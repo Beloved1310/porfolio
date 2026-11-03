@@ -41,7 +41,6 @@ const ProjectCard = ({ project }: { project: Project }) => (
     title={project.title}
     eyebrow={project.categories.join(" · ")}
     meta={project.period}
-    tags={project.technologies}
     highlight={project.highlight?.label}
     detailUrl={`/projects/${project.slug}`}
     links={[
@@ -68,7 +67,6 @@ const TabPanel = ({ tab }: { tab: TabId }) => {
             title={role.company}
             eyebrow={role.role}
             meta={role.period}
-            tags={role.technologies}
             detailUrl={`/work/${role.slug}`}
             links={[
               { label: "View work details", href: `/work/${role.slug}`, internal: true },
@@ -124,10 +122,10 @@ const TabPanel = ({ tab }: { tab: TabId }) => {
           </ul>
         </div>
         <Link
-          to="/research"
+          to="/speaking"
           className="group mt-10 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-stone-700 dark:text-stone-300 hover:text-amber-700 dark:hover:text-amber-400"
         >
-          Speaking and teaching
+          Speaking
           <FiArrowRight aria-hidden="true" className="group-hover:translate-x-1 transition-transform" />
         </Link>
       </>
@@ -244,9 +242,9 @@ const Projects = () => {
               to: "/album",
             },
             {
-              label: "Speaking and teaching",
-              description: "Talks and panels, and where I teach.",
-              to: "/research",
+              label: "Speaking",
+              description: "Talks, keynotes, and conference panels.",
+              to: "/speaking",
             },
           ]}
         />

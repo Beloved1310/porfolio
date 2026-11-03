@@ -8,6 +8,7 @@ import {
   FiArrowRight,
   FiExternalLink,
   FiTwitter,
+  FiMic,
 } from "react-icons/fi";
 import CommunityLeadership from "./Community";
 import HeroFlipCard from "../components/HeroFlipCard";
@@ -212,6 +213,128 @@ const Home = () => {
       {/* COMMUNITY */}
       <section id="community" className="border-t border-stone-100 dark:border-stone-800">
         <CommunityLeadership />
+      </section>
+
+      {/* SPEAKING SPOTLIGHT */}
+      <section
+        id="speaking"
+        className="relative py-20 md:py-32 px-4 sm:px-6 md:px-16 border-t border-stone-100 dark:border-stone-800 bg-white dark:bg-stone-950"
+      >
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+            <div>
+              <h2 className="text-[10px] uppercase tracking-[0.3em] text-stone-500 dark:text-stone-400 mb-4 font-bold flex items-center gap-3">
+                <span className="w-8 h-px bg-stone-300 dark:bg-stone-700" />- SPEAKING
+              </h2>
+              <p className="text-2xl md:text-4xl leading-tight tracking-tight font-bold text-stone-900 dark:text-white max-w-2xl">
+                On stage: AI agent safety, runtime governance, and systems thinking.
+              </p>
+            </div>
+            <Link
+              to="/speaking"
+              className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-stone-900 dark:bg-white text-white dark:text-stone-900 text-xs font-bold uppercase tracking-widest hover:bg-amber-600 dark:hover:bg-amber-400 dark:hover:text-stone-950 transition-colors shadow-sm shrink-0"
+            >
+              <span>All 7 Speaking Sessions</span>
+              <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
+
+          {/* Curated Sessions Grid */}
+          <div className="grid gap-6 lg:grid-cols-12 items-stretch">
+            {/* Featured Session 1: LLMday London (Large Hero Card) */}
+            <Link
+              to="/speaking"
+              className="lg:col-span-7 group rounded-3xl border border-stone-200/90 dark:border-stone-800 bg-stone-50/60 dark:bg-stone-900/60 overflow-hidden flex flex-col justify-between hover:border-amber-500/50 transition-all duration-300 hover:shadow-lg"
+            >
+              <div className="relative aspect-[16/10] overflow-hidden bg-stone-200 dark:bg-stone-800">
+                <img
+                  src="/ayo-speaking-llmday.jpg"
+                  alt="Adefisayo Adejumo speaking about the LAR framework at LLMday London"
+                  loading="lazy"
+                  className="w-full h-full object-cover object-top group-hover:scale-102 transition-transform duration-500"
+                />
+                <div className="absolute top-4 left-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-stone-950/80 backdrop-blur-md text-amber-400 text-[10px] font-mono font-bold uppercase tracking-widest border border-white/10">
+                  <FiMic aria-hidden="true" /> Featured Keynote · Talk
+                </div>
+              </div>
+              <div className="p-6 sm:p-8 flex flex-col justify-between flex-1">
+                <div>
+                  <span className="text-xs font-mono font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 block mb-2">
+                    Large Language Models, AI & ML Conference London
+                  </span>
+                  <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-stone-900 dark:text-white mb-3 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                    Your Agent Left the Laptop Open. LAR Closes It
+                  </h3>
+                  <p className="text-sm sm:text-base text-stone-600 dark:text-stone-300 leading-relaxed font-normal">
+                    Live stage demonstration of the LAR governance framework (Lock, Attribute, Require), explaining why autonomous agents must never hold ambient authority in production environments.
+                  </p>
+                </div>
+                <div className="mt-6 pt-5 border-t border-stone-200/80 dark:border-stone-800/80 flex items-center justify-between text-xs font-bold uppercase tracking-widest text-amber-700 dark:text-amber-400">
+                  <span>View session details & post</span>
+                  <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
+                </div>
+              </div>
+            </Link>
+
+            {/* Side Sessions (Two Cards Stacked) */}
+            <div className="lg:col-span-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-1">
+              {/* Session 2: DTX London 2026 Panel */}
+              <Link
+                to="/speaking"
+                className="group rounded-3xl border border-stone-200/90 dark:border-stone-800 bg-stone-50/60 dark:bg-stone-900/60 p-6 flex flex-col justify-between hover:border-amber-500/50 transition-all duration-300 hover:shadow-md"
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-amber-700 dark:text-amber-400">
+                      DTX London 2026 · Panel
+                    </span>
+                    <span className="text-[10px] font-mono text-stone-600 dark:text-stone-400">
+                      14 Oct 2026
+                    </span>
+                  </div>
+                  <h3 className="text-base sm:text-lg font-bold text-stone-900 dark:text-white mb-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                    From Vibe to Value: Engineering in an Agent-Driven World
+                  </h3>
+                  <p className="text-xs sm:text-sm text-stone-600 dark:text-stone-300 leading-relaxed">
+                    Moderated an industry panel featuring senior engineering leaders from Barclays, Switch2, and building societies on transitioning from prompt experiments to resilient production systems.
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-stone-700 dark:text-stone-300 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                  <span>View speaking story</span>
+                  <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
+                </div>
+              </Link>
+
+              {/* Session 3: JSMonthly */}
+              <Link
+                to="/speaking"
+                className="group rounded-3xl border border-stone-200/90 dark:border-stone-800 bg-stone-50/60 dark:bg-stone-900/60 p-6 flex flex-col justify-between hover:border-amber-500/50 transition-all duration-300 hover:shadow-md"
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-amber-700 dark:text-amber-400">
+                      JSMonthly London · Talk
+                    </span>
+                    <span className="text-[10px] font-mono text-stone-600 dark:text-stone-400">
+                      Technical Deep Dive
+                    </span>
+                  </div>
+                  <h3 className="text-base sm:text-lg font-bold text-stone-900 dark:text-white mb-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                    Bitwise in the Browser: The Superpower You've Been Ignoring
+                  </h3>
+                  <p className="text-xs sm:text-sm text-stone-600 dark:text-stone-300 leading-relaxed">
+                    Demystifying binary arithmetic, masks, and memory packing in modern JavaScript to build ultra-fast, high-efficiency client-side applications.
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-stone-700 dark:text-stone-300 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                  <span>View speaking story</span>
+                  <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
+                </div>
+              </Link>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* LIFE ALBUM TEASER */}

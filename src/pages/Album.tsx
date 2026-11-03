@@ -29,9 +29,9 @@ const Album = () => {
               to: "/projects#work",
             },
             {
-              label: "Speaking and teaching",
-              description: "Talks and panels, and where I teach.",
-              to: "/research",
+              label: "Speaking",
+              description: "Talks, keynotes, and conference panels.",
+              to: "/speaking",
             },
             {
               label: "Credentials",

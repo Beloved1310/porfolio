@@ -43,33 +43,50 @@ const CardMedia = ({ images, label }: { images: ImageSource[]; label: string }) 
   );
 };
 
-const pill =
-  "inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[11px] font-bold uppercase tracking-widest transition-colors";
-
 export const CardLinkButton = ({ link, primary = false }: { link: CardLink; primary?: boolean }) => {
   if (link.placeholder) {
     return (
-      <span
-        className={`${pill} border border-dashed border-stone-300 dark:border-stone-700 text-stone-500 dark:text-stone-400`}
-      >
-        {link.label}: link coming soon
+      <span className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[11px] font-mono uppercase tracking-wider border border-dashed border-stone-300 dark:border-stone-700 text-stone-400 dark:text-stone-500">
+        {link.label}: coming soon
       </span>
     );
   }
-  const style = primary
-    ? `${pill} bg-stone-900 text-white hover:bg-amber-700 dark:bg-white dark:text-stone-900 dark:hover:bg-amber-400`
-    : `${pill} border border-stone-300 dark:border-stone-700 text-stone-800 dark:text-stone-200 hover:border-amber-500 hover:text-amber-700 dark:hover:text-amber-400`;
 
   if (link.internal) {
     return (
-      <Link to={link.href} className={style}>
-        {link.label} <FiArrowRight aria-hidden="true" />
+      <Link
+        to={link.href}
+        className={`group/btn inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold uppercase tracking-wider transition-all duration-200 select-none ${
+          primary
+            ? "bg-stone-950 text-white dark:bg-white dark:text-stone-950 shadow-sm hover:shadow-md hover:bg-amber-600 dark:hover:bg-amber-400 dark:hover:text-stone-950 active:scale-[0.98]"
+            : "border border-stone-200 dark:border-stone-700 bg-stone-50/90 dark:bg-stone-800/80 text-stone-800 dark:text-stone-200 hover:border-amber-500 hover:text-amber-700 dark:hover:text-amber-400 active:scale-[0.98]"
+        }`}
+      >
+        <span>{link.label}</span>
+        <FiArrowRight
+          aria-hidden="true"
+          className="transition-transform duration-200 group-hover/btn:translate-x-1"
+        />
       </Link>
     );
   }
+
   return (
-    <a href={link.href} target="_blank" rel="noopener noreferrer" className={style}>
-      {link.label} <FiArrowUpRight aria-hidden="true" />
+    <a
+      href={link.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`group/btn inline-flex items-center justify-center gap-1.5 rounded-full px-4 py-2.5 text-xs font-bold uppercase tracking-wider transition-all duration-200 select-none ${
+        primary
+          ? "bg-stone-950 text-white dark:bg-white dark:text-stone-950 shadow-sm hover:shadow-md hover:bg-amber-600 dark:hover:bg-amber-400 dark:hover:text-stone-950 active:scale-[0.98]"
+          : "border border-stone-200 dark:border-stone-700 bg-stone-50/90 dark:bg-stone-800/80 text-stone-700 dark:text-stone-300 hover:border-amber-500 hover:text-amber-700 dark:hover:text-amber-400 hover:bg-white dark:hover:bg-stone-900 active:scale-[0.98]"
+      }`}
+    >
+      <span>{link.label}</span>
+      <FiArrowUpRight
+        aria-hidden="true"
+        className="transition-transform duration-200 group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5"
+      />
       <span className="sr-only"> (opens in a new tab)</span>
     </a>
   );
@@ -94,7 +111,6 @@ const ShowcaseCard = ({
   eyebrow,
   meta,
   children,
-  tags,
   links,
   aspect = "aspect-[16/10]",
   highlight,
@@ -118,14 +134,18 @@ const ShowcaseCard = ({
     <article
       onClick={handleCardClick}
       className={`group relative flex flex-col overflow-hidden rounded-3xl bg-white dark:bg-stone-900 transition-all duration-300 ${
-        effectiveDetailUrl ? "cursor-pointer hover:-translate-y-1 hover:shadow-2xl hover:shadow-stone-900/10 dark:hover:shadow-black/40" : ""
+        effectiveDetailUrl
+          ? "cursor-pointer hover:-translate-y-1 hover:shadow-2xl hover:shadow-stone-900/10 dark:hover:shadow-black/40"
+          : ""
       } ${
         highlight
           ? "border-2 border-amber-500 shadow-[0_20px_50px_-12px_rgba(217,119,6,0.35)] md:-translate-y-1"
           : "border border-stone-200 dark:border-stone-800 hover:border-amber-500/50 dark:hover:border-amber-500/40"
       }`}
     >
-      <div className={`relative ${aspect} overflow-hidden border-b border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-950`}>
+      <div
+        className={`relative ${aspect} overflow-hidden border-b border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-950`}
+      >
         {effectiveDetailUrl ? (
           <Link to={effectiveDetailUrl} tabIndex={-1} aria-hidden="true" className="block h-full w-full">
             <CardMedia images={images} label={title} />
@@ -169,21 +189,9 @@ const ShowcaseCard = ({
           </div>
         )}
 
-        {tags && tags.length > 0 && (
-          <ul className="mt-5 flex flex-wrap gap-2">
-            {tags.map((t) => (
-              <li
-                key={t}
-                className="rounded-lg border border-amber-500/20 bg-amber-500/5 px-2.5 py-1 text-[10px] font-bold uppercase tracking-tight text-amber-700 dark:text-amber-400"
-              >
-                {t}
-              </li>
-            ))}
-          </ul>
-        )}
-
+        {/* Clean, high-UI/UX button toolbar (skills removed from card and moved to details page) */}
         {links && links.length > 0 && (
-          <div className="mt-auto flex flex-wrap items-center gap-3 pt-6">
+          <div className="mt-auto pt-6 border-t border-stone-100 dark:border-stone-800/80 flex flex-wrap items-center gap-2.5">
             {links.map((l, i) => (
               <CardLinkButton key={l.label + l.href} link={l} primary={i === 0} />
             ))}

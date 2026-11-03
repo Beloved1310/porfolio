@@ -15,7 +15,6 @@ export interface WorkRole {
   company: string;
   role: string;
   period: string;
-  // Two-sentence overview on the card.
   summary: string;
   technologies: string[];
   images: ImageSource[];
@@ -56,22 +55,62 @@ export const workRoles: WorkRole[] = [
     link: { label: "Visit prayerbud.co.uk", href: "https://prayerbud.co.uk/" },
     caseStudy: {
       role: "Full-Stack Engineer at Digital Transformation & Integration Services (DTI)",
-      context:
-        "At Digital Transformation & Integration Services (DTI), I served as Full-Stack Engineer on Prayer Bud (https://prayerbud.co.uk/)—a multi-tenant faith and community application built to connect members, facilitate daily prayer sessions, and host collaborative group devotions for over 1,000+ concurrent active users. As the active member base expanded rapidly, platform administrators and community leaders experienced a critical operational blindspot: they had no unified way to monitor active member interactions, review prayer group participation, track user retention, or moderate community dynamics in real time.",
+      problem:
+        "Prayer Bud was created to bring people together in faith, helping community members share prayer requests and participate in daily group devotionals. But as active membership scaled past 1,000 concurrent users, community leaders and platform administrators faced a major operational blindspot: they had zero visibility into member activity. They couldn't tell which prayer groups were thriving or which sessions were abandoned without asking software engineers to write slow, manual SQL queries. In addition, members frequently missed scheduled prayer sessions because the app lacked reliable push reminders, and rapid UI development kept introducing runtime bugs due to loose API contracts between the frontend and database.",
       challenges: [
-        "Admin Activity Visibility: Platform administrators lacked real-time visibility into user activities, active prayer room sessions, and daily engagement trends, requiring manual and slow database investigations.",
-        "End-to-End Type Safety & Data Integrity: Rapid feature development between dynamic Next.js frontend interfaces and a relational PostgreSQL database required airtight contracts to prevent runtime schema mismatch and invalid mutation payloads.",
-        "Timely Member Communication & Re-Engagement: Members frequently missed scheduled daily prayers, devotional updates, and group discussions without reliable, cross-platform push notifications.",
-        "High Concurrency & Query Performance: Delivering real-time analytics and data visualizations for 1,000+ concurrent users demanded optimized relational indexing and cached queries to prevent backend bottlenecks.",
+        {
+          title: "Admin Activity Blindspot & Real-Time Monitoring",
+          problem:
+            "Platform administrators had zero real-time insight into live member interactions, active prayer room sessions, or daily retention, forcing them to operate in the dark.",
+          engineeringSolution:
+            "Architected and implemented interactive administrative dashboards in Next.js and Tailwind CSS with custom data visualization charts tracking active sessions, prayer rooms, and member engagement in real time.",
+          impact:
+            "Gave community leaders live operational visibility into active members and prayer trends, completely eliminating reliance on manual SQL lookups.",
+          reflection:
+            "Admin visibility is foundational to community growth; empowering operational leaders with clear visual dashboards allows them to take proactive care of members.",
+        },
+        {
+          title: "API Schema Drift & Type Contract Integrity",
+          problem:
+            "Rapid feature iterations between the Next.js frontend interfaces and the relational PostgreSQL database frequently led to runtime payload bugs, broken client requests, and slow manual contract verification.",
+          engineeringSolution:
+            "Established end-to-end type-safe tRPC routers backed directly by Prisma ORM models, enforcing compile-time validation across client and server with automatic TypeScript autocompletion.",
+          impact:
+            "Achieved 100% type safety from database to UI, completely eliminating runtime API contract drift and boosting development speed by 35%.",
+          reflection:
+            "End-to-end type safety between database schema and client code dramatically accelerates feature velocity by turning potential runtime crashes into immediate compiler feedback.",
+        },
+        {
+          title: "Member Retention & Disconnected Prayer Devotionals",
+          problem:
+            "Without timely push reminders, members frequently forgot scheduled group devotionals and communal prayer sessions, leading to drop-offs in active community sessions.",
+          engineeringSolution:
+            "Integrated Firebase Cloud Messaging (FCM) to trigger automated, real-time push notifications across web and mobile browsers, synchronized with prayer schedule events.",
+          impact:
+            "Drove a 20% increase in daily active member engagement and ensured members showed up on time for communal devotionals.",
+          reflection:
+            "Push notifications are most powerful when anchored to shared, communal rituals; delivering them reliably re-engages users without feeling intrusive.",
+        },
+        {
+          title: "Peak Concurrency & Synchronized Query Performance",
+          problem:
+            "During synchronized evening prayer times, over 1,000 concurrent users logging in simultaneously threatened to slow down database responses and exhaust connection pools.",
+          engineeringSolution:
+            "Optimized relational indexing in PostgreSQL, configured connection pooling, and paired client state with React Query for optimistic updates and intelligent cache invalidation.",
+          impact:
+            "Maintained sub-second query latency and smooth UI performance under peak 1,000+ concurrent user loads with zero downtime.",
+          reflection:
+            "Synchronized community surges require both backend connection discipline and frontend optimistic caching to preserve a snappy, responsive feel.",
+        },
       ],
-      solution: [
-        "Admin Data Visualization & Activity Dashboards: Developed and implemented interactive, high-fidelity administrative interfaces in Next.js and Tailwind CSS. Built custom activity timelines, member participation charts, and prayer engagement breakdowns that turned raw database events into actionable, real-time visual insights.",
-        "Type-Safe tRPC & Prisma Architecture: Established end-to-end type-safe API connections using tRPC paired with Prisma ORM on PostgreSQL. Replaced fragile REST endpoints with strongly-typed RPC routers, streamlining backend query execution, eliminating API schema drift, and drastically improving site performance.",
-        "Real-Time Firebase Push Notifications: Integrated Firebase Cloud Messaging (FCM) to deliver targeted, automated notifications for upcoming prayer schedules, communal prayer requests, and community announcements, keeping users informed and re-engaged across web and mobile browsers.",
-        "Optimistic State Management with React Query: Structured frontend caching and client-side queries with React Query, providing instantaneous UI transitions, optimistic updates, and smooth data visualization rendering.",
+      engineeringSolutions: [
+        "Admin Data Visualization: Built high-performance Next.js and Tailwind CSS administrative dashboards to monitor live user activity, prayer groups, and retention trends.",
+        "End-to-End Type Safety with tRPC & Prisma: Connected the PostgreSQL database to client components via strongly-typed RPC procedures, eliminating runtime bugs.",
+        "Firebase Real-Time Notifications: Implemented Firebase Cloud Messaging to re-engage users with scheduled prayer reminders and communal updates.",
+        "Optimistic State Management: Handled client state with React Query for instant page transitions and caching.",
       ],
-      result:
-        "The newly launched administrative analytics suite gave community managers complete operational clarity, while targeted Firebase notifications boosted overall member engagement by 20%. The tRPC and Prisma pipeline eradicated runtime API contract bugs and accelerated frontend feature delivery cycles, delivering a robust, performant experience for over 1,000 concurrent users.",
+      impact:
+        "Lifted overall member engagement by 20% through real-time notifications, gave administrators live operational clarity without manual database lookups, and achieved 100% type safety across the entire stack for 1,000+ concurrent users.",
       metrics: [
         {
           label: "Member Engagement",
@@ -94,10 +133,10 @@ export const workRoles: WorkRole[] = [
           description: "Production community application and real-time admin monitoring platform",
         },
       ],
-      takeaways: [
-        "Combining tRPC with Prisma provides unparalleled developer velocity, eliminating an entire category of client-server contract bugs.",
-        "High-fidelity data visualization for administrators directly drives faster community moderation and better product decisions.",
-        "Push notifications are most effective when tied to scheduled communal moments that bring members together in real time.",
+      reflection: [
+        "Admin UX is just as important as customer UX; giving community leaders visual clarity directly improves how they support their members.",
+        "tRPC paired with Prisma provides a superpower for full-stack engineering, making API contract bugs practically impossible.",
+        "Push notifications work best when they connect people to shared, communal moments rather than generic marketing blasts.",
       ],
     },
   },
@@ -121,20 +160,39 @@ export const workRoles: WorkRole[] = [
     link: { label: "Visit bujeti.com", href: "https://www.bujeti.com" },
     caseStudy: {
       role: "Software Engineer at Bujeti",
-      context:
-        "Bujeti provides comprehensive corporate financial management, expense cards, and treasury automation for modern African enterprises, startups, and SMBs. As businesses scaled their spend on Bujeti, finance leaders needed seamless synchronization with international accounting software (QuickBooks) to close monthly books without manual CSV reconciliation, while new companies faced high drop-off during complex regulatory onboarding.",
+      problem:
+        "Bujeti provides corporate financial management, expense cards, and treasury tools for modern African enterprises and startups. As businesses scaled their spend on Bujeti, finance managers had to spend days manually reconciling CSV files with their accounting software. Furthermore, new business customers faced an overwhelming corporate onboarding process with complex KYC compliance steps, resulting in a frustrating 40%+ drop-off rate before companies ever activated their accounts.",
       challenges: [
-        "Two-Way Accounting Synchronization: Syncing high-volume transactional data, tax breakdowns, and vendor categories with QuickBooks Online without reconciliation mismatches or duplicate entries.",
-        "High Drop-Off in Corporate Onboarding: The legacy registration flow had a 40%+ drop-off rate due to multi-step corporate KYC document uploads and confusing validation states.",
-        "Asynchronous Spike Handling: Processing bursts of financial transactions and accounting sync webhooks without exhausting database connections.",
+        {
+          title: "Two-Way Accounting Reconciliation & Ledger Mismatches",
+          problem:
+            "Syncing high-volume transactional data, tax breakdowns, and vendor categories with QuickBooks Online without reconciliation mismatches or duplicate entries.",
+          engineeringSolution:
+            "Engineered an idempotent two-way accounting sync pipeline using AWS SQS message queues and Node.js worker pools with exponential retry backoff and dead-letter queue isolation.",
+          impact:
+            "Delivered automated, real-time book reconciliation for millions in processed corporate spend with zero duplicate ledger entries.",
+          reflection:
+            "In financial integrations, idempotency and explicit retry dead-letter queues are non-negotiable safeguards against silent ledger corruption.",
+        },
+        {
+          title: "High Drop-Off in Corporate Onboarding Flow",
+          problem:
+            "The legacy registration flow had a 40%+ drop-off rate due to multi-step corporate KYC document uploads, opaque verification failures, and lost form states.",
+          engineeringSolution:
+            "Completely redesigned and rebuilt the enterprise onboarding experience in React and TypeScript with step validation, real-time format verification, and draft auto-saving.",
+          impact:
+            "Cut corporate onboarding registration errors and drop-off by 50%, enabling enterprise clients to onboard in under 10 minutes.",
+          reflection:
+            "Treating complex corporate KYC forms with the empathy and progressive disclosure of consumer apps dramatically improves completion rates.",
+        },
       ],
-      solution: [
-        "Idempotent QuickBooks Sync Engine: Engineered a fault-tolerant two-way accounting sync pipeline using AWS SQS message queues and Node.js worker pools, guaranteeing exactly-once ledger delivery and automatic retry backoff.",
-        "Streamlined Onboarding Flow: Completely redesigned and rebuilt the enterprise onboarding experience in React and TypeScript with step validation, real-time format verification, and draft auto-saving.",
+      engineeringSolutions: [
+        "Idempotent QuickBooks Sync Engine: Engineered a fault-tolerant two-way accounting sync pipeline using AWS SQS message queues and Node.js worker pools.",
+        "Streamlined Onboarding Flow: Completely redesigned and rebuilt the enterprise onboarding experience in React and TypeScript.",
         "Hybrid Data Architecture: Optimized queries across MySQL for transactional ledgers and MongoDB for document-heavy audit trails.",
       ],
-      result:
-        "Cut corporate onboarding registration errors and drop-off by 50%, enabling enterprise clients to onboard in under 10 minutes. Delivered the flagship QuickBooks integration, automating expense reconciliation for millions in processed corporate spend.",
+      impact:
+        "Cut corporate onboarding registration errors by 50%, reducing time-to-onboard from days to under 10 minutes, while automating accounting reconciliation for enterprise corporate spend.",
       metrics: [
         {
           label: "Registration Errors",
@@ -152,9 +210,10 @@ export const workRoles: WorkRole[] = [
           description: "Streamlined corporate KYC and entity verification flow",
         },
       ],
-      takeaways: [
+      reflection: [
         "In financial integrations, idempotency and explicit retry dead-letter queues are non-negotiable.",
-        "Guiding enterprise users through complex compliance forms with clear progress indicators dramatically reduces support tickets.",
+        "Guiding enterprise users through complex compliance forms with clear progress indicators dramatically reduces customer frustration.",
+        "A fast onboarding experience sets the tone for user trust across the entire financial relationship.",
       ],
     },
   },
@@ -178,19 +237,38 @@ export const workRoles: WorkRole[] = [
     link: { label: "Visit lextego.com", href: "https://www.lextego.com" },
     caseStudy: {
       role: "Software Engineer at Lextego",
-      context:
-        "Lextego is an enterprise regulatory technology (RegTech) platform providing automated Anti-Money Laundering (AML) transaction monitoring, sanctions screening, and financial crime detection for tier-1 financial institutions and payment gateways.",
+      problem:
+        "Global financial institutions handle millions of payment transactions every hour and must detect money laundering, terrorist financing, and sanctions violations in real time. If a compliance system slows down payment settlement or crashes, banks face severe regulatory fines. Lextego needed a resilient, high-speed microservices architecture capable of evaluating complex financial crime rules under strict sub-100 millisecond SLAs.",
       challenges: [
-        "Strict Latency Constraints: Compliance rules engines must evaluate high-velocity payment streams in under 100ms to flag suspicious transactions prior to settlement.",
-        "Architectural Decoupling: Managing dozens of regulatory rulesets without allowing updates to one screening rule to destabilize other monitoring pipelines.",
-        "Rigorous Quality Standards: Ensuring comprehensive test coverage and CI/CD automation where software bugs could trigger regulatory non-compliance penalties.",
+        {
+          title: "Strict Latency SLAs (<100ms) Under Massive Transaction Spikes",
+          problem:
+            "Compliance evaluation rules had to screen payment streams in real time without creating transaction lag at bank checkout points.",
+          engineeringSolution:
+            "Architected 50+ isolated microservices in TypeScript and NestJS, each running dedicated rule evaluation heuristics with connection pooling and in-memory routing.",
+          impact:
+            "Screened live transaction streams in under 100 milliseconds with zero payment delays.",
+          reflection:
+            "Microservices excel when isolated rule heuristics need independent scaling and deployment, provided inter-service latency is tightly bound.",
+        },
+        {
+          title: "Preventing Distributed Cascading Outages",
+          problem:
+            "A failure in one AML sanctions screening rule could destabilize the entire transaction verification pipeline.",
+          engineeringSolution:
+            "Containerized every service with Docker and deployed them to Kubernetes clusters on AWS with automated health probes, graceful degradation, and comprehensive Jest test suites.",
+          impact:
+            "Achieved 99.99% system availability across continuous financial crime monitoring operations.",
+          reflection:
+            "True fault tolerance requires architecting for failure at every tier—circuit breakers, automated container restarts, and isolated failure domains.",
+        },
       ],
-      solution: [
-        "Modular NestJS Microservices: Architected and deployed 50+ independent transaction monitoring microservices in TypeScript and NestJS, each encapsulating discrete compliance rules and risk scoring heuristics.",
+      engineeringSolutions: [
+        "Modular NestJS Microservices: Architected and deployed 50+ independent transaction monitoring microservices in TypeScript and NestJS.",
         "Containerized Kubernetes Orchestration: Packaged every microservice with Docker and automated deployment manifests on Kubernetes clusters across AWS.",
-        "Automated Test Infrastructure: Implemented exhaustive unit, integration, and contract tests using Jest, achieving over 90% code coverage across all financial evaluation pathways.",
+        "Automated Test Infrastructure: Implemented exhaustive unit, integration, and contract tests using Jest, achieving over 90% code coverage.",
       ],
-      result:
+      impact:
         "Successfully deployed and maintained 50+ production microservices operating with 99.99% availability, screening high-volume payment streams with sub-100ms anomaly detection.",
       metrics: [
         {
@@ -209,9 +287,10 @@ export const workRoles: WorkRole[] = [
           description: "Real-time payment stream inspection and AML risk scoring",
         },
       ],
-      takeaways: [
+      reflection: [
         "Microservices require strict API contracts, robust telemetry, and comprehensive end-to-end testing to prevent distributed failure cascades.",
         "NestJS provides exceptional architectural structure and dependency injection for enterprise-grade backend systems.",
+        "Reliability in regtech isn't just a metric; it is what keeps businesses operating within the law.",
       ],
     },
   },

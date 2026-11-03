@@ -6,18 +6,18 @@ import RelatedLinks from "../components/RelatedLinks";
 import { talks } from "../data/research";
 
 const Research = () => {
-  usePageTitle("Speaking and Teaching");
+  usePageTitle("Speaking");
 
   return (
     <div className="min-h-screen pt-24 pb-24 bg-white dark:bg-stone-950">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <PageHeader
-          eyebrow="Speaking, community and teaching"
-          title="Speaking and teaching"
+          eyebrow="Conferences, Panels & Keynotes"
+          title="Speaking"
         />
 
         <section aria-labelledby="speaking" className="mb-24">
-          <SectionHeading id="speaking" label="SPEAKING" title="Talks and panels." />
+          <SectionHeading id="speaking" label="SPEAKING" title="Conferences, panels, and technical talks." />
           <ul className="grid gap-4 sm:grid-cols-2">
             {talks.map((t) => (
               <li
