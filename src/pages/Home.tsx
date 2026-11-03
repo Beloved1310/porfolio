@@ -69,7 +69,7 @@ const Home = () => {
                   {!reduceMotion && (
                     <motion.span
                       aria-hidden="true"
-                      className="absolute top-0 h-full w-24 bg-gradient-to-r from-transparent via-white/70 to-transparent skew-x-[-25deg] pointer-events-none"
+                      className="absolute top-0 h-full w-24 bg-gradient-r from-transparent via-white/70 to-transparent skew-x-[-25deg] pointer-events-none"
                       initial={{ left: "-40%" }}
                       animate={{ left: "140%" }}
                       transition={{ duration: 1.6, repeat: Infinity, repeatDelay: 2.5, ease: "easeInOut" }}
@@ -116,6 +116,12 @@ const Home = () => {
 
                 <div className="flex items-center justify-center lg:justify-start flex-wrap gap-2 sm:gap-4 text-xs sm:text-sm font-mono font-bold uppercase tracking-[0.2em] text-stone-600 dark:text-stone-400">
                   <span>Start with:</span>
+                  <Link
+                    to="/work/dti"
+                    className="text-stone-700 dark:text-stone-300 hover:text-amber-700 dark:hover:text-amber-400 transition-colors underline decoration-stone-300 dark:decoration-stone-700 hover:decoration-amber-500 underline-offset-2"
+                  >
+                    Prayer Bud (DTI)
+                  </Link>
                   <Link
                     to="/projects/lar-framework"
                     className="text-stone-700 dark:text-stone-300 hover:text-amber-700 dark:hover:text-amber-400 transition-colors underline decoration-stone-300 dark:decoration-stone-700 hover:decoration-amber-500 underline-offset-2"

@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FiArrowRight, FiArrowUpRight, FiAward } from "react-icons/fi";
 import type { ImageSource } from "../data/projects";
 import type { CardLink } from "../data/work";
@@ -13,9 +13,12 @@ export const ImagePlaceholder = ({ label }: { label: string }) => (
     />
     <div className="relative flex h-full flex-col justify-between p-5">
       <span className="self-start rounded-full border border-stone-300 dark:border-stone-600 bg-white/70 dark:bg-stone-900/60 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-stone-500 dark:text-stone-400">
-        Image coming soon
+        Preview
       </span>
-      <span aria-hidden="true" className="text-3xl md:text-4xl font-black tracking-tighter leading-none text-stone-300 dark:text-stone-600 line-clamp-2">
+      <span
+        aria-hidden="true"
+        className="text-3xl md:text-4xl font-black tracking-tighter leading-none text-stone-300 dark:text-stone-600 line-clamp-2"
+      >
         {label}
       </span>
     </div>
@@ -46,7 +49,9 @@ const pill =
 export const CardLinkButton = ({ link, primary = false }: { link: CardLink; primary?: boolean }) => {
   if (link.placeholder) {
     return (
-      <span className={`${pill} border border-dashed border-stone-300 dark:border-stone-700 text-stone-500 dark:text-stone-400`}>
+      <span
+        className={`${pill} border border-dashed border-stone-300 dark:border-stone-700 text-stone-500 dark:text-stone-400`}
+      >
         {link.label}: link coming soon
       </span>
     );
@@ -54,6 +59,7 @@ export const CardLinkButton = ({ link, primary = false }: { link: CardLink; prim
   const style = primary
     ? `${pill} bg-stone-900 text-white hover:bg-amber-700 dark:bg-white dark:text-stone-900 dark:hover:bg-amber-400`
     : `${pill} border border-stone-300 dark:border-stone-700 text-stone-800 dark:text-stone-200 hover:border-amber-500 hover:text-amber-700 dark:hover:text-amber-400`;
+
   if (link.internal) {
     return (
       <Link to={link.href} className={style}>
@@ -77,58 +83,115 @@ interface ShowcaseCardProps {
   children?: ReactNode;
   tags?: string[];
   links?: CardLink[];
-  // Media shape; work cards use a wider frame than project cards.
   aspect?: string;
-  // Award or grant badge; also gives the card an amber frame so it stands out in the grid.
   highlight?: string;
+  detailUrl?: string;
 }
 
-const ShowcaseCard = ({ images, title, eyebrow, meta, children, tags, links, aspect = "aspect-[16/10]", highlight }: ShowcaseCardProps) => (
-  <article
-    className={`group relative flex flex-col overflow-hidden rounded-3xl bg-white dark:bg-stone-900 ${
-      highlight
-        ? "border-2 border-amber-500 shadow-[0_20px_50px_-12px_rgba(217,119,6,0.45)] md:-translate-y-2"
-        : "border border-stone-200 dark:border-stone-800"
-    }`}
-  >
-    <div className={`relative ${aspect} overflow-hidden border-b border-stone-200 dark:border-stone-800`}>
-      <CardMedia images={images} label={title} />
-      {highlight && (
-        <span className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-amber-400 px-3.5 py-1.5 text-[11px] font-black uppercase tracking-widest text-stone-900 shadow-lg">
-          <FiAward aria-hidden="true" /> {highlight}
-        </span>
-      )}
-    </div>
-    <div className="flex flex-1 flex-col p-6 md:p-7">
-      {eyebrow && (
-        <p className="mb-2 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-amber-700 dark:text-amber-400">{eyebrow}</p>
-      )}
-      <h3 className="text-xl md:text-2xl font-black tracking-tight leading-snug text-stone-900 dark:text-white">{title}</h3>
-      {meta && (
-        <p className="mt-1 font-mono text-[10px] uppercase tracking-widest text-stone-500 dark:text-stone-400">{meta}</p>
-      )}
-      {children && <div className="mt-4 text-sm leading-relaxed text-stone-600 dark:text-stone-400">{children}</div>}
-      {tags && tags.length > 0 && (
-        <ul className="mt-5 flex flex-wrap gap-2">
-          {tags.map((t) => (
-            <li
-              key={t}
-              className="rounded-lg border border-amber-500/20 bg-amber-500/5 px-2.5 py-1 text-[10px] font-bold uppercase tracking-tight text-amber-700 dark:text-amber-400"
-            >
-              {t}
-            </li>
-          ))}
-        </ul>
-      )}
-      {links && links.length > 0 && (
-        <div className="mt-auto flex flex-wrap gap-3 pt-6">
-          {links.map((l, i) => (
-            <CardLinkButton key={l.label + l.href} link={l} primary={i === 0} />
-          ))}
-        </div>
-      )}
-    </div>
-  </article>
-);
+const ShowcaseCard = ({
+  images,
+  title,
+  eyebrow,
+  meta,
+  children,
+  tags,
+  links,
+  aspect = "aspect-[16/10]",
+  highlight,
+  detailUrl,
+}: ShowcaseCardProps) => {
+  const navigate = useNavigate();
+
+  // Determine primary internal link if detailUrl isn't explicitly passed
+  const effectiveDetailUrl = detailUrl || links?.find((l) => l.internal)?.href;
+
+  const handleCardClick = (e: React.MouseEvent) => {
+    // If the click happened on a button or link, let it handle its own navigation
+    const target = e.target as HTMLElement;
+    if (target.closest("a, button")) return;
+    if (effectiveDetailUrl) {
+      navigate(effectiveDetailUrl);
+    }
+  };
+
+  return (
+    <article
+      onClick={handleCardClick}
+      className={`group relative flex flex-col overflow-hidden rounded-3xl bg-white dark:bg-stone-900 transition-all duration-300 ${
+        effectiveDetailUrl ? "cursor-pointer hover:-translate-y-1 hover:shadow-2xl hover:shadow-stone-900/10 dark:hover:shadow-black/40" : ""
+      } ${
+        highlight
+          ? "border-2 border-amber-500 shadow-[0_20px_50px_-12px_rgba(217,119,6,0.35)] md:-translate-y-1"
+          : "border border-stone-200 dark:border-stone-800 hover:border-amber-500/50 dark:hover:border-amber-500/40"
+      }`}
+    >
+      <div className={`relative ${aspect} overflow-hidden border-b border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-950`}>
+        {effectiveDetailUrl ? (
+          <Link to={effectiveDetailUrl} tabIndex={-1} aria-hidden="true" className="block h-full w-full">
+            <CardMedia images={images} label={title} />
+          </Link>
+        ) : (
+          <CardMedia images={images} label={title} />
+        )}
+        {highlight && (
+          <span className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-amber-400 px-3.5 py-1.5 text-[11px] font-black uppercase tracking-widest text-stone-900 shadow-lg">
+            <FiAward aria-hidden="true" /> {highlight}
+          </span>
+        )}
+      </div>
+
+      <div className="flex flex-1 flex-col p-6 md:p-7">
+        {eyebrow && (
+          <p className="mb-2 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-amber-700 dark:text-amber-400">
+            {eyebrow}
+          </p>
+        )}
+
+        <h3 className="text-xl md:text-2xl font-black tracking-tight leading-snug text-stone-900 dark:text-white group-hover:text-amber-700 dark:group-hover:text-amber-400 transition-colors">
+          {effectiveDetailUrl ? (
+            <Link to={effectiveDetailUrl} className="focus:outline-none">
+              {title}
+            </Link>
+          ) : (
+            title
+          )}
+        </h3>
+
+        {meta && (
+          <p className="mt-1 font-mono text-[10px] uppercase tracking-widest text-stone-500 dark:text-stone-400">
+            {meta}
+          </p>
+        )}
+
+        {children && (
+          <div className="mt-4 text-sm leading-relaxed text-stone-600 dark:text-stone-400">
+            {children}
+          </div>
+        )}
+
+        {tags && tags.length > 0 && (
+          <ul className="mt-5 flex flex-wrap gap-2">
+            {tags.map((t) => (
+              <li
+                key={t}
+                className="rounded-lg border border-amber-500/20 bg-amber-500/5 px-2.5 py-1 text-[10px] font-bold uppercase tracking-tight text-amber-700 dark:text-amber-400"
+              >
+                {t}
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {links && links.length > 0 && (
+          <div className="mt-auto flex flex-wrap items-center gap-3 pt-6">
+            {links.map((l, i) => (
+              <CardLinkButton key={l.label + l.href} link={l} primary={i === 0} />
+            ))}
+          </div>
+        )}
+      </div>
+    </article>
+  );
+};
 
 export default ShowcaseCard;

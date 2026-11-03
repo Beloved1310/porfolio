@@ -43,9 +43,10 @@ const ProjectCard = ({ project }: { project: Project }) => (
     meta={project.period}
     tags={project.technologies}
     highlight={project.highlight?.label}
+    detailUrl={`/projects/${project.slug}`}
     links={[
-      ...(project.caseStudy ? [{ label: "Case study", href: `/projects/${project.slug}`, internal: true }] : []),
-      ...(project.highlight?.postUrl ? [{ label: "Read the post", href: project.highlight.postUrl }] : []),
+      { label: "View story & details", href: `/projects/${project.slug}`, internal: true },
+      ...(project.highlight?.postUrl ? [{ label: "Read post", href: project.highlight.postUrl }] : []),
       ...(project.liveUrl ? [{ label: project.liveLabel ?? "Live site", href: project.liveUrl }] : []),
       ...(project.githubUrl ? [{ label: "Source", href: project.githubUrl }] : []),
     ]}
@@ -68,7 +69,11 @@ const TabPanel = ({ tab }: { tab: TabId }) => {
             eyebrow={role.role}
             meta={role.period}
             tags={role.technologies}
-            links={[role.link]}
+            detailUrl={`/work/${role.slug}`}
+            links={[
+              { label: "View work details", href: `/work/${role.slug}`, internal: true },
+              ...(role.liveUrl ? [{ label: role.liveLabel ?? "Visit site", href: role.liveUrl }] : []),
+            ]}
           >
             <p>{role.summary}</p>
           </ShowcaseCard>
