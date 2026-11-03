@@ -7,23 +7,20 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
-      colors: {
-        primary: {
-          50: '#eff6ff',
-          100: '#dbeafe',
-          200: '#bfdbfe',
-          300: '#93c5fd',
-          400: '#60a5fa',
-          500: '#3b82f6',
-          600: '#2563eb',
-          700: '#1d4ed8',
-          800: '#1e40af',
-          900: '#1e3a8a',
-        },
-      },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
         display: ['Poppins', 'system-ui', 'sans-serif'],
+        // Simulation logs and code only; the existing `font-mono` labels are unchanged.
+        code: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+        // Life Album captions only.
+        hand: ['Caveat', 'cursive'],
+      },
+      colors: {
+        // Warm paper tone for the Life Album, derived from stone and amber.
+        paper: {
+          light: '#f7f2e8',
+          dark: '#292420',
+        },
       },
     },
   },
