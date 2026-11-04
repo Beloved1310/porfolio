@@ -135,7 +135,12 @@ export const projects: Project[] = [
     title: "LAR framework (Lock, Attribute, Require)",
     summary:
       "A principled governance framework for autonomous AI agents in enterprise production: Lock privilege scopes, Attribute every action to an accountable human, and Require out-of-band confirmation for high-stakes mutations.",
-    images: [],
+    images: [
+      {
+        src: "/ayo-speaking-llmday.jpg",
+        alt: "Adefisayo Adejumo presenting the LAR framework at LLMday London",
+      },
+    ],
     technologies: ["OAuth 2.0 Token Exchange", "CIBA", "Agent Governance", "TypeScript", "Python", "FastAPI"],
     slides: [],
     categories: ["AI", "Backend"],

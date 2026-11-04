@@ -122,10 +122,10 @@ const TabPanel = ({ tab }: { tab: TabId }) => {
           </ul>
         </div>
         <Link
-          to="/speaking"
+          to="/#speaking"
           className="group mt-10 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-stone-700 dark:text-stone-300 hover:text-amber-700 dark:hover:text-amber-400"
         >
-          Speaking
+          Talks & Community Sharing
           <FiArrowRight aria-hidden="true" className="group-hover:translate-x-1 transition-transform" />
         </Link>
       </>

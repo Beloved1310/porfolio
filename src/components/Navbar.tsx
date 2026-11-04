@@ -7,7 +7,6 @@ import { scrollToId } from '../utils/scroll';
 
 const navItems = [
   { name: 'Work', to: '/projects' },
-  { name: 'Speaking', to: '/speaking' },
   { name: 'My Story', to: '/album' },
 ];
 

@@ -7,9 +7,6 @@ import {
   FiArrowUpRight,
   FiAward,
   FiBookOpen,
-  FiCheckCircle,
-  FiChevronDown,
-  FiChevronUp,
   FiClock,
   FiCode,
   FiExternalLink,
@@ -64,8 +61,6 @@ interface UnifiedItem {
 
 const ProjectCaseStudy = () => {
   const { slug = "" } = useParams();
-  const [activeStoryFilter, setActiveStoryFilter] = useState<number | "all">("all");
-  const [expandedStoryMap, setExpandedStoryMap] = useState<Record<number, boolean>>({});
   const [modalStoryIndex, setModalStoryIndex] = useState<number | null>(null);
 
   useEffect(() => {
@@ -177,7 +172,6 @@ const ProjectCaseStudy = () => {
 
   const { caseStudy } = item;
   const metrics = caseStudy.metrics || [];
-  const problemText = caseStudy.problem || caseStudy.context || item.summary;
   const reflections = caseStudy.reflection || caseStudy.takeaways || [];
 
   // Normalize challenges to ChallengeStory objects with all 4 pillars: Problem, Engineering Solutions, Impact, Reflection
@@ -214,8 +208,6 @@ const ProjectCaseStudy = () => {
       reflection: ref,
     };
   });
-
-  const impactText = caseStudy.impact || caseStudy.result || caseStudy.outcome || "";
 
   return (
     <article className="min-h-screen pt-24 pb-28 bg-[#fafafa] dark:bg-[#07090e] text-stone-900 dark:text-stone-100 transition-colors duration-300">
@@ -406,307 +398,156 @@ const ProjectCaseStudy = () => {
 
         {/* THE STORY FORMAT: Structured UX Content Sections */}
         <div className="space-y-16">
-          {/* 01. PROBLEM */}
-          <section className="relative">
-            <div className="flex items-center gap-3 mb-4">
-              <span className="text-xs font-mono font-black text-amber-700 dark:text-amber-400">01.</span>
-              <h2 className="text-xl sm:text-2xl font-black tracking-tight text-stone-900 dark:text-white uppercase tracking-wider">
-                Problem
-              </h2>
-            </div>
-            <div className="p-6 sm:p-8 rounded-3xl bg-amber-500/[0.04] dark:bg-amber-500/[0.07] border border-amber-500/20 dark:border-amber-500/30">
-              <span className="inline-block text-[10px] font-mono font-bold uppercase tracking-widest text-amber-800 dark:text-amber-400 mb-3">
-                The Core Friction & User Context
-              </span>
-              <p className="text-base sm:text-lg leading-relaxed text-stone-800 dark:text-stone-200 font-normal">
-                {problemText}
-              </p>
-            </div>
-          </section>
-
-          {/* 02. ENGINEERING STORIES */}
-          <section className="relative">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-              <div className="flex items-center gap-3">
-                <span className="text-xs font-mono font-black text-amber-700 dark:text-amber-400">02.</span>
+          {/* STORIES SECTION */}
+          {challengeStories.length > 0 && (
+            <section className="relative">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-stone-200/80 dark:border-stone-800">
                 <div>
+                  <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 block mb-1">
+                    System Challenges & Architectural Stories
+                  </span>
                   <h2 className="text-xl sm:text-2xl font-black tracking-tight text-stone-900 dark:text-white uppercase tracking-wider">
                     Engineering Stories
                   </h2>
-                  <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5">
-                    Individual challenge breakdowns: Problem, Engineering Solutions, Impact, and Reflection
-                  </p>
                 </div>
+                <span className="text-xs font-mono text-stone-500 dark:text-stone-400">
+                  {challengeStories.length} detailed breakdown{challengeStories.length > 1 ? "s" : ""}
+                </span>
               </div>
 
-              {challengeStories.length > 1 && (
-                <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const allExpanded = challengeStories.every((_, i) => expandedStoryMap[i] !== false);
-                      const nextState: Record<number, boolean> = {};
-                      challengeStories.forEach((_, i) => {
-                        nextState[i] = !allExpanded;
-                      });
-                      setExpandedStoryMap(nextState);
-                    }}
-                    className="text-[11px] font-mono font-bold px-3 py-1.5 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 text-stone-700 dark:text-stone-300 hover:border-amber-500/50 hover:text-amber-700 dark:hover:text-amber-400 transition-colors"
-                  >
-                    {challengeStories.every((_, i) => expandedStoryMap[i] !== false) ? "Collapse All" : "Expand All"}
-                  </button>
-                </div>
-              )}
-            </div>
-
-            {/* Story Filter / Selector Tabs */}
-            {challengeStories.length > 1 && (
-              <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-6 scrollbar-thin">
-                <button
-                  type="button"
-                  onClick={() => setActiveStoryFilter("all")}
-                  className={`shrink-0 px-3.5 py-1.5 rounded-full text-xs font-mono font-bold transition-colors ${
-                    activeStoryFilter === "all"
-                      ? "bg-amber-600 text-white shadow-2xs"
-                      : "bg-stone-100 dark:bg-stone-900 text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-white"
-                  }`}
-                >
-                  All Stories ({challengeStories.length})
-                </button>
+              {/* Individual Challenge Story Cards */}
+              <div className="space-y-8">
                 {challengeStories.map((ch, idx) => (
-                  <button
+                  <div
                     key={idx}
-                    type="button"
-                    onClick={() => setActiveStoryFilter(idx)}
-                    className={`shrink-0 px-3.5 py-1.5 rounded-full text-xs font-mono font-bold transition-colors truncate max-w-[220px] ${
-                      activeStoryFilter === idx
-                        ? "bg-amber-600 text-white shadow-2xs"
-                        : "bg-stone-100 dark:bg-stone-900 text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-white"
-                    }`}
+                    id={`story-${idx + 1}`}
+                    className="rounded-3xl bg-white dark:bg-stone-900 border border-stone-200/90 dark:border-stone-800 p-6 sm:p-8 shadow-sm transition-all"
                   >
-                    Story 0{idx + 1}: {ch.title.split(":")[0].split("&")[0].trim()}
-                  </button>
+                    {/* Story Header */}
+                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-6 pb-6 border-b border-stone-100 dark:border-stone-800/80">
+                      <div className="flex items-start gap-3.5">
+                        <span className="w-9 h-9 rounded-xl bg-stone-100 dark:bg-stone-800 text-stone-900 dark:text-stone-100 border border-stone-200 dark:border-stone-700 font-mono text-xs font-black flex items-center justify-center shrink-0 mt-0.5">
+                          0{idx + 1}
+                        </span>
+                        <div>
+                          <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 block mb-1">
+                            Story 0{idx + 1}
+                          </span>
+                          <h3 className="text-lg sm:text-xl font-black tracking-tight text-stone-950 dark:text-white">
+                            {ch.title}
+                          </h3>
+                        </div>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => setModalStoryIndex(idx)}
+                        className="group inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-stone-900 hover:bg-stone-800 text-white dark:bg-stone-100 dark:hover:bg-white dark:text-stone-950 font-mono text-xs font-bold transition-all shadow-sm hover:shadow active:scale-95 shrink-0 self-start sm:self-auto cursor-pointer"
+                        title="Read full dedicated story popup"
+                      >
+                        <FiBookOpen className="text-sm text-amber-400 dark:text-amber-600" aria-hidden="true" />
+                        <span>Read Story Details</span>
+                        <FiArrowRight className="text-xs opacity-70 group-hover:translate-x-0.5 transition-transform" />
+                      </button>
+                    </div>
+
+                    {/* 4 Pillars: Problem, Engineering Solutions, Impact, Reflection (Standard Palette) */}
+                    <div className="space-y-4">
+                      {/* Problem & Operational Friction */}
+                      <div className="p-4 sm:p-5 rounded-2xl bg-stone-50 dark:bg-stone-950/60 border border-stone-200/80 dark:border-stone-800/80">
+                        <span className="block text-xs font-mono font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 mb-2">
+                          Problem & Operational Friction
+                        </span>
+                        <p className="text-sm sm:text-base text-stone-800 dark:text-stone-200 leading-relaxed font-normal">
+                          {ch.problem}
+                        </p>
+                      </div>
+
+                      {/* Engineering Solutions & Technical Architecture */}
+                      <div className="p-4 sm:p-5 rounded-2xl bg-stone-50 dark:bg-stone-950/60 border border-stone-200/80 dark:border-stone-800/80">
+                        <span className="block text-xs font-mono font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 mb-2">
+                          Engineering Solutions & Technical Architecture
+                        </span>
+                        <p className="text-sm sm:text-base text-stone-800 dark:text-stone-200 leading-relaxed font-normal">
+                          {ch.engineeringSolution || ch.engineeringDecision}
+                        </p>
+                      </div>
+
+                      {/* Direct Impact & Results */}
+                      <div className="p-4 sm:p-5 rounded-2xl bg-stone-50 dark:bg-stone-950/60 border border-stone-200/80 dark:border-stone-800/80">
+                        <span className="block text-xs font-mono font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 mb-2">
+                          Direct Impact & Results
+                        </span>
+                        <p className="text-sm sm:text-base text-stone-800 dark:text-stone-200 leading-relaxed font-normal">
+                          {ch.impact}
+                        </p>
+                      </div>
+
+                      {/* Engineering Reflection & Trade-Offs */}
+                      <div className="p-4 sm:p-5 rounded-2xl bg-stone-50 dark:bg-stone-950/60 border border-stone-200/80 dark:border-stone-800/80">
+                        <span className="block text-xs font-mono font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 mb-2">
+                          Engineering Reflection & Trade-Offs
+                        </span>
+                        <p className="text-sm sm:text-base text-stone-800 dark:text-stone-200 leading-relaxed font-normal">
+                          {ch.reflection}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 ))}
               </div>
-            )}
+            </section>
+          )}
 
-            {/* Individual Challenge Stories Cards */}
-            {challengeStories.length > 0 && (
-              <div className="space-y-8">
-                {challengeStories
-                  .map((ch, originalIdx) => ({ ch, originalIdx }))
-                  .filter(({ originalIdx }) => activeStoryFilter === "all" || activeStoryFilter === originalIdx)
-                  .map(({ ch, originalIdx: idx }) => {
-                    const isExpanded = expandedStoryMap[idx] !== false;
-                    return (
-                      <div
-                        key={idx}
-                        id={`story-${idx + 1}`}
-                        className="rounded-3xl bg-white dark:bg-stone-900/90 border border-stone-200/90 dark:border-stone-800 p-6 sm:p-8 shadow-sm transition-all"
-                      >
-                        {/* Story Card Header */}
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-stone-100 dark:border-stone-800">
-                          <div className="flex items-center gap-3">
-                            <span className="w-8 h-8 rounded-xl bg-amber-500/10 text-amber-700 dark:text-amber-400 font-mono text-xs font-black flex items-center justify-center shrink-0">
-                              0{idx + 1}
-                            </span>
-                            <div>
-                              <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-amber-700 dark:text-amber-400 block mb-0.5">
-                                Story 0{idx + 1}
-                              </span>
-                              <h3 className="text-lg sm:text-xl font-black tracking-tight text-stone-950 dark:text-white">
-                                {ch.title}
-                              </h3>
-                            </div>
-                          </div>
-
-                          <div className="flex items-center gap-2 self-start sm:self-auto shrink-0">
-                            <button
-                              type="button"
-                              onClick={() => setModalStoryIndex(idx)}
-                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 dark:bg-amber-950/40 border border-amber-200/80 dark:border-amber-800/80 text-amber-800 dark:text-amber-300 text-xs font-mono font-bold hover:bg-amber-100 dark:hover:bg-amber-900/50 transition-colors"
-                              title="Open full dedicated story view"
-                            >
-                              <FiBookOpen aria-hidden="true" />
-                              <span>Read Story Details</span>
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => {
-                                setExpandedStoryMap((prev) => ({
-                                  ...prev,
-                                  [idx]: !isExpanded,
-                                }));
-                              }}
-                              className="p-1.5 rounded-full text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
-                              aria-label={isExpanded ? "Collapse story" : "Expand story"}
-                            >
-                              {isExpanded ? <FiChevronUp /> : <FiChevronDown />}
-                            </button>
-                          </div>
-                        </div>
-
-                        {/* 4 Pillars Layout: Problem, Engineering Solutions, Impact, Reflection */}
-                        {isExpanded ? (
-                          <div className="grid gap-4 sm:gap-5">
-                            {/* Pillar 1: Problem */}
-                            <div className="p-5 rounded-2xl bg-rose-500/[0.04] dark:bg-rose-500/[0.08] border border-rose-500/20 dark:border-rose-500/30">
-                              <div className="flex items-center gap-2 mb-2">
-                                <span className="w-2 h-2 rounded-full bg-rose-500" aria-hidden="true" />
-                                <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-rose-700 dark:text-rose-400">
-                                  Problem & Operational Friction
-                                </span>
-                              </div>
-                              <p className="text-sm sm:text-base text-stone-800 dark:text-stone-200 leading-relaxed font-normal">
-                                {ch.problem}
-                              </p>
-                            </div>
-
-                            {/* Pillar 2: Engineering Solutions */}
-                            <div className="p-5 rounded-2xl bg-amber-500/[0.04] dark:bg-amber-500/[0.08] border border-amber-500/20 dark:border-amber-500/30">
-                              <div className="flex items-center gap-2 mb-2">
-                                <span className="w-2 h-2 rounded-full bg-amber-500" aria-hidden="true" />
-                                <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-amber-800 dark:text-amber-400">
-                                  Engineering Solutions & Technical Architecture
-                                </span>
-                              </div>
-                              <p className="text-sm sm:text-base text-stone-800 dark:text-stone-200 leading-relaxed font-normal">
-                                {ch.engineeringSolution || ch.engineeringDecision}
-                              </p>
-                            </div>
-
-                            {/* Pillar 3: Impact */}
-                            <div className="p-5 rounded-2xl bg-emerald-500/[0.04] dark:bg-emerald-500/[0.08] border border-emerald-500/20 dark:border-emerald-500/30">
-                              <div className="flex items-center gap-2 mb-2">
-                                <span className="w-2 h-2 rounded-full bg-emerald-500" aria-hidden="true" />
-                                <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-400">
-                                  Direct Impact & Results
-                                </span>
-                              </div>
-                              <p className="text-sm sm:text-base text-stone-800 dark:text-stone-200 leading-relaxed font-normal">
-                                {ch.impact}
-                              </p>
-                            </div>
-
-                            {/* Pillar 4: Reflection */}
-                            <div className="p-5 rounded-2xl bg-violet-500/[0.04] dark:bg-violet-500/[0.08] border border-violet-500/20 dark:border-violet-500/30">
-                              <div className="flex items-center gap-2 mb-2">
-                                <span className="w-2 h-2 rounded-full bg-violet-500" aria-hidden="true" />
-                                <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-violet-800 dark:text-violet-400">
-                                  Engineering Reflection & Trade-Offs
-                                </span>
-                              </div>
-                              <p className="text-sm sm:text-base text-stone-800 dark:text-stone-200 leading-relaxed font-normal">
-                                {ch.reflection}
-                              </p>
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="p-4 rounded-2xl bg-stone-50 dark:bg-stone-950/50 border border-stone-200/80 dark:border-stone-800/80 flex items-center justify-between gap-4">
-                            <p className="text-xs sm:text-sm text-stone-600 dark:text-stone-400 line-clamp-2">
-                              <strong className="text-rose-600 dark:text-rose-400 font-semibold">Problem: </strong>
-                              {ch.problem}
-                            </p>
-                            <button
-                              type="button"
-                              onClick={() => {
-                                setExpandedStoryMap((prev) => ({
-                                  ...prev,
-                                  [idx]: true,
-                                }));
-                              }}
-                              className="shrink-0 text-xs font-mono font-bold text-amber-700 dark:text-amber-400 hover:underline inline-flex items-center gap-1"
-                            >
-                              Read full story <FiChevronDown />
-                            </button>
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-              </div>
-            )}
-          </section>
-
-          {/* 03. IMPACT & RESULTS */}
-          <section className="relative rounded-3xl bg-stone-900 text-white dark:bg-stone-900/95 dark:border dark:border-stone-800 p-7 sm:p-9 shadow-xl overflow-hidden">
-            <div className="relative z-10">
-              <div className="flex items-center gap-3 mb-4">
-                <span className="text-xs font-mono font-black text-amber-400">03.</span>
-                <h2 className="text-xl sm:text-2xl font-black tracking-tight text-white uppercase tracking-wider">
-                  Impact & Results
-                </h2>
-              </div>
-              <p className="text-base sm:text-lg leading-relaxed text-stone-200 mb-6 font-normal">
-                {impactText}
-              </p>
-
-              {/* Quantified Production Metrics embedded directly in Results */}
-              {metrics.length > 0 && (
-                <div className="mt-8 pt-8 border-t border-stone-800">
-                  <span className="block text-[10px] font-mono font-bold uppercase tracking-widest text-amber-400/90 mb-4">
-                    Production Metrics & Quantitative Evidence
+          {/* RESULTS & PRODUCTION METRICS */}
+          {(metrics.length > 0 || item.liveUrl) && (
+            <section className="relative rounded-3xl bg-stone-900 text-white dark:bg-stone-900/95 border border-stone-800 p-6 sm:p-8 shadow-xl overflow-hidden">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-stone-800">
+                <div>
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-amber-400 block mb-1">
+                    Production Results
                   </span>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
-                    {metrics.map((m) => (
-                      <div
-                        key={m.label}
-                        className="p-4 sm:p-5 rounded-2xl bg-stone-800/85 border border-stone-700/80 flex flex-col justify-between"
-                      >
-                        <div>
-                          <span className="block text-[10px] font-mono font-bold uppercase tracking-widest text-stone-400 mb-1">
-                            {m.label}
-                          </span>
-                          <span className="block text-2xl sm:text-3xl font-black tracking-tight text-amber-400 tabular-nums">
-                            {m.value}
-                          </span>
-                        </div>
-                        {m.description && (
-                          <span className="block text-xs text-stone-300 mt-2 leading-snug">
-                            {m.description}
-                          </span>
-                        )}
-                      </div>
-                    ))}
-                  </div>
+                  <h2 className="text-xl sm:text-2xl font-black tracking-tight text-white uppercase tracking-wider">
+                    Results & Live Scale
+                  </h2>
                 </div>
-              )}
-
-              {item.liveUrl && (
-                <div className="mt-8 pt-6 border-t border-stone-800/80 flex flex-wrap items-center justify-between gap-4">
+                {item.liveUrl && (
                   <a
                     href={item.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-amber-400 hover:text-amber-300 transition-colors"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 text-xs font-mono font-bold transition-all shrink-0"
                   >
-                    Open live platform: {item.liveLabel ?? item.liveUrl} <FiArrowUpRight />
+                    <span>Live Product: {item.liveLabel ?? item.liveUrl.replace(/^https?:\/\//, "").replace(/\/$/, "")}</span>
+                    <FiArrowUpRight />
                   </a>
+                )}
+              </div>
+
+              {metrics.length > 0 && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+                  {metrics.map((m) => (
+                    <div
+                      key={m.label}
+                      className="p-4 sm:p-5 rounded-2xl bg-stone-800/85 border border-stone-700/80 flex flex-col justify-between"
+                    >
+                      <div>
+                        <span className="block text-[10px] font-mono font-bold uppercase tracking-widest text-stone-400 mb-1">
+                          {m.label}
+                        </span>
+                        <span className="block text-2xl sm:text-3xl font-black tracking-tight text-amber-400 tabular-nums">
+                          {m.value}
+                        </span>
+                      </div>
+                      {m.description && (
+                        <span className="block text-xs text-stone-300 mt-2 leading-snug">
+                          {m.description}
+                        </span>
+                      )}
+                    </div>
+                  ))}
                 </div>
               )}
-            </div>
-          </section>
-
-          {/* 04. REFLECTION */}
-          {reflections.length > 0 && (
-            <section className="relative">
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-xs font-mono font-black text-amber-700 dark:text-amber-400">04.</span>
-                <h2 className="text-xl sm:text-2xl font-black tracking-tight text-stone-900 dark:text-white uppercase tracking-wider">
-                  Reflection
-                </h2>
-              </div>
-              <ul className="space-y-3">
-                {reflections.map((refItem, i) => (
-                  <li
-                    key={i}
-                    className="flex items-start gap-3.5 p-4 sm:p-5 rounded-2xl bg-white dark:bg-stone-900 border border-stone-200/80 dark:border-stone-800 text-xs sm:text-sm text-stone-700 dark:text-stone-300 shadow-2xs"
-                  >
-                    <FiCheckCircle className="text-amber-600 dark:text-amber-400 shrink-0 mt-0.5 text-base" />
-                    <span className="leading-relaxed font-normal">{refItem}</span>
-                  </li>
-                ))}
-              </ul>
             </section>
           )}
 
@@ -819,54 +660,42 @@ const ProjectCaseStudy = () => {
               </div>
 
               {/* Modal 4 Pillars Content */}
-              <div className="space-y-5">
+              <div className="space-y-4">
                 {/* 1. Problem */}
-                <div className="p-5 rounded-2xl bg-rose-500/[0.05] dark:bg-rose-500/[0.1] border border-rose-500/25">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="w-2 h-2 rounded-full bg-rose-500" aria-hidden="true" />
-                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-rose-700 dark:text-rose-400">
-                      01. Problem & Operational Friction
-                    </span>
-                  </div>
+                <div className="p-5 rounded-2xl bg-stone-50 dark:bg-stone-950/60 border border-stone-200/80 dark:border-stone-800/80">
+                  <span className="block text-xs font-mono font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 mb-2">
+                    Problem & Operational Friction
+                  </span>
                   <p className="text-sm sm:text-base text-stone-800 dark:text-stone-200 leading-relaxed font-normal">
                     {activeStory.problem}
                   </p>
                 </div>
 
                 {/* 2. Engineering Solutions */}
-                <div className="p-5 rounded-2xl bg-amber-500/[0.05] dark:bg-amber-500/[0.1] border border-amber-500/25">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="w-2 h-2 rounded-full bg-amber-500" aria-hidden="true" />
-                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-amber-800 dark:text-amber-400">
-                      02. Engineering Solutions & Technical Architecture
-                    </span>
-                  </div>
+                <div className="p-5 rounded-2xl bg-stone-50 dark:bg-stone-950/60 border border-stone-200/80 dark:border-stone-800/80">
+                  <span className="block text-xs font-mono font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 mb-2">
+                    Engineering Solutions & Technical Architecture
+                  </span>
                   <p className="text-sm sm:text-base text-stone-800 dark:text-stone-200 leading-relaxed font-normal">
                     {activeStory.engineeringSolution || activeStory.engineeringDecision}
                   </p>
                 </div>
 
                 {/* 3. Impact */}
-                <div className="p-5 rounded-2xl bg-emerald-500/[0.05] dark:bg-emerald-500/[0.1] border border-emerald-500/25">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500" aria-hidden="true" />
-                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-400">
-                      03. Direct Impact & Measurable Results
-                    </span>
-                  </div>
+                <div className="p-5 rounded-2xl bg-stone-50 dark:bg-stone-950/60 border border-stone-200/80 dark:border-stone-800/80">
+                  <span className="block text-xs font-mono font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 mb-2">
+                    Direct Impact & Results
+                  </span>
                   <p className="text-sm sm:text-base text-stone-800 dark:text-stone-200 leading-relaxed font-normal">
                     {activeStory.impact}
                   </p>
                 </div>
 
                 {/* 4. Reflection */}
-                <div className="p-5 rounded-2xl bg-violet-500/[0.05] dark:bg-violet-500/[0.1] border border-violet-500/25">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="w-2 h-2 rounded-full bg-violet-500" aria-hidden="true" />
-                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-violet-800 dark:text-violet-400">
-                      04. Engineering Reflection & Retrospective Takeaways
-                    </span>
-                  </div>
+                <div className="p-5 rounded-2xl bg-stone-50 dark:bg-stone-950/60 border border-stone-200/80 dark:border-stone-800/80">
+                  <span className="block text-xs font-mono font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 mb-2">
+                    Engineering Reflection & Trade-Offs
+                  </span>
                   <p className="text-sm sm:text-base text-stone-800 dark:text-stone-200 leading-relaxed font-normal">
                     {activeStory.reflection}
                   </p>

@@ -4,7 +4,6 @@ import { site } from "../data/site";
 
 const pages = [
   { name: "Projects", to: "/projects" },
-  { name: "Speaking", to: "/speaking" },
   { name: "Life Album", to: "/album" },
   { name: "Credentials", to: "/credentials" },
 ];
