@@ -2,7 +2,7 @@ export const site = {
   name: "Adefisayo Adejumo",
   shortName: "Ayo",
   intro:
-    "Software engineering is my craft. I build AI and agentic systems that are safe to trust in production, and I have never stopped teaching.",
+    "I am a software engineer focused on building reliable AI systems and the tools that keep them accountable. Before engineering, I taught in schools; I bring that same clarity to complex technical work.",
   email: "adeoluwafisayomi@gmail.com",
   linkedin: "https://www.linkedin.com/in/adefisayo-adejumo/",
   github: "https://github.com/Beloved1310",

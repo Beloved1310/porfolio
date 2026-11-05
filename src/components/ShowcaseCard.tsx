@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FiArrowRight, FiArrowUpRight, FiAward } from "react-icons/fi";
 import type { ImageSource } from "../data/projects";
 import type { CardLink } from "../data/work";
@@ -46,8 +46,8 @@ const CardMedia = ({ images, label }: { images: ImageSource[]; label: string }) 
 export const CardLinkButton = ({ link, primary = false }: { link: CardLink; primary?: boolean }) => {
   if (link.placeholder) {
     return (
-      <span className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[11px] font-mono uppercase tracking-wider border border-dashed border-stone-300 dark:border-stone-700 text-stone-400 dark:text-stone-500">
-        {link.label}: coming soon
+      <span className="inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-xs border border-stone-200 dark:border-stone-700 text-stone-500 dark:text-stone-400">
+        {link.label} · in progress
       </span>
     );
   }
@@ -56,10 +56,10 @@ export const CardLinkButton = ({ link, primary = false }: { link: CardLink; prim
     return (
       <Link
         to={link.href}
-        className={`group/btn inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold uppercase tracking-wider transition-all duration-200 select-none ${
+        className={`group/btn inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-colors duration-200 select-none ${
           primary
-            ? "bg-stone-950 text-white dark:bg-white dark:text-stone-950 shadow-sm hover:shadow-md hover:bg-amber-600 dark:hover:bg-amber-400 dark:hover:text-stone-950 active:scale-[0.98]"
-            : "border border-stone-200 dark:border-stone-700 bg-stone-50/90 dark:bg-stone-800/80 text-stone-800 dark:text-stone-200 hover:border-amber-500 hover:text-amber-700 dark:hover:text-amber-400 active:scale-[0.98]"
+            ? "bg-amber-700 text-white dark:bg-amber-500 dark:text-stone-950 hover:bg-amber-800 dark:hover:bg-amber-400"
+            : "border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-800 dark:text-stone-200 hover:border-amber-600 hover:text-amber-800 dark:hover:text-amber-300"
         }`}
       >
         <span>{link.label}</span>
@@ -76,10 +76,10 @@ export const CardLinkButton = ({ link, primary = false }: { link: CardLink; prim
       href={link.href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`group/btn inline-flex items-center justify-center gap-1.5 rounded-full px-4 py-2.5 text-xs font-bold uppercase tracking-wider transition-all duration-200 select-none ${
+      className={`group/btn inline-flex min-h-11 items-center justify-center gap-1.5 rounded-full px-4 py-2.5 text-sm font-semibold transition-colors duration-200 select-none ${
         primary
-          ? "bg-stone-950 text-white dark:bg-white dark:text-stone-950 shadow-sm hover:shadow-md hover:bg-amber-600 dark:hover:bg-amber-400 dark:hover:text-stone-950 active:scale-[0.98]"
-          : "border border-stone-200 dark:border-stone-700 bg-stone-50/90 dark:bg-stone-800/80 text-stone-700 dark:text-stone-300 hover:border-amber-500 hover:text-amber-700 dark:hover:text-amber-400 hover:bg-white dark:hover:bg-stone-900 active:scale-[0.98]"
+          ? "bg-amber-700 text-white dark:bg-amber-500 dark:text-stone-950 hover:bg-amber-800 dark:hover:bg-amber-400"
+          : "border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-700 dark:text-stone-300 hover:border-amber-600 hover:text-amber-800 dark:hover:text-amber-300"
       }`}
     >
       <span>{link.label}</span>
@@ -112,35 +112,23 @@ const ShowcaseCard = ({
   meta,
   children,
   links,
-  aspect = "aspect-[16/10]",
+  aspect = "aspect-[4/3] sm:aspect-[16/10]",
   highlight,
   detailUrl,
 }: ShowcaseCardProps) => {
-  const navigate = useNavigate();
-
-  // Determine primary internal link if detailUrl isn't explicitly passed
+  // Keep the card itself non-interactive; its image, title and actions are links.
   const effectiveDetailUrl = detailUrl || links?.find((l) => l.internal)?.href;
-
-  const handleCardClick = (e: React.MouseEvent) => {
-    // If the click happened on a button or link, let it handle its own navigation
-    const target = e.target as HTMLElement;
-    if (target.closest("a, button")) return;
-    if (effectiveDetailUrl) {
-      navigate(effectiveDetailUrl);
-    }
-  };
 
   return (
     <article
-      onClick={handleCardClick}
-      className={`group relative flex flex-col overflow-hidden rounded-3xl bg-white dark:bg-stone-900 transition-all duration-300 ${
+      className={`group relative flex flex-col overflow-hidden rounded-2xl bg-white dark:bg-stone-900 transition-all duration-300 ${
         effectiveDetailUrl
-          ? "cursor-pointer hover:-translate-y-1 hover:shadow-2xl hover:shadow-stone-900/10 dark:hover:shadow-black/40"
+          ? "hover:shadow-lg hover:shadow-stone-900/10 dark:hover:shadow-black/30"
           : ""
       } ${
         highlight
-          ? "border-2 border-amber-500 shadow-[0_20px_50px_-12px_rgba(217,119,6,0.35)] md:-translate-y-1"
-          : "border border-stone-200 dark:border-stone-800 hover:border-amber-500/50 dark:hover:border-amber-500/40"
+          ? "border-2 border-amber-600 shadow-[0_16px_40px_-16px_rgba(135,69,40,0.4)] md:-translate-y-1"
+          : "border border-stone-200 dark:border-stone-800 hover:border-amber-500/70 dark:hover:border-amber-500/50"
       }`}
     >
       <div
@@ -162,12 +150,12 @@ const ShowcaseCard = ({
 
       <div className="flex flex-1 flex-col p-6 md:p-7">
         {eyebrow && (
-          <p className="mb-2 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-amber-700 dark:text-amber-400">
+          <p className="mb-2 text-xs font-semibold tracking-wide text-amber-800 dark:text-amber-300">
             {eyebrow}
           </p>
         )}
 
-        <h3 className="text-xl md:text-2xl font-black tracking-tight leading-snug text-stone-900 dark:text-white group-hover:text-amber-700 dark:group-hover:text-amber-400 transition-colors">
+        <h3 className="text-xl md:text-2xl font-semibold tracking-tight leading-snug text-stone-900 dark:text-white group-hover:text-amber-800 dark:group-hover:text-amber-300 transition-colors">
           {effectiveDetailUrl ? (
             <Link to={effectiveDetailUrl} className="focus:outline-none">
               {title}
@@ -178,7 +166,7 @@ const ShowcaseCard = ({
         </h3>
 
         {meta && (
-          <p className="mt-1 font-mono text-[10px] uppercase tracking-widest text-stone-500 dark:text-stone-400">
+          <p className="mt-1 text-xs text-stone-500 dark:text-stone-400">
             {meta}
           </p>
         )}
@@ -191,7 +179,7 @@ const ShowcaseCard = ({
 
         {/* Clean, high-UI/UX button toolbar (skills removed from card and moved to details page) */}
         {links && links.length > 0 && (
-          <div className="mt-auto pt-6 border-t border-stone-100 dark:border-stone-800/80 flex flex-wrap items-center gap-2.5">
+          <div className="mt-auto pt-5 border-t border-stone-100 dark:border-stone-800/80 flex flex-wrap items-center gap-2.5">
             {links.map((l, i) => (
               <CardLinkButton key={l.label + l.href} link={l} primary={i === 0} />
             ))}

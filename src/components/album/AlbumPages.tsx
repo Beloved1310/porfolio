@@ -164,7 +164,7 @@ const AlbumPhoto = ({ sources }: { sources: AlbumImage[] }) => {
 
 export const PhotoPage = ({ chapter, pageNumber }: { chapter: AlbumChapter; pageNumber: number }) => (
   <div className={`${paper} relative flex flex-col items-center justify-center px-8 pt-12 pb-16 md:p-10`}>
-    <RunningHead side="left">{`Chapter ${pad(chapter.number)} · ${chapter.years}`}</RunningHead>
+    <RunningHead side="left">{`Chapter ${pad(chapter.number)}${chapter.years ? ` · ${chapter.years}` : ""}`}</RunningHead>
     <div className="relative w-full max-w-[17rem] lg:max-w-xs">
       {/* Manga panel: inked border, hard shadow and a screentone corner */}
       <div className="relative aspect-[4/5] -rotate-1 overflow-hidden border-[3px] border-stone-900 bg-white shadow-[6px_6px_0_0_#1c1917] dark:shadow-[6px_6px_0_0_#000]">
@@ -202,7 +202,7 @@ export const StoryPage = ({ chapter, pageNumber }: { chapter: AlbumChapter; page
       </span>
       <div className="pb-1">
         <p className="font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-amber-800 dark:text-amber-400">
-          Chapter {chapter.number} · {chapter.years}
+          Chapter {chapter.number}{chapter.years ? ` · ${chapter.years}` : ""}
         </p>
         <h2 className="text-2xl md:text-3xl font-black tracking-tight leading-tight text-stone-900 dark:text-white">{chapter.title}</h2>
       </div>

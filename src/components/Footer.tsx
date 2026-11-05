@@ -3,7 +3,7 @@ import { FiDownload, FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
 import { site } from "../data/site";
 
 const pages = [
-  { name: "Projects", to: "/projects" },
+  { name: "Work", to: "/projects" },
   { name: "Life Album", to: "/album" },
   { name: "Credentials", to: "/credentials" },
 ];
@@ -16,8 +16,8 @@ const Footer = () => (
           Adefisayo (Ayo) Adejumo<span className="text-amber-500">.</span>
         </p>
         <p className="mt-3 text-sm leading-relaxed text-stone-400 max-w-xs">
-          Software engineer in London. Open to software, AI, solutions and forward deployed
-          engineering roles. I can start now.
+          Software engineer in London focused on AI systems, backend platforms, and full-stack
+          product engineering.
         </p>
       </div>
 

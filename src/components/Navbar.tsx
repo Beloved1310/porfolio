@@ -33,14 +33,14 @@ const Navbar = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 mix-blend-difference pointer-events-none [&_:focus-visible]:outline-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 md:h-24 flex items-center justify-between text-white pointer-events-auto">
+    <header className="fixed top-0 left-0 w-full z-50 pointer-events-none [&_:focus-visible]:outline-amber-600">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 md:h-20 flex items-center justify-between text-stone-800 dark:text-stone-100 pointer-events-auto bg-white/90 dark:bg-stone-950/90 backdrop-blur-xl border-x border-b border-stone-200/80 dark:border-stone-800/80 shadow-sm shadow-stone-900/5 rounded-b-2xl">
         <Link
           to="/#hero"
           onClick={(e) => handleAnchorClick(e, '/#hero')}
           className="font-bold tracking-tighter text-xl md:text-2xl group flex items-center gap-2"
         >
-          <span className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-black text-sm transition-transform group-hover:rotate-12">
+          <span className="w-8 h-8 bg-amber-600 rounded-full flex items-center justify-center text-white text-sm transition-transform group-hover:rotate-12">
             A
           </span>
           <span className="hidden sm:inline">ADEFISAYO</span>
@@ -48,14 +48,15 @@ const Navbar = () => {
 
         <nav
           aria-label="Main"
-          className="hidden md:flex items-center gap-10 text-[10px] font-bold uppercase tracking-[0.3em]"
+          className="hidden md:flex items-center gap-5 text-sm font-semibold tracking-wide"
         >
           {navItems.map((item) => (
             <Link
               key={item.name}
               to={item.to}
               onClick={(e) => handleAnchorClick(e, item.to)}
-              className="hover:opacity-70 transition-opacity"
+              aria-current={location.pathname === item.to ? "page" : undefined}
+              className={`rounded-full px-3 py-2 transition-colors ${location.pathname === item.to ? "bg-stone-100 dark:bg-stone-800 text-amber-800 dark:text-amber-300" : "hover:bg-stone-100 dark:hover:bg-stone-800"}`}
             >
               {item.name}
             </Link>
@@ -63,14 +64,15 @@ const Navbar = () => {
           <Link
             to="/#contact"
             onClick={(e) => handleAnchorClick(e, '/#contact')}
-            className="px-6 py-2 border border-white rounded-full hover:bg-white hover:text-black transition-all"
+            className="px-5 py-2.5 rounded-full bg-amber-700 text-white hover:bg-amber-800 transition-colors"
           >
             Connect
           </Link>
           <button
             onClick={toggleTheme}
-            className="p-1.5 flex"
-            aria-label="Toggle theme"
+            className="p-2.5 flex rounded-full hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+            aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+            title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
           >
             {theme === 'light' ? <FiMoon size={16} /> : <FiSun size={16} />}
           </button>
@@ -78,7 +80,7 @@ const Navbar = () => {
 
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden p-2"
+          className="md:hidden p-2 rounded-full hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
           aria-label="Toggle menu"
           aria-expanded={isOpen}
           aria-controls="mobile-menu"
@@ -94,7 +96,7 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-black text-white pointer-events-auto"
+            className="md:hidden bg-white dark:bg-stone-950 text-stone-800 dark:text-stone-100 pointer-events-auto border-t border-stone-200 dark:border-stone-800 shadow-lg"
           >
             <div className="px-4 py-4 space-y-3">
               {navItems.map((item) => (
@@ -105,7 +107,7 @@ const Navbar = () => {
                     handleAnchorClick(e, item.to);
                     setIsOpen(false);
                   }}
-                  className="block px-2 py-2 text-sm font-bold uppercase tracking-widest"
+                  className="block rounded-xl px-3 py-3 text-sm font-semibold hover:bg-stone-100 dark:hover:bg-stone-800"
                 >
                   {item.name}
                 </Link>
@@ -116,13 +118,13 @@ const Navbar = () => {
                   handleAnchorClick(e, '/#contact');
                   setIsOpen(false);
                 }}
-                className="block px-2 py-2 text-sm font-bold uppercase tracking-widest"
+                className="block rounded-xl px-3 py-3 text-sm font-semibold hover:bg-stone-100 dark:hover:bg-stone-800"
               >
                 Connect
               </Link>
               <button
                 onClick={toggleTheme}
-                className="flex items-center gap-2 px-2 py-2 text-sm font-bold uppercase tracking-widest"
+                className="flex items-center gap-2 rounded-xl px-3 py-3 text-sm font-semibold hover:bg-stone-100 dark:hover:bg-stone-800"
               >
                 {theme === 'light' ? <FiMoon size={16} /> : <FiSun size={16} />} Theme
               </button>

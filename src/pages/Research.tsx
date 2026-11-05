@@ -12,6 +12,9 @@ import SmartImage from "../components/SmartImage";
 import { usePageTitle } from "../utils/usePageTitle";
 import RelatedLinks from "../components/RelatedLinks";
 
+const storyButtonClass =
+  "group inline-flex items-center gap-2 rounded-xl border border-stone-300 dark:border-stone-700 bg-transparent px-5 py-2.5 text-xs font-mono font-bold uppercase tracking-wider text-stone-800 dark:text-stone-200 transition-colors hover:border-amber-600 hover:text-amber-700 dark:hover:text-amber-400 cursor-pointer";
+
 const Research = () => {
   usePageTitle("Speaking & Community");
 
@@ -37,7 +40,7 @@ const Research = () => {
     activeModalIndex !== null && talks[activeModalIndex] ? talks[activeModalIndex] : null;
 
   return (
-    <div className="min-h-screen pt-24 pb-28 bg-[#fafafa] dark:bg-[#07090e] text-stone-900 dark:text-stone-100 transition-colors duration-300">
+    <div className="min-h-screen pt-24 pb-28 bg-stone-50 dark:bg-stone-950 text-stone-900 dark:text-stone-100 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Navigation Breadcrumb */}
         <div className="mb-8 pb-4 border-b border-stone-200/80 dark:border-stone-800">
@@ -68,26 +71,25 @@ const Research = () => {
           {/* 1. HERO TALK: LLMday London - Wide Panoramic Showcase */}
           {talks[0] && (
             <div className="rounded-3xl border border-stone-200/90 dark:border-stone-800 bg-white dark:bg-stone-900 overflow-hidden shadow-sm hover:border-amber-500/50 transition-all">
-              {/* Grand Wide Horizontal Image */}
+              {/* Full LLMday Photo */}
               <div
                 onClick={() => setActiveModalIndex(0)}
-                className="relative aspect-[16/9] sm:aspect-[21/9] w-full overflow-hidden bg-stone-100 dark:bg-stone-800 cursor-pointer group"
+                className="relative w-full overflow-hidden bg-stone-100 dark:bg-stone-800 cursor-pointer group"
                 title="Click image to read full talk story"
               >
                 {talks[0].image ? (
                   <SmartImage
                     sources={talks[0].image}
-                    wrapperClassName="w-full h-full"
-                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                    wrapperClassName="w-full"
+                    className="block h-auto max-h-[75vh] w-full object-contain"
                   />
                 ) : (
                   <img
                     src="/ayo-speaking-llmday.jpg"
                     alt={talks[0].title}
-                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                    className="block h-auto max-h-[75vh] w-full object-contain"
                   />
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-stone-950/20 to-transparent pointer-events-none" />
                 <div className="absolute top-4 left-4 sm:top-6 sm:left-6">
                   <span className="px-3 py-1.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-black/75 backdrop-blur-md text-amber-300 border border-white/10 shadow-sm">
                     {talks[0].event}
@@ -117,11 +119,11 @@ const Research = () => {
                 <button
                   type="button"
                   onClick={() => setActiveModalIndex(0)}
-                  className="group inline-flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-stone-900 hover:bg-stone-800 text-white dark:bg-stone-100 dark:hover:bg-white dark:text-stone-950 font-mono text-xs font-bold uppercase tracking-wider transition-all shadow-sm hover:shadow active:scale-95 shrink-0 self-start md:self-center cursor-pointer"
+                  className={storyButtonClass}
                 >
-                  <FiBookOpen className="text-sm text-amber-400 dark:text-amber-600" aria-hidden="true" />
+                  <FiBookOpen className="text-amber-700 dark:text-amber-400" aria-hidden="true" />
                   <span>Read Talk Story</span>
-                  <FiArrowRight className="text-xs group-hover:translate-x-1 transition-transform" />
+                  <FiArrowRight className="transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
                 </button>
               </div>
             </div>
@@ -134,17 +136,16 @@ const Research = () => {
                 <div>
                   <div
                     onClick={() => setActiveModalIndex(1)}
-                    className="relative aspect-[16/9] w-full overflow-hidden bg-stone-100 dark:bg-stone-800 cursor-pointer group"
+                    className="relative w-full overflow-hidden bg-stone-100 dark:bg-stone-800 cursor-pointer group"
                     title="Click image to read full talk story"
                   >
                     {talks[1].image && (
                       <SmartImage
                         sources={talks[1].image}
-                        wrapperClassName="w-full h-full"
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        wrapperClassName="w-full"
+                        className="block h-auto max-h-[70vh] w-full object-contain"
                       />
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-stone-950/70 via-transparent to-transparent pointer-events-none" />
                     <div className="absolute top-4 left-4">
                       <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-black/75 backdrop-blur-md text-amber-300 border border-white/10">
                         {talks[1].event}
@@ -169,11 +170,11 @@ const Research = () => {
                   <button
                     type="button"
                     onClick={() => setActiveModalIndex(1)}
-                    className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 text-stone-800 dark:text-stone-200 text-xs font-mono font-bold hover:border-amber-600 hover:text-amber-700 dark:hover:text-amber-400 transition-colors cursor-pointer"
+                    className={storyButtonClass}
                   >
-                    <FiBookOpen />
+                    <FiBookOpen className="text-amber-700 dark:text-amber-400" aria-hidden="true" />
                     <span>Read Talk Story</span>
-                    <FiArrowRight className="group-hover:translate-x-0.5 transition-transform" />
+                    <FiArrowRight className="transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
                   </button>
                 </div>
               </div>
@@ -184,17 +185,16 @@ const Research = () => {
                 <div>
                   <div
                     onClick={() => setActiveModalIndex(2)}
-                    className="relative aspect-[4/3] w-full overflow-hidden bg-stone-100 dark:bg-stone-800 cursor-pointer group"
+                    className="relative w-full overflow-hidden bg-stone-100 dark:bg-stone-800 cursor-pointer group"
                     title="Click image to read full talk story"
                   >
                     {talks[2].image && (
                       <SmartImage
                         sources={talks[2].image}
-                        wrapperClassName="w-full h-full"
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        wrapperClassName="w-full"
+                        className="block h-auto max-h-[70vh] w-full object-contain"
                       />
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-stone-950/70 via-transparent to-transparent pointer-events-none" />
                     <div className="absolute top-4 left-4">
                       <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-black/75 backdrop-blur-md text-amber-300 border border-white/10">
                         {talks[2].event}
@@ -219,11 +219,11 @@ const Research = () => {
                   <button
                     type="button"
                     onClick={() => setActiveModalIndex(2)}
-                    className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 text-stone-800 dark:text-stone-200 text-xs font-mono font-bold hover:border-amber-600 hover:text-amber-700 dark:hover:text-amber-400 transition-colors cursor-pointer"
+                    className={storyButtonClass}
                   >
-                    <FiBookOpen />
+                    <FiBookOpen className="text-amber-700 dark:text-amber-400" aria-hidden="true" />
                     <span>Read Panel Story</span>
-                    <FiArrowRight className="group-hover:translate-x-0.5 transition-transform" />
+                    <FiArrowRight className="transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
                   </button>
                 </div>
               </div>
@@ -235,17 +235,16 @@ const Research = () => {
             <div className="rounded-3xl border border-stone-200/90 dark:border-stone-800 bg-white dark:bg-stone-900 overflow-hidden shadow-sm hover:border-amber-500/50 transition-all">
               <div
                 onClick={() => setActiveModalIndex(3)}
-                className="relative aspect-[16/8] sm:aspect-[16/6] w-full overflow-hidden bg-stone-100 dark:bg-stone-800 cursor-pointer group"
+                className="relative w-full overflow-hidden bg-stone-100 dark:bg-stone-800 cursor-pointer group"
                 title="Click image to read full talk story"
               >
                 {talks[3].image && (
                   <SmartImage
                     sources={talks[3].image}
-                    wrapperClassName="w-full h-full"
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    wrapperClassName="w-full"
+                    className="block h-auto max-h-[70vh] w-full object-contain"
                   />
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-transparent to-transparent pointer-events-none" />
                 <div className="absolute top-4 left-4">
                   <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-black/75 backdrop-blur-md text-amber-300 border border-white/10">
                     {talks[3].event}
@@ -269,11 +268,11 @@ const Research = () => {
                 <button
                   type="button"
                   onClick={() => setActiveModalIndex(3)}
-                  className="group inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-stone-900 hover:bg-stone-800 text-white dark:bg-stone-100 dark:hover:bg-white dark:text-stone-950 font-mono text-xs font-bold uppercase tracking-wider transition-all shadow-sm shrink-0 self-start md:self-center cursor-pointer"
+                  className={storyButtonClass}
                 >
-                  <FiBookOpen className="text-amber-400 dark:text-amber-600" />
+                  <FiBookOpen className="text-amber-700 dark:text-amber-400" aria-hidden="true" />
                   <span>Read Talk Story</span>
-                  <FiArrowRight className="group-hover:translate-x-0.5 transition-transform" />
+                  <FiArrowRight className="transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
                 </button>
               </div>
             </div>
@@ -286,17 +285,16 @@ const Research = () => {
                 <div>
                   <div
                     onClick={() => setActiveModalIndex(4)}
-                    className="relative aspect-[4/3] w-full overflow-hidden bg-stone-100 dark:bg-stone-800 cursor-pointer group"
+                    className="relative w-full overflow-hidden bg-stone-100 dark:bg-stone-800 cursor-pointer group"
                     title="Click image to read full talk story"
                   >
                     {talks[4].image && (
                       <SmartImage
                         sources={talks[4].image}
-                        wrapperClassName="w-full h-full"
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        wrapperClassName="w-full"
+                        className="block h-auto max-h-[70vh] w-full object-contain"
                       />
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-stone-950/70 via-transparent to-transparent pointer-events-none" />
                     <div className="absolute top-4 left-4">
                       <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-black/75 backdrop-blur-md text-amber-300 border border-white/10">
                         {talks[4].event}
@@ -321,11 +319,11 @@ const Research = () => {
                   <button
                     type="button"
                     onClick={() => setActiveModalIndex(4)}
-                    className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 text-stone-800 dark:text-stone-200 text-xs font-mono font-bold hover:border-amber-600 hover:text-amber-700 dark:hover:text-amber-400 transition-colors cursor-pointer"
+                    className={storyButtonClass}
                   >
-                    <FiBookOpen />
+                    <FiBookOpen className="text-amber-700 dark:text-amber-400" aria-hidden="true" />
                     <span>Read Talk Story</span>
-                    <FiArrowRight className="group-hover:translate-x-0.5 transition-transform" />
+                    <FiArrowRight className="transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
                   </button>
                 </div>
               </div>
@@ -336,17 +334,16 @@ const Research = () => {
                 <div>
                   <div
                     onClick={() => setActiveModalIndex(5)}
-                    className="relative aspect-[16/9] w-full overflow-hidden bg-stone-100 dark:bg-stone-800 cursor-pointer group"
+                    className="relative w-full overflow-hidden bg-stone-100 dark:bg-stone-800 cursor-pointer group"
                     title="Click image to read full talk story"
                   >
                     {talks[5].image && (
                       <SmartImage
                         sources={talks[5].image}
-                        wrapperClassName="w-full h-full"
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        wrapperClassName="w-full"
+                        className="block h-auto max-h-[70vh] w-full object-contain"
                       />
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-stone-950/70 via-transparent to-transparent pointer-events-none" />
                     <div className="absolute top-4 left-4">
                       <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-black/75 backdrop-blur-md text-amber-300 border border-white/10">
                         {talks[5].event}
@@ -371,11 +368,11 @@ const Research = () => {
                   <button
                     type="button"
                     onClick={() => setActiveModalIndex(5)}
-                    className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 text-stone-800 dark:text-stone-200 text-xs font-mono font-bold hover:border-amber-600 hover:text-amber-700 dark:hover:text-amber-400 transition-colors cursor-pointer"
+                    className={storyButtonClass}
                   >
-                    <FiBookOpen />
+                    <FiBookOpen className="text-amber-700 dark:text-amber-400" aria-hidden="true" />
                     <span>Read Panel Story</span>
-                    <FiArrowRight className="group-hover:translate-x-0.5 transition-transform" />
+                    <FiArrowRight className="transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
                   </button>
                 </div>
               </div>
@@ -387,17 +384,16 @@ const Research = () => {
             <div className="rounded-3xl border border-stone-200/90 dark:border-stone-800 bg-white dark:bg-stone-900 overflow-hidden shadow-sm hover:border-amber-500/50 transition-all">
               <div
                 onClick={() => setActiveModalIndex(6)}
-                className="relative aspect-[16/8] sm:aspect-[21/9] w-full overflow-hidden bg-stone-100 dark:bg-stone-800 cursor-pointer group"
+                className="relative w-full overflow-hidden bg-stone-100 dark:bg-stone-800 cursor-pointer group"
                 title="Click image to read full talk story"
               >
                 {talks[6].image && (
                   <SmartImage
                     sources={talks[6].image}
-                    wrapperClassName="w-full h-full"
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    wrapperClassName="w-full"
+                    className="block h-auto max-h-[70vh] w-full object-contain"
                   />
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-transparent to-transparent pointer-events-none" />
                 <div className="absolute top-4 left-4">
                   <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-black/75 backdrop-blur-md text-amber-300 border border-white/10">
                     {talks[6].event}
@@ -421,11 +417,11 @@ const Research = () => {
                 <button
                   type="button"
                   onClick={() => setActiveModalIndex(6)}
-                  className="group inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-stone-900 hover:bg-stone-800 text-white dark:bg-stone-100 dark:hover:bg-white dark:text-stone-950 font-mono text-xs font-bold uppercase tracking-wider transition-all shadow-sm shrink-0 self-start md:self-center cursor-pointer"
+                  className={storyButtonClass}
                 >
-                  <FiBookOpen className="text-amber-400 dark:text-amber-600" />
+                  <FiBookOpen className="text-amber-700 dark:text-amber-400" aria-hidden="true" />
                   <span>Read Talk Story</span>
-                  <FiArrowRight className="group-hover:translate-x-0.5 transition-transform" />
+                  <FiArrowRight className="transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
                 </button>
               </div>
             </div>
@@ -493,11 +489,11 @@ const Research = () => {
 
             {/* Modal Image View */}
             {activeTalk.image && activeTalk.image.length > 0 && (
-              <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden bg-stone-100 dark:bg-stone-800 mb-6 border border-stone-200 dark:border-stone-800">
+              <div className="relative w-full overflow-hidden rounded-2xl bg-stone-100 dark:bg-stone-800 mb-6 border border-stone-200 dark:border-stone-800">
                 <SmartImage
                   sources={activeTalk.image}
-                  wrapperClassName="w-full h-full"
-                  className="w-full h-full object-cover"
+                  wrapperClassName="w-full"
+                  className="block h-auto max-h-[75vh] w-full object-contain"
                 />
               </div>
             )}

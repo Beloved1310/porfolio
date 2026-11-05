@@ -1,16 +1,15 @@
 import { Link } from "react-router-dom";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   FiGithub,
   FiLinkedin,
   FiMail,
   FiDownload,
   FiArrowRight,
-  FiExternalLink,
   FiTwitter,
 } from "react-icons/fi";
 import CommunityLeadership from "./Community";
-import HeroFlipCard from "../components/HeroFlipCard";
+import HeroStoryCard from "../components/HeroStoryCard";
 import { AlbumCover } from "../components/album/AlbumPages";
 import { site } from "../data/site";
 import { usePageTitle } from "../utils/usePageTitle";
@@ -20,7 +19,7 @@ const now = [
   { label: "Researching", text: "How to keep AI agents in check while they run, and how to share work between them." },
   {
     label: "Looking for",
-    text: "Software, AI, solutions or forward deployed engineering roles in London. I can start now.",
+    text: "Software engineering roles focused on AI systems, backend platforms, or full-stack product work in London.",
   },
 ];
 
@@ -33,7 +32,6 @@ const socials = [
 ];
 
 const Home = () => {
-  const reduceMotion = useReducedMotion();
   usePageTitle();
 
   return (
@@ -57,84 +55,52 @@ const Home = () => {
               className="text-center lg:text-left"
             >
               <div className="relative">
-                <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-full bg-amber-500/10 text-amber-700 dark:text-amber-400 text-[10px] sm:text-xs font-bold uppercase tracking-widest border border-amber-500/20">
-                  <span className="relative flex h-2 w-2" aria-hidden="true">
-                    <span className="animate-ping motion-reduce:animate-none absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500" />
-                  </span>
-                  Open to software and AI engineering roles · London
+                <div className="inline-flex items-center gap-2.5 px-4 py-2 mb-6 rounded-full bg-amber-100/80 dark:bg-amber-900/30 text-amber-900 dark:text-amber-200 text-sm font-medium border border-amber-200/80 dark:border-amber-800/70">
+                  <span className="inline-flex h-2 w-2 rounded-full bg-amber-600" aria-hidden="true" />
+                  Available for software engineering roles · London
                 </div>
-                <h1 className="relative block w-fit mx-auto lg:mx-0 overflow-hidden text-5xl sm:text-6xl md:text-8xl font-bold tracking-tighter leading-[0.85] mb-6 text-stone-900 dark:text-white">
-                  AYO<span className="text-amber-600">.</span>
-                  {!reduceMotion && (
-                    <motion.span
-                      aria-hidden="true"
-                      className="absolute top-0 h-full w-24 bg-gradient-r from-transparent via-white/70 to-transparent skew-x-[-25deg] pointer-events-none"
-                      initial={{ left: "-40%" }}
-                      animate={{ left: "140%" }}
-                      transition={{ duration: 1.6, repeat: Infinity, repeatDelay: 2.5, ease: "easeInOut" }}
-                    />
-                  )}
+                <p className="mb-2 text-base sm:text-lg font-medium text-stone-600 dark:text-stone-300">Adefisayo “Ayo” Adejumo</p>
+                <h1 className="relative block w-fit mx-auto lg:mx-0 text-6xl sm:text-7xl md:text-8xl font-semibold tracking-[-0.06em] leading-[0.95] mb-5 text-stone-900 dark:text-white">
+                  Ayo<span className="text-amber-700 dark:text-amber-400">.</span>
                 </h1>
-                <p className="text-[10px] sm:text-xs md:text-sm font-mono font-bold uppercase tracking-[0.2em] text-stone-500 dark:text-stone-400 mb-8 sm:mb-12">
-                  Software engineer. AI and agentic systems. Former teacher.
+                <p className="text-sm sm:text-base font-medium text-amber-900 dark:text-amber-200 mb-6 sm:mb-8">
+                  Software engineer · AI systems · Former teacher
                 </p>
               </div>
 
-              <p className="text-base sm:text-lg md:text-xl leading-relaxed tracking-tight max-w-2xl mx-auto lg:mx-0 text-stone-600 dark:text-stone-400 font-medium mb-8 sm:mb-12">
+              <p className="text-base sm:text-lg md:text-xl leading-relaxed max-w-2xl mx-auto lg:mx-0 text-stone-700 dark:text-stone-300 mb-8 sm:mb-10">
                 {site.intro}
               </p>
 
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-stretch w-full mx-auto lg:mx-0">
-                  <a href="#how-i-got-here" className="group flex flex-col items-center lg:items-start sm:flex-1">
-                    <motion.div
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="flex items-center justify-center gap-3 w-full px-6 sm:px-8 py-3 sm:py-4 bg-stone-900 dark:bg-white text-white dark:text-stone-900 rounded-full font-bold uppercase tracking-widest text-[10px] sm:text-xs transition-all"
-                    >
-                      Explore My Story
-                      <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
-                    </motion.div>
-                    <span className="mt-3 text-[9px] sm:text-[10px] font-mono text-stone-500 dark:text-stone-400 uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-all duration-300 hidden sm:block">
-                      From the classroom to AI agents, in order
-                    </span>
-                  </a>
                   <Link to="/projects" className="group flex flex-col items-center lg:items-start sm:flex-1">
                     <motion.div
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="flex items-center justify-center gap-3 w-full px-6 sm:px-8 py-3 sm:py-4 bg-white dark:bg-stone-800 text-stone-900 dark:text-white border border-stone-200 dark:border-stone-700 rounded-full font-bold uppercase tracking-widest text-[10px] sm:text-xs transition-all"
+                      className="flex items-center justify-center gap-3 w-full min-h-12 px-6 sm:px-8 py-3.5 bg-amber-700 hover:bg-amber-800 dark:bg-amber-500 dark:hover:bg-amber-400 text-white dark:text-stone-950 rounded-full font-semibold text-sm transition-colors"
                     >
-                      View Projects <FiExternalLink />
+                      View My Work
+                      <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
                     </motion.div>
                     <span className="mt-3 text-[9px] sm:text-[10px] font-mono text-stone-500 dark:text-stone-400 uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-all duration-300 hidden sm:block">
-                      Straight to the work
+                      Production work and technical case studies
+                    </span>
+                  </Link>
+                  <Link to="/album" className="group flex flex-col items-center lg:items-start sm:flex-1">
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="flex items-center justify-center gap-3 w-full min-h-12 px-6 sm:px-8 py-3.5 bg-white dark:bg-stone-900 text-stone-800 dark:text-stone-100 border border-stone-300 dark:border-stone-700 rounded-full font-semibold text-sm hover:border-amber-500 transition-colors"
+                    >
+                      My Story <FiArrowRight />
+                    </motion.div>
+                    <span className="mt-3 text-[9px] sm:text-[10px] font-mono text-stone-500 dark:text-stone-400 uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-all duration-300 hidden sm:block">
+                      From the classroom to engineering
                     </span>
                   </Link>
                 </div>
 
-                <div className="flex items-center justify-center lg:justify-start flex-wrap gap-2 sm:gap-4 text-xs sm:text-sm font-mono font-bold uppercase tracking-[0.2em] text-stone-600 dark:text-stone-400">
-                  <span>Start with:</span>
-                  <Link
-                    to="/work/dti"
-                    className="text-stone-700 dark:text-stone-300 hover:text-amber-700 dark:hover:text-amber-400 transition-colors underline decoration-stone-300 dark:decoration-stone-700 hover:decoration-amber-500 underline-offset-2"
-                  >
-                    Prayer Bud (DTI)
-                  </Link>
-                  <Link
-                    to="/projects/lar-framework"
-                    className="text-stone-700 dark:text-stone-300 hover:text-amber-700 dark:hover:text-amber-400 transition-colors underline decoration-stone-300 dark:decoration-stone-700 hover:decoration-amber-500 underline-offset-2"
-                  >
-                    LAR framework
-                  </Link>
-                  <Link
-                    to="/projects/content-creation-studio"
-                    className="text-stone-700 dark:text-stone-300 hover:text-amber-700 dark:hover:text-amber-400 transition-colors underline decoration-stone-300 dark:decoration-stone-700 hover:decoration-amber-500 underline-offset-2"
-                  >
-                    Content Creation Studio
-                  </Link>
-                </div>
               </div>
             </motion.div>
 
@@ -144,7 +110,7 @@ const Home = () => {
               transition={{ duration: 0.8 }}
               className="relative flex justify-center items-center"
             >
-              <HeroFlipCard />
+              <HeroStoryCard />
             </motion.div>
           </div>
         </div>
@@ -226,13 +192,15 @@ const Home = () => {
             <div className="relative z-10 grid gap-8 lg:grid-cols-12 items-center">
               {/* LAR Speaking Photo */}
               <div className="lg:col-span-5 order-2 lg:order-1">
-                <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden bg-stone-200 dark:bg-stone-800 shadow-md border border-stone-200 dark:border-stone-700/80 group">
+                <div className="relative aspect-[4/5] w-full rounded-2xl overflow-hidden bg-stone-200 dark:bg-stone-800 shadow-md border border-stone-200 dark:border-stone-700/80 group">
                   <img
                     src="/ayo-speaking-llmday.jpg"
                     alt="Adefisayo Adejumo presenting the LAR framework at LLMday London"
                     loading="lazy"
                     decoding="async"
-                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                    width={864}
+                    height={1154}
+                    className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.01] motion-reduce:transition-none"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-stone-950/85 via-stone-950/20 to-transparent pointer-events-none" />
                   <div className="absolute bottom-3 left-3 right-3 text-white">

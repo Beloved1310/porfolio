@@ -9,12 +9,12 @@ interface PageHeaderProps {
 
 // The shared page header (Work, Research, Credentials, My Story), so every page opens the same way.
 const PageHeader = ({ eyebrow, title, intro }: PageHeaderProps) => (
-  <header className="relative text-center mb-16 md:mb-20">
+  <header className="relative max-w-4xl mb-12 md:mb-16">
     {eyebrow && (
     <motion.p
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 text-amber-700 dark:text-amber-400 text-xs font-black uppercase tracking-widest mb-6 border border-amber-500/20"
+      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-100/80 dark:bg-amber-900/30 text-amber-900 dark:text-amber-200 text-sm font-medium mb-5 border border-amber-200/80 dark:border-amber-800/70"
     >
       {eyebrow}
     </motion.p>
@@ -23,13 +23,13 @@ const PageHeader = ({ eyebrow, title, intro }: PageHeaderProps) => (
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.1 }}
-      className="text-5xl md:text-7xl font-black mb-6 tracking-tighter text-stone-900 dark:text-white"
+      className="text-4xl sm:text-5xl md:text-6xl font-semibold mb-5 tracking-tight text-stone-900 dark:text-white"
     >
       {title}
       <span className="text-amber-600">.</span>
     </motion.h1>
     {intro && (
-      <div className="text-stone-500 dark:text-stone-400 max-w-2xl mx-auto font-medium text-base md:text-lg leading-relaxed">
+      <div className="text-stone-600 dark:text-stone-300 max-w-2xl font-normal text-base md:text-lg leading-relaxed">
         {intro}
       </div>
     )}

@@ -7,6 +7,7 @@ interface Moment {
   caption: string;
   img: string;
   alt: string;
+  aspect?: string;
   // CSS object-position, so the crop keeps the person in frame.
   focus: string;
   link: { href: string; network: "LinkedIn" | "X" };
@@ -27,7 +28,25 @@ const featured: Moment = {
 
 const moments: Moment[] = [
   {
-    title: "STEM Bridge",
+    title: "SheBuilds Lovable Hackathon",
+    caption: "Building with Lovable alongside women in tech at an International Women’s Day hackathon.",
+    img: "/iwday-shebuilds-hackathon.jpg",
+    alt: "Women celebrating together at the SheBuilds Lovable hackathon for International Women’s Day",
+    focus: "center",
+    aspect: "aspect-[3/2]",
+    link: activityFeed,
+  },
+  {
+    title: "Open Source Hackathon · MetaMindz × HL",
+    caption: "At the MetaMindz × HL Open Source Hackathon, sharing a day of open-source building with the community.",
+    img: "/metamindz-hl-open-source-hackathon.jpg",
+    alt: "Participants gathered at the MetaMindz × HL Open Source Hackathon",
+    focus: "center",
+    aspect: "aspect-[3/2]",
+    link: activityFeed,
+  },
+  {
+    title: "Communication Lead · STEM Bridge",
     caption: "Volunteering with STEM Bridge, which helps teenage girls in Nigeria find their careers in tech.",
     img: "/ayo-stem-bridge.jpg",
     alt: "Adefisayo Adejumo with STEM Bridge volunteers and a group of teenage girls",
@@ -152,7 +171,7 @@ const MomentsRow = () => {
         {moments.map((moment) => (
           // Cards are sized so the next one always peeks in, which signals there is more to see.
           <li key={moment.title} className="snap-start flex-shrink-0 w-[88%] sm:w-[70%] lg:w-[55%]">
-            <MomentCard moment={moment} aspect="aspect-[4/3] lg:aspect-[3/2]" />
+            <MomentCard moment={moment} aspect={moment.aspect ?? "aspect-[4/3] lg:aspect-[3/2]"} />
           </li>
         ))}
       </ul>

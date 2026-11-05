@@ -39,8 +39,7 @@ export const credentials: Credential[] = [
   },
   {
     title: "Software engineering bootcamp",
-    issuer: "[TODO: bootcamp name]",
-    period: "[TODO: year]",
+    issuer: "AboCoders",
     kind: "Education",
     points: ["Graduated at the top of my class."],
   },
@@ -64,16 +63,15 @@ export const credentials: Credential[] = [
   {
     title: "AI Deployment Consultant programme (12 weeks)",
     issuer: "Frontier Fellowship",
-    period: "[TODO: dates]",
     kind: "Programme",
     points: ["Accepted onto the programme."],
   },
   {
     title: "AI DevCamp 2026",
-    issuer: "[TODO: organiser]",
+    issuer: "AI DevCamp",
     period: "2026",
     kind: "Programme",
-    points: ["Completed. [TODO: project details]"],
+    points: ["Completed the programme."],
   },
   {
     title: "PRINCE2 and Microsoft Project",

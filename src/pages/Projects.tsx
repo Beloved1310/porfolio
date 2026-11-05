@@ -85,7 +85,7 @@ const TabPanel = ({ tab }: { tab: TabId }) => {
     return (
       <div className={grid}>
         {projects
-          .filter((p) => p.categories.includes(category))
+          .filter((p) => p.slug !== "lar-framework" && p.categories.includes(category))
           // Award winners lead their tab.
           .sort((a, b) => Number(!!b.highlight) - Number(!!a.highlight))
           .map((p) => (
@@ -100,7 +100,7 @@ const TabPanel = ({ tab }: { tab: TabId }) => {
       <>
         <div className={grid}>
           {publications.map((p) => (
-            <ShowcaseCard key={p.title} images={[]} title={p.title} eyebrow={p.status} meta={p.venue} links={[p.link]}>
+            <ShowcaseCard key={p.title} images={[]} title={p.title} eyebrow={p.status} meta={p.venue} links={p.link.placeholder ? [] : [p.link]}>
               {p.authors && <p className="mb-2">{p.authors}</p>}
               {p.contribution && <p className="text-stone-800 dark:text-stone-200">{p.contribution}</p>}
             </ShowcaseCard>
@@ -136,7 +136,7 @@ const TabPanel = ({ tab }: { tab: TabId }) => {
     return (
       <div className={grid}>
         {hackathons.map((h) => (
-          <ShowcaseCard key={h.title} images={h.images} title={h.title} eyebrow={h.role} links={[h.link]}>
+          <ShowcaseCard key={h.title} images={h.images} title={h.title} eyebrow={h.role} aspect={h.aspect ?? "aspect-[3/2]"} links={h.link.placeholder ? [] : [h.link]}>
             <p>{h.text}</p>
           </ShowcaseCard>
         ))}
@@ -170,7 +170,7 @@ const Projects = () => {
   usePageTitle(`Work: ${activeTab.label}`);
 
   return (
-    <div className="min-h-screen pt-24 pb-16 bg-[#f8fafc] dark:bg-[#030712] transition-colors duration-500 overflow-hidden">
+    <div className="min-h-screen pt-24 pb-16 bg-stone-50 dark:bg-stone-950 transition-colors duration-500 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Background Ambient Glows */}
         <div className="absolute -top-24 -left-24 w-96 h-96 bg-amber-500/10 rounded-full blur-[120px] pointer-events-none" />
@@ -192,7 +192,7 @@ const Projects = () => {
                     to={{ hash: tab.id }}
                     replace
                     aria-current={isActive ? "page" : undefined}
-                    className={`block whitespace-nowrap px-4 sm:px-5 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest transition-colors ${
+                    className={`block whitespace-nowrap px-4 sm:px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors ${
                       isActive
                         ? "bg-amber-700 text-white shadow-[0_8px_20px_rgba(217,119,6,0.35)]"
                         : "text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100"

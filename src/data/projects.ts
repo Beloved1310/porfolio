@@ -5,35 +5,23 @@ export interface ImageSource {
   alt: string;
 }
 
-export interface MetricHighlight {
-  label: string;
-  value: string;
-  description?: string;
-}
-
 export interface ChallengeStory {
   title: string;
   problem: string;
   engineeringSolution?: string;
   engineeringDecision?: string;
   impact: string;
-  reflection?: string;
 }
 
 export interface CaseStudy {
   role: string;
-  // The 4 Core Pillars requested by user:
   problem: string;
-  engineeringSolutions: string[];
   impact: string;
-  reflection: string[];
 
   // Structured breakdown for each challenge story:
   challenges: ChallengeStory[];
 
-  metrics?: MetricHighlight[];
   context?: string;
-  takeaways?: string[];
   simulation?: { label: string; to: string };
   liveSimulation?: "lar";
   story?: { label: string; to: string };
@@ -89,7 +77,7 @@ export const projects: Project[] = [
           engineeringDecision:
             "Implemented strict, hard approval gates and ephemeral credential isolation. The agent pipeline halts immediately before any outbound API call until a human operator clicks 'Approve'.",
           impact:
-            "Zero unvetted or accidental posts reached public channels, delivering 100% human sign-off compliance.",
+            "The publish step stays blocked until an operator approves the reviewed draft.",
         },
         {
           title: "Multi-Agent Coordination & Tone Consistency",
@@ -98,7 +86,7 @@ export const projects: Project[] = [
           engineeringDecision:
             "Built a modular multi-agent graph on Google ADK and Vertex AI Agent Engine. Dedicated research agents collect raw facts, channel-specialist agents craft custom copy, and an editor agent checks facts against source citations.",
           impact:
-            "Cut content research-to-draft turnaround time by 65% while keeping channel-specific voices consistent.",
+            "Channel-specific agents produce distinct drafts, while an editor checks claims against research sources.",
         },
         {
           title: "Opaque Agent Reasoning & Lack of Operator Trust",
@@ -110,23 +98,8 @@ export const projects: Project[] = [
             "Operators can watch reasoning live and steer or cancel runs before errors cascade.",
         },
       ],
-      engineeringSolutions: [
-        "Multi-Agent Graph on Google ADK: Architected a specialized agent team using Google ADK and Vertex AI Agent Engine, separating research, channel copywriting, and compliance review into distinct stages.",
-        "Hard Approval Gates & Scoped Tokens: Enforced short-lived, task-bound credentials per agent execution. Publishing steps stop at approval gates until confirmed by a human.",
-        "Real-Time React & FastAPI Control Plane: Built an interactive control plane streaming agent thoughts, tool invocations, and draft diffs live via WebSockets.",
-      ],
       impact:
-        "Reduced time from raw research to reviewable multi-channel drafts by 65%, with zero unvetted publishing errors. Now serves as the primary live operational testbed for LAR agentic governance.",
-      metrics: [
-        { label: "Turnaround Time", value: "65% Faster", description: "From raw research to reviewable drafts" },
-        { label: "Publishing Errors", value: "0 Incidents", description: "Mandatory human sign-off on public pushes" },
-        { label: "Architecture", value: "Google ADK", description: "Vertex AI Agent Engine + FastAPI & React" },
-      ],
-      reflection: [
-        "Human-in-the-loop is not an impediment to AI speed; it is the fundamental prerequisite for deploying autonomous agents in production.",
-        "Observability creates trust: streaming agent reasoning in real-time turns an opaque black box into an intuitive co-pilot.",
-        "Building safety gates at the protocol level is vastly more reliable than relying on polite system prompts.",
-      ],
+        "The result is a reviewable content workflow with source checks, a human approval boundary, and a live operator view. The project also provides a working testbed for LAR governance.",
       simulation: { label: "Try the LAR governance simulation", to: "/projects/lar-framework#lar-framework-simulation" },
     },
   },
@@ -156,44 +129,20 @@ export const projects: Project[] = [
           engineeringDecision:
             "Applied Lock: utilized OAuth 2.0 Token Exchange (RFC 8693) to downscope tokens into single-purpose, ephemeral credentials valid only for the specific micro-task.",
           impact:
-            "Completely eliminated ambient authority; an agent compromised by prompt injection has zero power outside its narrow assigned task.",
+            "Agent credentials are downscoped for the task, limiting what a run can request under the configured policy.",
         },
         {
-          title: "Anonymous Bot Logs & Broken Audit Trails",
+          title: "Human accountability at sensitive actions",
           problem:
-            "When security teams inspect API logs, all bot actions appear under the same service account, breaking regulatory compliance and chain-of-custody.",
+            "Service-account logs can obscure which person initiated an agent run, while high-risk actions may need a separate approval step.",
           engineeringDecision:
-            "Applied Attribute: embedded verifiable cryptographic user attestation into every downstream request, guaranteeing that every agent invocation is tied to an accountable human principal.",
+            "Applied Attribute by attaching verifiable user attestation to downstream requests, and Require by using CIBA to request approval before configured high-risk actions proceed.",
           impact:
-            "Created 100% auditable logs where compliance officers can identify the exact human accountable for every automated API call.",
+            "Requests carry an inspectable human attribution, and the simulator demonstrates the approval boundary before a configured action continues.",
         },
-        {
-          title: "Unverified Irreversible Mutations",
-          problem:
-            "High-stakes actions (transferring funds, deleting customer data, sending mass emails) execute automatically without secondary verification.",
-          engineeringDecision:
-            "Applied Require: integrated Client-Initiated Backchannel Authentication (CIBA) to push verification requests directly to the responsible human's phone before executing critical actions.",
-          impact:
-            "Provided bank-grade security: the agent cannot execute an irreversible action without an explicit push approval from a human mobile device.",
-        },
-      ],
-      engineeringSolutions: [
-        "Lock: Implemented OAuth 2.0 Token Exchange (RFC 8693) to downscope ambient user tokens into single-purpose, ephemeral credentials restricted strictly to the agent's immediate task.",
-        "Attribute: Embedded verifiable user identity into every downstream API request, guaranteeing that every agent invocation is cryptographically attributable to a human principal.",
-        "Require: Integrated Client-Initiated Backchannel Authentication (CIBA) to push verification requests directly to the responsible human's device before executing high-risk mutations.",
       ],
       impact:
-        "Established a foundational security standard for AI agent execution. Presented as a keynote talk at LLMday London ('Your Agent Left the Laptop Open. LAR Closes It') and demonstrated through an interactive live simulator.",
-      metrics: [
-        { label: "Privilege Scope", value: "Zero Ambient", description: "Ephemeral downscoped tokens via RFC 8693" },
-        { label: "Audit Traceability", value: "100%", description: "Every action tied cryptographically to a human" },
-        { label: "Verification Standard", value: "CIBA", description: "Out-of-band push confirmation for critical actions" },
-      ],
-      reflection: [
-        "Agent security is identity security: agents should never possess more ambient authority than the human they act on behalf of.",
-        "CIBA is the natural bridge between autonomous execution and human safety, mirroring modern multi-factor banking authorizations.",
-        "Interactive live simulations communicate complex distributed auth models far more effectively than static architecture diagrams.",
-      ],
+        "Published as a governance framework, presented at LLMday London, and made inspectable through an interactive simulator. The demo shows how scoped credentials, human attribution, and out-of-band approval fit into an agent workflow.",
       liveSimulation: "lar",
     },
   },
@@ -210,16 +159,16 @@ export const projects: Project[] = [
     caseStudy: {
       role: "Pipeline Architect & Engineer — designed the document segmentation, vector indexing, and grounded extraction agents.",
       problem:
-        "Under the UK Financial Conduct Authority's Consumer Duty (FG22/5), banks and lenders are legally required to find and remove 'sludge': tricky cancellation journeys, misleading fine print, and unnecessary steps that stop customers from switching or claiming refunds. Compliance officers were spending hundreds of hours reading through massive 100+ page policy disclosures by hand, resulting in missed violations and inconsistent findings.",
+        "Under the UK Financial Conduct Authority's Consumer Duty (FG22/5), firms need to identify cancellation friction, confusing terms, and barriers to switching or claiming refunds. This project turns policy disclosures into reviewable findings tied back to source text and FCA guidance.",
       challenges: [
         {
           title: "Overwhelming Unstructured Legal Text",
           problem:
-            "Disclosures span hundreds of pages filled with dense legal definitions, contradictory clauses, and buried conditions.",
+            "Long disclosures combine dense definitions, cross-references, and cancellation conditions that are difficult to review together.",
           engineeringDecision:
             "Decomposed documents hierarchically using LangGraph, segmenting text into semantic regulatory units rather than arbitrary token chunks.",
           impact:
-            "Preserved complete legal context across complex multi-page cancellation clauses.",
+            "The report retains source passages and page references so reviewers can inspect each finding in context.",
         },
         {
           title: "Generic AI Hallucinations & Lack of Grounding",
@@ -228,35 +177,20 @@ export const projects: Project[] = [
           engineeringDecision:
             "Indexed the official FCA FG22/5 rules into ChromaDB vector stores and constrained LLaMA prompts to require paragraph-level citations for every finding.",
           impact:
-            "Every single flagged sludge practice directly cites the relevant FCA requirement.",
+            "Findings include source passages and relevant FCA clause references for analyst review.",
         },
         {
           title: "Slow Inference Speed Across Large Document Sets",
           problem:
-            "Auditing enterprise document repositories with traditional cloud APIs took hours per run and racked up massive API bills.",
+            "Repeatedly sending whole documents to a general-purpose model makes the audit difficult to review and expensive to operate.",
           engineeringDecision:
             "Integrated high-speed Groq LPU inference running open-weight LLaMA models, enabling ultra-fast token generation at fraction of the cost.",
           impact:
-            "Accelerated full-document compliance audits by 90%, delivering actionable findings in under 3 minutes.",
+            "The pipeline returns categorized findings with source passages and FCA clause references for an analyst to review.",
         },
-      ],
-      engineeringSolutions: [
-        "Hierarchical LangGraph Pipeline: Decomposed long-form documents into semantic sections, routing each block through specialized extraction and validation agents.",
-        "ChromaDB Vector Retrieval: Indexed official FCA regulatory texts in ChromaDB, matching potential sludge patterns against specific compliance clauses.",
-        "High-Speed Groq LLaMA Inference: Powered inference with LLaMA models running on Groq hardware for rapid token generation with verifiable citations.",
       ],
       impact:
         "Turned opaque source material into categorized, actionable reports of customer friction points, complete with direct page references and specific FCA FG22/5 clause citations.",
-      metrics: [
-        { label: "Audit Acceleration", value: "90% Faster", description: "Compared to manual compliance document reviews" },
-        { label: "Regulatory Basis", value: "FCA FG22/5", description: "Every flagged item is grounded with direct clause citations" },
-        { label: "Inference Speed", value: "Sub-Second", description: "High-throughput token generation via Groq LPUs" },
-      ],
-      reflection: [
-        "RAG pipelines are only as strong as their chunking strategy; splitting by semantic legal clauses rather than arbitrary character lengths prevents lost context.",
-        "Grounded extraction with strict citation constraints builds immediate trust with compliance and legal officers.",
-        "Speed transforms compliance from a quarterly dread into a continuous, real-time audit capability.",
-      ],
     },
   },
   {
@@ -278,9 +212,9 @@ export const projects: Project[] = [
           problem:
             "Large language models are word predictors, not calculators; asking them to compute IRR or currency exchanges on balance sheets results in confident errors.",
           engineeringDecision:
-            "Decoupled calculation completely from language generation. Structured Python and pandas to execute 100% of arithmetic and table aggregations deterministically.",
+            "Decoupled calculation completely from language generation. Structured Python and pandas to execute arithmetic and table aggregations deterministically.",
           impact:
-            "Achieved 100% calculation accuracy with zero math hallucinations.",
+            "Calculation outputs come from source data and deterministic code, so the language model does not invent arithmetic results.",
         },
         {
           title: "Translating Vague Human Questions into Queries",
@@ -289,35 +223,20 @@ export const projects: Project[] = [
           engineeringDecision:
             "Used fast Groq LLaMA models solely as a semantic parser to translate user intent into structured pandas query parameters, and then format verified computational results into natural English.",
           impact:
-            "Investors receive conversational, instant answers backed by verifiable math in under 800ms.",
+            "The interface pairs plain-language answers with calculation results that can be traced to the underlying portfolio data.",
         },
         {
           title: "Bridging Prototype to Enterprise Roadmaps",
           problem:
-            "Great code is useless if enterprise fund stakeholders cannot see how it will integrate with legacy accounting ledgers over the next 6 months.",
+            "A prototype is difficult to evaluate without a clear path for integrating it with a fund's existing accounting systems.",
           engineeringDecision:
-            "Authored complete system architecture specifications, data pipeline designs, and a phased 6-month enterprise delivery plan alongside the working prototype.",
+            "Authored system architecture and data pipeline specifications alongside a phased enterprise delivery plan.",
           impact:
             "Gave executive stakeholders a clear path from prototype to production roll-out.",
         },
       ],
-      engineeringSolutions: [
-        "Deterministic Math Engine: Python and pandas execute 100% of arithmetic and valuation calculations directly on source tabular data.",
-        "LLM Purely for Language Translation: Employed LLaMA models on Groq solely to interpret user intent into structured query parameters and format verified results into clean summaries.",
-        "Forward-Deployed Architecture Spec: Delivered complete API specifications, pgvector schemas, and a 6-month enterprise delivery plan.",
-      ],
       impact:
-        "Achieved 100% computational accuracy with zero arithmetic hallucinations, giving investors instant answers grounded in verifiable tabular calculations.",
-      metrics: [
-        { label: "Math Accuracy", value: "100%", description: "All calculations handled deterministically by pandas" },
-        { label: "Query Latency", value: "<800ms", description: "FastAPI + Redis caching for instantaneous responses" },
-        { label: "Deliverable", value: "Code + Roadmap", description: "Prototype paired with 6-month enterprise spec" },
-      ],
-      reflection: [
-        "Never ask a language model to do math: let code calculate and let the model translate.",
-        "Forward deployed engineering requires mastering both deep technical execution and strategic product ownership.",
-        "Enterprise clients value deterministic guarantees far more than flashy probabilistic features.",
-      ],
+        "The prototype keeps financial calculations in deterministic code and grounds conversational responses in query output.",
     },
   },
   {
@@ -334,7 +253,7 @@ export const projects: Project[] = [
     caseStudy: {
       role: "Full-Stack Engineer — owned the booking engine, user account management, and payment checkout from initial architecture to live launch.",
       problem:
-        "Finding and booking a desk or private meeting room was painful: users had to exchange multiple emails with office managers, wait for manual confirmation, and deal with clunky payment links. Worknoon was built to make reserving a workspace take less than 60 seconds with instant confirmation.",
+        "Booking a desk or meeting room required back-and-forth with office managers and manual payment confirmation. Worknoon brings availability, reservation, and checkout into one booking flow.",
       challenges: [
         {
           title: "Double-Booking Race Conditions",
@@ -343,7 +262,7 @@ export const projects: Project[] = [
           engineeringDecision:
             "Engineered atomic row-level locking in PostgreSQL during checkout transactions to guarantee that once a room is reserved, it is locked immediately.",
           impact:
-            "Zero double-booking conflicts across high-demand workspace inventory.",
+            "The database transaction makes availability checking and reservation a single operation, so competing requests cannot both claim the same slot.",
         },
         {
           title: "Complex Multi-Seat Team Billing",
@@ -355,23 +274,8 @@ export const projects: Project[] = [
             "Enabled seamless corporate team onboarding without manual finance manager approvals for every desk.",
         },
       ],
-      engineeringSolutions: [
-        "Atomic Reservation Engine: Engineered database transaction locks in PostgreSQL to guarantee atomic seat reservations with zero double-booking risk.",
-        "Responsive Client Application: Built a responsive, accessible React interface styled with Tailwind CSS, featuring interactive space previews and instant checkout.",
-        "Unified Account & Operator Dashboard: Created portals for workspace managers to update real-time availability, track occupancy, and review billing.",
-      ],
       impact:
-        "Successfully launched Worknoon at worknoon.com, allowing users to discover and reserve workspaces in under a minute with automated confirmation and billing.",
-      metrics: [
-        { label: "Reservation Time", value: "<60s", description: "From space search to confirmed reservation" },
-        { label: "Production Status", value: "Live", description: "Active commercial deployment at worknoon.com" },
-        { label: "Booking Reliability", value: "100%", description: "Zero double-booking conflicts via atomic locks" },
-      ],
-      reflection: [
-        "Simplicity in checkout flows directly correlates with booking completion rates.",
-        "Handling reservation time slots with strict UTC timestamps prevents timezone scheduling discrepancies.",
-        "Giving workspace operators automated management tools reduces human operational overhead by half.",
-      ],
+        "Worknoon brings workspace discovery, reservation, confirmation, and team billing into one live booking flow.",
     },
   },
   {
@@ -399,7 +303,7 @@ export const projects: Project[] = [
           engineeringDecision:
             "Optimized MongoDB geospatial 2dsphere indexing and designed reconnect-tolerant polling endpoints that smooth driver positions over intermittent connections.",
           impact:
-            "Reduced driver dispatch query latency to under 250ms with reliable GPS tracking.",
+            "The dispatch flow matches requests against location-indexed driver data and displays location updates as connections recover.",
         },
         {
           title: "Handling Varied Booking Modalities in One State Machine",
@@ -408,25 +312,11 @@ export const projects: Project[] = [
           engineeringDecision:
             "Designed a strict finite state machine managing trip lifecycles (requested, accepted, arriving, in-transit, completed) with mode-specific pricing rules.",
           impact:
-            "Prevented illegal trip state transitions and eliminated rider billing disputes.",
+            "The state machine defines valid trip transitions and keeps pricing rules attached to the selected booking mode.",
         },
-      ],
-      engineeringSolutions: [
-        "Geospatial MongoDB Routing: Utilized MongoDB 2dsphere indexes to perform sub-second driver proximity lookups and track active trip coordinates.",
-        "State-Machine Trip Lifecycle: Designed a resilient state machine managing trip stages from request to completion.",
-        "Modular Micro-Services: Built RESTful services in Node.js and Express handling user profiles, driver verification, and payment plans.",
       ],
       impact:
         "Live on the iOS App Store in Nigeria, handling real-time driver dispatches, ride reservations, and flexible time plans with high reliability.",
-      metrics: [
-        { label: "App Store Status", value: "iOS Live", description: "Published on the App Store serving passengers & drivers" },
-        { label: "Dispatch Query", value: "<250ms", description: "Geospatial proximity query response time" },
-        { label: "Trip Modalities", value: "3 Modes", description: "Instant hailing, scheduled bookings, and hourly hire" },
-      ],
-      reflection: [
-        "Designing trip lifecycles as strict finite state machines prevents illegal state transitions during intermittent mobile reconnects.",
-        "Geospatial indexing must be tuned alongside query limits to maintain sub-second performance at scale.",
-      ],
     },
   },
   {
@@ -453,7 +343,7 @@ export const projects: Project[] = [
           engineeringDecision:
             "Decomposed the system into independent microservices (Auth, Image Ingestion, Metadata Store, Audit Log) packaged in Docker containers.",
           impact:
-            "A failure in one background service cannot disrupt clinical viewing workflows, achieving zero-downtime fault isolation.",
+            "Separating background processing from image viewing keeps conversion failures within the service that owns that work.",
         },
         {
           title: "GDPR Consent & Immutable Audit Logs",
@@ -462,25 +352,11 @@ export const projects: Project[] = [
           engineeringDecision:
             "Implemented an immutable cryptographic audit ledger recording every record access with timestamps and physician IDs.",
           impact:
-            "Achieved 100% GDPR compliance audit readiness.",
+            "Access records and consent state are represented in the application for inspection during a privacy review.",
         },
       ],
-      engineeringSolutions: [
-        "Decomposed Microservices: Split the platform into independent services running in Docker containers.",
-        "Redis In-Memory Acceleration: Deployed Redis caching to serve frequently accessed diagnostic records with microsecond latency.",
-        "Immutable Audit Logs: Implemented cryptographic logging for every patient record inspection.",
-      ],
       impact:
-        "Built a resilient healthcare imaging platform where individual service crashes could not disrupt clinical viewing workflows, achieving complete GDPR compliance validation.",
-      metrics: [
-        { label: "GDPR Conformance", value: "100%", description: "Granular consent tracking and encrypted diagnostic data" },
-        { label: "Architecture", value: "Dockerized", description: "Independent microservices with Redis caching and Node.js" },
-        { label: "Fault Isolation", value: "Zero Downtime", description: "Service failures isolated to individual containers" },
-      ],
-      reflection: [
-        "Compliance is an architectural constraint, not an afterthought; baking consent and auditing into service boundaries eliminates compliance retrofits.",
-        "Containerization guarantees that sensitive diagnostic pipelines execute identically across staging and clinical production.",
-      ],
+        "Built a healthcare imaging prototype with isolated image-processing services and an access audit trail, making the privacy and failure boundaries explicit for review.",
     },
   },
   {
@@ -516,25 +392,11 @@ export const projects: Project[] = [
           engineeringDecision:
             "Used LLMs to generate empathetic, growth-mindset feedback tailored to where the learner specifically struggled, scaling challenge difficulty dynamically.",
           impact:
-            "Increased student task completion rates and time spent persevering through hard exercises.",
+            "The adaptive flow changes the hint and next exercise in response to the learner's attempt pattern.",
         },
       ],
-      engineeringSolutions: [
-        "Adaptive Prompting & Feedback Engine: Leveraged LLMs paired with custom scoring heuristics to analyze student attempt patterns, delivering empathetic, growth-mindset feedback.",
-        "Dynamic Learning Pathways: Designed reactive frontend dashboards in React that visualize perseverance milestones rather than simple test scores.",
-        "Full-Stack Node.js Architecture: Built robust APIs and MongoDB collections tracking learning trajectories.",
-      ],
       impact:
-        "Completed as MSc dissertation project at Kingston University London, earning Distinction honors and demonstrating how software can foster learner resilience.",
-      metrics: [
-        { label: "Academic Honor", value: "Distinction", description: "Awarded Distinction for MSc Software Engineering Dissertation" },
-        { label: "Theoretical Base", value: "Grit Theory", description: "Angela Duckworth's psychological perseverance model in software" },
-        { label: "Pedagogical Impact", value: "Adaptive", description: "Dynamic problem scaling based on student struggle indicators" },
-      ],
-      reflection: [
-        "The best software interfaces understand human psychology; aligning UI feedback with intrinsic motivation fundamentally improves learning outcomes.",
-        "Bridging domain knowledge (teaching) with technical craftsmanship (full-stack engineering) creates unique, high-impact products.",
-      ],
+        "Completed as an MSc dissertation at Kingston University London and awarded a Distinction. The prototype demonstrates how feedback and exercise difficulty can respond to learner behavior.",
     },
   },
   {
@@ -562,7 +424,7 @@ export const projects: Project[] = [
           engineeringDecision:
             "Designed dedicated transaction assets on the Klayr SDK that cryptographically verify cryptographic signatures and record votes into immutable Merkle state stores.",
           impact:
-            "Guaranteed 100% on-chain ballot deduplication and tamper resistance.",
+            "The transaction handler checks voter signatures and ballot state before recording a vote.",
         },
         {
           title: "Deterministic Poll Closure Without Human Intervention",
@@ -571,25 +433,11 @@ export const projects: Project[] = [
           engineeringDecision:
             "Implemented on-block lifecycle hooks that monitor blockchain block height and automatically seal tallies at the exact expiration block.",
           impact:
-            "Zero dispute over poll closing deadlines; execution is 100% deterministic.",
+            "The poll closes from block-height state, so the closing rule is inspectable and does not depend on a manual administrator action.",
         },
-      ],
-      engineeringSolutions: [
-        "Custom Sidechain Module: Built dedicated transaction commands for poll creation, ballot casting, and option revision using TypeScript and the Klayr framework.",
-        "State Store Verification: Implemented isolated on-chain stores that validate voter cryptographic signatures and verify eligibility prior to state mutation.",
-        "On-Block Expiration Logic: Engineered automated block lifecycle hooks that monitor block height and trigger final tally execution deterministically.",
       ],
       impact:
         "The project won a competitive blockchain developer grant and recognition across the web3 community for its clean module architecture and verifiable ballot execution.",
-      metrics: [
-        { label: "Industry Award", value: "Grant Winner", description: "Awarded competitive ecosystem developer grant" },
-        { label: "Double-Vote Prevention", value: "100%", description: "Cryptographically enforced on-chain ballot deduplication" },
-        { label: "Poll Execution", value: "Deterministic", description: "Automatic block-height lifecycle transitions" },
-      ],
-      reflection: [
-        "Blockchain development demands zero-assumption defensive programming: all inputs must be rigorously validated before committing state.",
-        "Building on modular SDKs like Klayr demonstrates how domain-specific application chains can solve trust bottlenecks.",
-      ],
     },
   },
   {
@@ -613,26 +461,13 @@ export const projects: Project[] = [
           problem:
             "Standard conversational models output polite preamble like 'I am sorry to hear you are having an emergency,' wasting time.",
           engineeringDecision:
-            "Engineered zero-shot prompts with negative constraints forcing the model to generate the immediate numbered physical action as token #1.",
+            "Used instruction-constrained prompts to prioritize a concrete safety action before explanatory text.",
           impact:
-            "Delivered clear, prioritized first-aid instructions in under 2 seconds.",
+            "The response starts with an ordered first-aid action and follows with relevant cautions and guidance.",
         },
       ],
-      engineeringSolutions: [
-        "Engineered Gemini Prompts: Crafted strict system instructions instructing Gemini to format emergency responses into immediate numbered physical steps, bold warnings, and contraindications.",
-        "Streamlined Streamlit Interface: Built a high-contrast, clean web interface allowing users to describe the emergency with a few keystrokes.",
-        "Safety-First Triage Banners: Embedded persistent visual reminders to summon professional medical services.",
-      ],
       impact:
-        "Delivered a working emergency assistant capable of generating structured first-aid guidance in under 2 seconds, providing actionable support when stress is highest.",
-      metrics: [
-        { label: "Time to First Step", value: "<2s", description: "Immediate triage instruction generation via Gemini API" },
-        { label: "Format", value: "Priority Ranked", description: "Urgent physical actions delivered first before secondary guidance" },
-      ],
-      reflection: [
-        "Emergency UX requires extreme minimalism: eliminate all non-essential clicks and conversational filler.",
-        "Prompt engineering for critical contexts requires negative constraints to ban disclaimers from delaying primary instructions.",
-      ],
+        "Built an emergency assistant that structures guidance as prioritized actions and keeps a reminder to contact emergency services visible in the interface.",
     },
   },
   {
@@ -658,64 +493,38 @@ export const projects: Project[] = [
           engineeringDecision:
             "Implemented real-time WebSockets with Socket.io on Node.js to provide instant chat, presence detection, and community pings.",
           impact:
-            "Enabled sub-50ms live chat and code snippet sharing across developers.",
+            "Developers can share code snippets and exchange messages through a live Socket.io connection.",
         },
       ],
-      engineeringSolutions: [
-        "Socket.io Real-Time Infrastructure: Implemented WebSockets with Socket.io on Node.js to provide instant chat, presence detection, and community pings.",
-        "Relational Schema on PostgreSQL: Designed normalized schemas for developer profiles, code artifacts, comments, and community upvotes.",
-        "Modular React Frontend: Created a modern, accessible interface with syntax highlighting, search filters, and one-click code copying.",
-      ],
       impact:
-        "Deployed live on Vercel, providing ServiceNow practitioners with a dedicated, responsive resource sharing space and live collaboration channels.",
-      metrics: [
-        { label: "Broadcast Latency", value: "<50ms", description: "Real-time message and notification delivery via Socket.io" },
-        { label: "Deployment", value: "Vercel + Node", description: "Live accessible developer portal" },
-      ],
-      reflection: [
-        "Developer tools must prioritize fast search and effortless copy-paste affordances.",
-        "WebSockets provide immense value for technical communities where live discussion drives peer problem solving.",
-      ],
+        "Deployed a ServiceNow resource hub with code sharing, discussion, and live collaboration, available at the linked site.",
     },
   },
   {
     slug: "shefi-solana",
     title: "Solana Smart Contract & DeFi Tracker",
     summary:
-      "A high-throughput decentralized finance and SPL token tracking interface built during the SheFi technical fellowship, featuring sub-second Solana cluster event streams and wallet connectivity.",
+      "A decentralized finance and SPL token tracking interface built during the SheFi technical fellowship, with wallet connectivity and live Solana cluster subscriptions.",
     images: [],
     technologies: ["Solana", "Web3.js", "Rust", "React", "TypeScript", "Tailwind CSS"],
     categories: ["Backend", "Frontend"],
     caseStudy: {
       role: "Web3 Engineer — built the Solana wallet integration, SPL token balance tracker, and real-time transaction event listeners.",
       problem:
-        "Decentralized finance on high-speed blockchains like Solana operates at sub-second speeds. Many web frontends fail to handle rapid block confirmations, leaving users uncertain whether their transactions succeeded or failed.",
+        "On Solana, a frontend needs to reflect wallet and account changes from the cluster without relying on repeated manual refreshes.",
       challenges: [
         {
           title: "Handling Sub-Second Finality in UI",
           problem:
-            "Traditional HTTP polling causes UI lag and out-of-sync token balances on high-throughput chains.",
+            "Repeated HTTP polling can leave displayed balances stale while account state changes on the cluster.",
           engineeringDecision:
             "Subscribed directly to Solana cluster WebSocket RPC streams, listening for slot commitment updates and balance changes live.",
           impact:
             "Delivered instant visual feedback as soon as transactions were confirmed on-chain.",
         },
       ],
-      engineeringSolutions: [
-        "Solana Web3.js Connection Layer: Integrated Solana JSON-RPC endpoints to query account info, verify signatures, and listen for on-chain state changes.",
-        "Wallet Adapter Integration: Implemented standard Solana Wallet Adapter hooks in React with responsive connection modal dialogues.",
-        "Optimistic UI Updates: Provided instant visual feedback on balance adjustments while awaiting confirmed cluster finality.",
-      ],
       impact:
-        "Delivered a responsive DeFi tracker showcasing sub-second transaction awareness and seamless wallet interactions on the Solana devnet and mainnet.",
-      metrics: [
-        { label: "Transaction Speed", value: "Sub-Second", description: "Solana slot awareness and live balance updates" },
-        { label: "Fellowship", value: "SheFi Web3", description: "Advanced DeFi and smart contract development cohort" },
-      ],
-      reflection: [
-        "Solana's architecture requires deep familiarity with account rent, Program Derived Addresses, and transaction instruction formatting.",
-        "Real-time RPC websocket subscriptions provide vastly superior UX compared to repetitive polling on high-speed chains.",
-      ],
+        "Delivered a DeFi tracker that connects a wallet and reflects account and transaction updates from Solana subscriptions.",
     },
   },
 ];
@@ -727,7 +536,7 @@ export interface OpenSourceContribution {
   title: string;
   description: string;
   url: string;
-  status: string;
+  status?: string;
 }
 
 export const openSource: OpenSourceContribution[] = [
@@ -736,7 +545,6 @@ export const openSource: OpenSourceContribution[] = [
     title: "Issue #4650",
     description: "Contribution to opensre, an AI SRE agent toolkit.",
     url: "https://github.com/Tracer-Cloud/opensre/issues/4650",
-    status: "[TODO: PR link and status]",
   },
   {
     repo: "CodeYourFuture/curriculum",

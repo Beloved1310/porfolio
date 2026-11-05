@@ -9,7 +9,7 @@ export interface AlbumImage extends ImageSource {
 export interface AlbumChapter {
   number: number;
   title: string;
-  years: string;
+  years?: string;
   // Which part of the book the chapter belongs to; see `parts` below.
   part: number;
   // Tried in order: the named slot first, then an existing photo that fits.
@@ -74,7 +74,6 @@ export const chapters: AlbumChapter[] = [
   {
     number: 3,
     title: "The switch",
-    years: "[TODO: year]",
     part: 2,
     images: [{ src: "/ayo-bootcamp.jpg", alt: "Adefisayo Adejumo receiving an AboCoders training certificate" }],
     hook: "Curiosity pulled me towards code, and I let it.",
@@ -166,7 +165,6 @@ export const chapters: AlbumChapter[] = [
   {
     number: 8,
     title: "On stage",
-    years: "[TODO: years]",
     part: 3,
     images: [
       {
