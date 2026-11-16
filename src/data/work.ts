@@ -32,7 +32,7 @@ export const workRoles: WorkRole[] = [
     role: "Full-Stack Engineer",
     period: "March 2024 to January 2025",
     summary:
-      "Full-stack engineering on Prayer Bud (prayerbud.co.uk): built admin activity dashboards, connected the PostgreSQL data layer to the client with tRPC and Prisma, and added Firebase notifications for scheduled community activity.",
+      "Full-stack work on Prayer Bud (prayerbud.co.uk). I built admin dashboards, linked the PostgreSQL database to the app with tRPC and Prisma, and added Firebase reminders for scheduled prayer sessions.",
     technologies: [
       "Next.js",
       "TypeScript",
@@ -56,47 +56,47 @@ export const workRoles: WorkRole[] = [
     caseStudy: {
       role: "Full-Stack Engineer at Digital Transformation & Integration Services (DTI)",
       problem:
-        "Prayer Bud brings people together through prayer requests and group devotionals. Community leaders needed a way to see activity without asking engineers to query the database; members also needed timely reminders, while the frontend and database needed a clearer contract.",
+        "Prayer Bud brings people together through prayer requests and group devotionals. Leaders wanted to see activity without asking an engineer to check the database. Members needed reminders. The app and the database also needed to agree on the shape of their data.",
       challenges: [
         {
-          title: "Admin Activity Blindspot & Real-Time Monitoring",
+          title: "Admins could not see activity",
           problem:
-            "Administrators had no in-product view of active prayer rooms or member activity and relied on engineers to query the database.",
+            "Admins had no view of live prayer rooms or member activity inside the product. They had to ask engineers to look it up.",
           engineeringSolution:
-            "Architected and implemented interactive administrative dashboards in Next.js and Tailwind CSS with custom data visualization charts tracking active sessions, prayer rooms, and member engagement in real time.",
+            "I built admin dashboards in Next.js and Tailwind CSS, with charts showing live sessions, prayer rooms and member activity.",
           impact:
-            "The dashboard exposes active members and prayer activity directly to community leaders, replacing manual queries for routine checks.",
+            "Leaders now see active members and prayer activity for themselves, with no need to ask an engineer.",
         },
         {
-          title: "API Schema Drift & Type Contract Integrity",
+          title: "The app and database drifted apart",
           problem:
-            "Rapid feature iterations between the Next.js frontend interfaces and the relational PostgreSQL database frequently led to runtime payload bugs, broken client requests, and slow manual contract verification.",
+            "Fast changes to the Next.js app and the PostgreSQL database often caused data bugs and broken requests. Checking them by hand was slow.",
           engineeringSolution:
-            "Established end-to-end type-safe tRPC routers backed directly by Prisma ORM models, enforcing compile-time validation across client and server with automatic TypeScript autocompletion.",
+            "I set up typed tRPC routes built on Prisma models, so TypeScript checks the client and server together.",
           impact:
-            "Typed tRPC procedures derive their contracts from Prisma models, so client and server changes are checked together during development.",
+            "If a change breaks the link between client and server, it shows up while coding, not in production.",
         },
         {
-          title: "Member Retention & Disconnected Prayer Devotionals",
+          title: "Members missed sessions",
           problem:
-            "Without timely push reminders, members frequently forgot scheduled group devotionals and communal prayer sessions, leading to drop-offs in active community sessions.",
+            "Without reminders, members often forgot group devotionals and prayer sessions, and fewer people joined.",
           engineeringSolution:
-            "Integrated Firebase Cloud Messaging (FCM) to trigger automated, real-time push notifications across web and mobile browsers, synchronized with prayer schedule events.",
+            "I added Firebase Cloud Messaging to send push reminders on web and mobile, timed to the prayer schedule.",
           impact:
-            "Scheduled Firebase notifications give members a direct reminder for communal devotional sessions.",
+            "Members get a reminder before each group session.",
         },
         {
-          title: "Peak Concurrency & Synchronized Query Performance",
+          title: "Busy evening sessions",
           problem:
-            "Synchronized evening prayer sessions create bursts of database and client activity that need to remain responsive.",
+            "Evening prayer sessions start at the same time, so lots of people use the app at once. It still needs to feel fast.",
           engineeringSolution:
-            "Optimized relational indexing in PostgreSQL, configured connection pooling, and paired client state with React Query for optimistic updates and intelligent cache invalidation.",
+            "I improved PostgreSQL indexes, set up connection pooling and used React Query to cache data and update the screen straight away.",
           impact:
-            "PostgreSQL indexes and connection pooling handle database access, while React Query caching supports optimistic client updates during busy sessions.",
+            "The database copes with the rush, and the app stays quick during busy sessions.",
         },
       ],
       impact:
-        "The shipped work gives administrators an activity dashboard, connects client and database types through tRPC and Prisma, and delivers scheduled reminders through Firebase Cloud Messaging.",
+        "Admins have an activity dashboard, the app and database share one set of types through tRPC and Prisma, and members get reminders through Firebase.",
     },
   },
   {
@@ -106,7 +106,7 @@ export const workRoles: WorkRole[] = [
     role: "Software Engineer",
     period: "February 2023 to March 2024",
     summary:
-      "Fintech for African businesses: built the QuickBooks accounting sync and redesigned corporate onboarding with clearer validation and saved form progress.",
+      "Fintech for African businesses. I built the QuickBooks sync and redesigned company sign-up, with clearer error messages and saved progress.",
     technologies: ["TypeScript", "Node.js", "React", "MySQL", "MongoDB", "AWS SQS", "Express", "Tailwind CSS"],
     images: [
       {
@@ -120,29 +120,29 @@ export const workRoles: WorkRole[] = [
     caseStudy: {
       role: "Software Engineer at Bujeti",
       problem:
-        "Bujeti provides financial tools for African businesses. Finance teams needed transaction data to stay in sync with QuickBooks, while corporate customers faced a demanding KYC onboarding flow with unclear validation and lost form state.",
+        "Bujeti makes finance tools for African businesses. Finance teams needed their transactions to match QuickBooks. Company customers found the KYC sign-up hard: errors were unclear and their progress was lost.",
       challenges: [
         {
-          title: "Two-Way Accounting Reconciliation & Ledger Mismatches",
+          title: "Keeping the books in sync",
           problem:
-            "Syncing high-volume transactional data, tax breakdowns, and vendor categories with QuickBooks Online without reconciliation mismatches or duplicate entries.",
+            "Lots of transactions, tax details and vendor categories had to sync with QuickBooks Online with no mismatches or duplicates.",
           engineeringSolution:
-            "Engineered an idempotent two-way accounting sync pipeline using AWS SQS message queues and Node.js worker pools with exponential retry backoff and dead-letter queue isolation.",
+            "I built a two-way sync with AWS SQS queues and Node.js workers. Each job is safe to run twice, failed jobs retry with growing gaps, and jobs that keep failing go to a separate queue.",
           impact:
-            "The sync uses idempotent jobs, retry handling, and a dead-letter queue so failed accounting updates can be inspected and replayed safely.",
+            "Failed updates are not lost. The team can look at them and run them again safely.",
         },
         {
-          title: "High Drop-Off in Corporate Onboarding Flow",
+          title: "Companies gave up during sign-up",
           problem:
-            "The legacy KYC flow split document uploads and verification across steps, with unclear failures and lost form state making it difficult to resume onboarding.",
+            "The old KYC flow spread uploads and checks over many steps. Errors were unclear and progress was lost, so it was hard to pick up where you left off.",
           engineeringSolution:
-            "Completely redesigned and rebuilt the enterprise onboarding experience in React and TypeScript with step validation, real-time format verification, and draft auto-saving.",
+            "I rebuilt the sign-up flow in React and TypeScript. Each step is checked as you go, file formats are checked on upload, and drafts save automatically.",
           impact:
-            "Step validation, format checks, and draft saving make KYC requirements and recovery paths visible as customers complete onboarding.",
+            "Customers can see what each step needs and can come back to finish later.",
         },
       ],
       impact:
-        "The new onboarding flow makes validation and saved progress visible, while the accounting sync processes ledger updates through retryable, idempotent jobs.",
+        "Sign-up is clearer and saves progress, and the accounting sync handles failures without losing or doubling records.",
     },
   },
   {
@@ -152,7 +152,7 @@ export const workRoles: WorkRole[] = [
     role: "Software Engineer",
     period: "January 2022 to February 2023",
     summary:
-      "Regtech platform monitoring payments for financial crime. Built transaction-monitoring services in TypeScript and NestJS and worked on their containerized deployment and test infrastructure.",
+      "Regtech that watches payments for financial crime. I built transaction checking services in TypeScript and NestJS, and worked on their Docker deployment and tests.",
     technologies: ["TypeScript", "Node.js", "NestJS", "Docker", "Kubernetes", "Jest", "AWS", "PostgreSQL"],
     images: [
       {
@@ -166,29 +166,29 @@ export const workRoles: WorkRole[] = [
     caseStudy: {
       role: "Software Engineer at Lextego",
       problem:
-        "Lextego screens payment activity for money laundering, terrorist financing, and sanctions risks. The service architecture needed to isolate rule evaluation and recover from failures without interrupting the broader screening workflow.",
+        "Lextego checks payments for money laundering, terrorist financing and sanctions risks. The rule checks needed to run on their own, and a failure in one place could not stop the rest of the screening.",
       challenges: [
         {
-          title: "Keeping transaction screening isolated",
+          title: "Keeping screening separate",
           problem:
-            "Compliance evaluation rules had to screen payment streams in real time without creating transaction lag at bank checkout points.",
+            "Compliance rules had to check payments as they happened without slowing them down.",
           engineeringSolution:
-            "Built isolated rule-evaluation services in TypeScript and NestJS, using connection pooling and in-memory routing to keep screening work modular.",
+            "I built separate rule services in TypeScript and NestJS, with connection pooling and in-memory routing.",
           impact:
-            "Rule evaluation runs inside dedicated services, keeping screening logic separate from payment processing concerns.",
+            "Rule checks run in their own services, apart from payment processing.",
         },
         {
-          title: "Preventing Distributed Cascading Outages",
+          title: "Stopping one failure from spreading",
           problem:
-            "A failure in one AML sanctions screening rule could destabilize the entire transaction verification pipeline.",
+            "If one sanctions rule failed, it could break the whole checking pipeline.",
           engineeringSolution:
-            "Containerized every service with Docker and deployed them to Kubernetes clusters on AWS with automated health probes, graceful degradation, and comprehensive Jest test suites.",
+            "I put each service in Docker and ran them on Kubernetes on AWS, with health checks, safe fallbacks and Jest tests.",
           impact:
-            "Container health checks and graceful-degradation paths give operators a defined recovery behavior when a service fails.",
+            "When a service fails, the team knows how it will recover.",
         },
       ],
       impact:
-        "The work made transaction screening easier to evolve and operate through service boundaries, container health checks, and automated tests.",
+        "Screening became easier to change and run, thanks to separate services, health checks and automated tests.",
     },
   },
 ];
@@ -207,9 +207,9 @@ export interface Hackathon {
 
 export const hackathons: Hackathon[] = [
   {
-    title: "Clarity — SheBuilds International Women’s Day Hackathon",
+    title: "Clarity, SheBuilds International Women’s Day Hackathon",
     role: "Competed",
-    text: "At the SheBuilds hackathon, I used Lovable to build Clarity, a prototype for women and first-time builders facing self-doubt or a difficult goal. Its core flow turns a challenge into an AI-generated plan of manageable actions people can check off and track. I focused the experience on making the first step feel approachable, rather than adding another complicated productivity tool.",
+    text: "At the SheBuilds hackathon, I used Lovable to build Clarity. It is for women and first-time builders facing self-doubt or a hard goal. You describe your challenge, and AI turns it into small steps you can tick off. I wanted the first step to feel easy, not to build another complicated productivity app.",
     images: [
       {
         src: "/clarity-shebuilds-hackathon.jpg",
@@ -221,7 +221,7 @@ export const hackathons: Hackathon[] = [
   {
     title: "QuickAid Emergency First-Aid Assistant",
     role: "Winner · Large Language Models Hackathon, Westminster Business School",
-    text: "Built for the Westminster Business School LLM hackathon, QuickAid uses Gemini to turn an emergency description into prioritized first-aid guidance. I designed the response to lead with an actionable step, follow with relevant cautions, and keep the reminder to contact emergency services visible.",
+    text: "I built QuickAid for the Westminster Business School LLM hackathon. It uses Gemini to turn a description of an emergency into first-aid steps in order. Each answer starts with what to do, then gives warnings, and always reminds you to call emergency services.",
     images: [
       { src: "/optimized/first-aid.jpg", alt: "QuickAid first-aid guidance form" },
     ],
@@ -230,7 +230,7 @@ export const hackathons: Hackathon[] = [
   {
     title: "SwitchPoint at EAT_HACK (Really Good Culture)",
     role: "Competed",
-    text: "Built for the Human Truth track: what really makes shoppers switch products, versus what they say would.",
+    text: "Built for the Human Truth track: what really makes shoppers switch products, compared with what they say would.",
     images: [],
     link: { label: "Read about it", href: "#", placeholder: true },
   },

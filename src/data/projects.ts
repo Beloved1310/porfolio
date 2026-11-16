@@ -60,46 +60,46 @@ export const projects: Project[] = [
     title: "Content Creation Studio",
     period: "May 2026 to present",
     summary:
-      "A collaborative team of AI agents that researches, drafts, cross-reviews, and publishes multi-channel content, with mandatory human-in-the-loop approval gates before any public post.",
+      "A team of AI agents that researches, writes, reviews and publishes content. Nothing goes public until a person approves it.",
     images: [{ src: "/project-content-studio.png", alt: "Content Creation Studio control plane" }],
     technologies: ["Python", "Google ADK", "Vertex AI Agent Engine", "FastAPI", "React", "TypeScript", "Tailwind CSS"],
     githubUrl: "https://github.com/Beloved1310/Content-Creation-Studio",
     categories: ["AI", "Frontend", "Backend"],
     caseStudy: {
-      role: "Lead Architect & Full-Stack Engineer — designed the multi-agent pipeline, safety tooling, and real-time streaming control plane.",
+      role: "Lead engineer. I designed the agent pipeline, the safety checks and the live control panel.",
       problem:
-        "Modern digital teams need to research market trends, write authoritative articles, and distribute tailored copy across disparate channels like newsletters, blogs, and social platforms. Unsupervised autonomous agents can generate text quickly, but when deployed without boundaries, they hallucinate facts, invent fake numbers, and can publish unvetted statements to every public channel in seconds. We needed the speed of AI agents without the catastrophic risk of unchecked automated publishing.",
+        "Teams want to research a topic, write about it and share it on blogs, newsletters and social media. AI agents can do this fast. Left alone, they also make up facts and numbers, and they can post them everywhere in seconds. I wanted the speed of agents without that risk.",
       challenges: [
         {
-          title: "Uncontrolled Autonomous Publishing",
+          title: "Agents that publish on their own",
           problem:
-            "Agents that draft and post autonomously can push hallucinated data or leaked company info to social platforms without any human catching it in time.",
+            "An agent that writes and posts by itself can share wrong facts or private company details before anyone sees them.",
           engineeringDecision:
-            "Implemented strict, hard approval gates and ephemeral credential isolation. The agent pipeline halts immediately before any outbound API call until a human operator clicks 'Approve'.",
+            "I added a hard approval step. The pipeline stops before any outside call and waits until a person clicks Approve. Each run also gets its own short-lived credentials.",
           impact:
-            "The publish step stays blocked until an operator approves the reviewed draft.",
+            "Nothing is published until a person has read and approved the draft.",
         },
         {
-          title: "Multi-Agent Coordination & Tone Consistency",
+          title: "One tone does not fit every channel",
           problem:
-            "Different channels demand radically different tones: an in-depth technical blog post requires rigorous citations, while an X thread needs concise brevity. Monolithic prompts failed to balance both.",
+            "A technical blog post needs sources. A post on X needs to be short. A single large prompt could not do both well.",
           engineeringDecision:
-            "Built a modular multi-agent graph on Google ADK and Vertex AI Agent Engine. Dedicated research agents collect raw facts, channel-specialist agents craft custom copy, and an editor agent checks facts against source citations.",
+            "I split the work across several agents on Google ADK and Vertex AI Agent Engine. Research agents gather facts. Channel agents write for each platform. An editor agent checks each claim against the sources.",
           impact:
-            "Channel-specific agents produce distinct drafts, while an editor checks claims against research sources.",
+            "Each channel gets its own draft, and every claim is checked against the research.",
         },
         {
-          title: "Opaque Agent Reasoning & Lack of Operator Trust",
+          title: "People could not see what the agents were doing",
           problem:
-            "If an operator cannot see what an agent is doing while it runs, they are forced to either blindly trust the output or spend double the time auditing every sentence.",
+            "If you cannot watch an agent work, you either trust it blindly or spend twice as long checking every line.",
           engineeringDecision:
-            "Built a real-time reactive control plane in FastAPI and React that streams step-by-step thoughts, tool invocations, and live draft diffs over WebSockets.",
+            "I built a live control panel in FastAPI and React. It streams each step, each tool call and each change to the draft over WebSockets.",
           impact:
-            "Operators can watch reasoning live and steer or cancel runs before errors cascade.",
+            "People can follow a run as it happens, and steer or stop it before a mistake spreads.",
         },
       ],
       impact:
-        "The result is a reviewable content workflow with source checks, a human approval boundary, and a live operator view. The project also provides a working testbed for LAR governance.",
+        "The result is a content workflow you can review. Claims are checked against sources, a person approves every post, and you can watch each run live. It is also where I test the LAR framework.",
       simulation: { label: "Try the LAR governance simulation", to: "/projects/lar-framework#lar-framework-simulation" },
     },
   },
@@ -107,7 +107,7 @@ export const projects: Project[] = [
     slug: "lar-framework",
     title: "LAR framework (Lock, Attribute, Require)",
     summary:
-      "A principled governance framework for autonomous AI agents in enterprise production: Lock privilege scopes, Attribute every action to an accountable human, and Require out-of-band confirmation for high-stakes mutations.",
+      "A framework for keeping AI agents safe at work. Lock what an agent can access, Attribute every action to a real person, and Require approval before anything high risk.",
     images: [
       {
         src: "/ayo-speaking-llmday.jpg",
@@ -118,31 +118,31 @@ export const projects: Project[] = [
     slides: [],
     categories: ["AI", "Backend"],
     caseStudy: {
-      role: "Creator & Lead Researcher — authored the framework architecture, RFC implementations, and interactive live demonstration.",
+      role: "Creator. I designed the framework, built it on open standards and made the live demo.",
       problem:
-        "When an AI agent runs in an enterprise, it usually borrows the developer's full login credentials. If the model misunderstands a task or gets tricked by prompt injection, nothing stops it from reading confidential files or transferring money. Worst of all, enterprise audit logs only record a generic bot account, making it impossible to prove which human authorized the action.",
+        "At work, an AI agent often runs with the developer's full login. If it misreads a task, or someone tricks it with a hidden instruction, nothing stops it from opening private files or moving money. The logs only show a bot account, so you cannot tell which person started it.",
       challenges: [
         {
-          title: "Excessive Ambient Authority (The Open Laptop Problem)",
+          title: "Too much access (the open laptop problem)",
           problem:
-            "Agents inherit wide, long-lived access tokens, meaning a coding bot often has permission to delete production databases or read HR payroll.",
+            "Agents are given broad access that lasts a long time. A coding agent might be able to delete a live database or read payroll.",
           engineeringDecision:
-            "Applied Lock: utilized OAuth 2.0 Token Exchange (RFC 8693) to downscope tokens into single-purpose, ephemeral credentials valid only for the specific micro-task.",
+            "Lock. I used OAuth 2.0 Token Exchange (RFC 8693) to swap broad access for a narrow token. It only covers the current task and expires quickly.",
           impact:
-            "Agent credentials are downscoped for the task, limiting what a run can request under the configured policy.",
+            "Each run can only reach what its task needs.",
         },
         {
-          title: "Human accountability at sensitive actions",
+          title: "Knowing who is responsible",
           problem:
-            "Service-account logs can obscure which person initiated an agent run, while high-risk actions may need a separate approval step.",
+            "Bot account logs hide which person started a run. Some actions also need a separate yes from a person.",
           engineeringDecision:
-            "Applied Attribute by attaching verifiable user attestation to downstream requests, and Require by using CIBA to request approval before configured high-risk actions proceed.",
+            "Attribute. Every request carries proof of the person it acts for. Require. High-risk actions use CIBA to ask that person for approval on their phone before they go ahead.",
           impact:
-            "Requests carry an inspectable human attribution, and the simulator demonstrates the approval boundary before a configured action continues.",
+            "Every request shows who it was for, and the demo shows a risky action waiting for approval.",
         },
       ],
       impact:
-        "Published as a governance framework, presented at LLMday London, and made inspectable through an interactive simulator. The demo shows how scoped credentials, human attribution, and out-of-band approval fit into an agent workflow.",
+        "I published LAR as a framework, presented it at LLMday London and built a live simulator. The demo shows how narrow access, a named person and phone approval fit into one agent workflow.",
       liveSimulation: "lar",
     },
   },
@@ -151,46 +151,46 @@ export const projects: Project[] = [
     title: "Consumer Duty Sludge Audit Tool",
     period: "March 2026 to April 2026",
     summary:
-      "An automated AI pipeline that audits complex financial and legal disclosures for 'sludge'—friction points, hidden cancel paths, and confusing terms—strictly grounded in FCA guidance FG22/5.",
+      "An AI pipeline that reads financial and legal documents and finds \"sludge\": hidden cancel steps, confusing terms and other friction. Every finding is tied to FCA guidance FG22/5.",
     images: [{ src: "/project-sludge-audit.png", alt: "Consumer Duty Sludge Audit Tool interface" }],
     technologies: ["Python", "LangChain", "LangGraph", "ChromaDB", "Groq (LLaMA)", "FastAPI"],
     githubUrl: "https://github.com/Beloved1310/cd-audit-tool",
     categories: ["AI", "Backend"],
     caseStudy: {
-      role: "Pipeline Architect & Engineer — designed the document segmentation, vector indexing, and grounded extraction agents.",
+      role: "Engineer. I designed how documents are split, indexed and checked against the rules.",
       problem:
-        "Under the UK Financial Conduct Authority's Consumer Duty (FG22/5), firms need to identify cancellation friction, confusing terms, and barriers to switching or claiming refunds. This project turns policy disclosures into reviewable findings tied back to source text and FCA guidance.",
+        "Under the FCA Consumer Duty (FG22/5), UK firms must find anything that makes it hard for customers to cancel, switch or get a refund. This tool turns policy documents into findings that point back to the source text and the FCA guidance.",
       challenges: [
         {
-          title: "Overwhelming Unstructured Legal Text",
+          title: "Long, dense legal text",
           problem:
-            "Long disclosures combine dense definitions, cross-references, and cancellation conditions that are difficult to review together.",
+            "Policy documents mix definitions, cross-references and cancel conditions. They are hard to review as a whole.",
           engineeringDecision:
-            "Decomposed documents hierarchically using LangGraph, segmenting text into semantic regulatory units rather than arbitrary token chunks.",
+            "I used LangGraph to split each document by meaning, section by section, not by a fixed number of words.",
           impact:
-            "The report retains source passages and page references so reviewers can inspect each finding in context.",
+            "Each finding keeps its source passage and page number, so a reviewer can read it in context.",
         },
         {
-          title: "Generic AI Hallucinations & Lack of Grounding",
+          title: "Vague AI answers with no sources",
           problem:
-            "Off-the-shelf LLMs produce generic commentary that compliance officers cannot use because they fail to cite the exact legal sub-clause.",
+            "General AI models give general comments. Compliance teams cannot use them without the exact clause.",
           engineeringDecision:
-            "Indexed the official FCA FG22/5 rules into ChromaDB vector stores and constrained LLaMA prompts to require paragraph-level citations for every finding.",
+            "I stored the FCA FG22/5 guidance in ChromaDB and told the model to cite a paragraph for every finding.",
           impact:
-            "Findings include source passages and relevant FCA clause references for analyst review.",
+            "Every finding comes with its source passage and the FCA clause it relates to.",
         },
         {
-          title: "Slow Inference Speed Across Large Document Sets",
+          title: "Slow and costly runs",
           problem:
-            "Repeatedly sending whole documents to a general-purpose model makes the audit difficult to review and expensive to operate.",
+            "Sending whole documents to a large model again and again is slow and expensive.",
           engineeringDecision:
-            "Integrated high-speed Groq LPU inference running open-weight LLaMA models, enabling ultra-fast token generation at fraction of the cost.",
+            "I ran open LLaMA models on Groq, which is fast and costs much less.",
           impact:
-            "The pipeline returns categorized findings with source passages and FCA clause references for an analyst to review.",
+            "The pipeline returns sorted findings, each with its source passage and FCA clause, ready for an analyst.",
         },
       ],
       impact:
-        "Turned opaque source material into categorized, actionable reports of customer friction points, complete with direct page references and specific FCA FG22/5 clause citations.",
+        "Hard-to-read documents become clear reports of customer friction, with page numbers and FCA FG22/5 clauses for each finding.",
     },
   },
   {
@@ -198,45 +198,45 @@ export const projects: Project[] = [
     title: "EquiTie Investor Portfolio Assistant",
     period: "January 2026 to February 2026",
     summary:
-      "A forward-deployed engineer prototype that answers private equity and angel investors' questions in plain English, with all financial calculations executed deterministically by code.",
+      "A prototype that answers investors' questions about their portfolio in plain English. All the maths is done by code, not by the AI.",
     images: [{ src: "/project-equitie.png", alt: "EquiTie investor portfolio assistant prototype" }],
     technologies: ["Python", "FastAPI", "pandas", "pgvector", "Redis", "Groq (LLaMA)", "React"],
     categories: ["AI", "Backend", "Frontend"],
     caseStudy: {
-      role: "Forward Deployed Engineer — built the prototype, authored the requirements specification, and developed the six-month production roadmap.",
+      role: "Forward deployed engineer. I built the prototype, wrote the requirements and planned the six months to production.",
       problem:
-        "Private equity investors and angel syndicates need fast, clear answers about their fund portfolios: total capital called, internal rate of return (IRR), and sector exposure. When standard AI chat bots are asked to calculate returns from financial tables, they frequently invent plausible-sounding numbers with absolute confidence, leading to dangerous financial misinformation.",
+        "Private equity and angel investors want quick answers about their funds: how much capital has been called, the rate of return (IRR) and which sectors they hold. When a normal AI chatbot works out returns from a table, it often makes up numbers that sound right. With money, that is dangerous.",
       challenges: [
         {
-          title: "Language Models Doing Math (Probabilistic Hallucination)",
+          title: "AI models are bad at maths",
           problem:
-            "Large language models are word predictors, not calculators; asking them to compute IRR or currency exchanges on balance sheets results in confident errors.",
+            "A language model predicts words. It is not a calculator. Ask it for an IRR and it may give a wrong answer with full confidence.",
           engineeringDecision:
-            "Decoupled calculation completely from language generation. Structured Python and pandas to execute arithmetic and table aggregations deterministically.",
+            "I kept the maths out of the model. Python and pandas do every calculation.",
           impact:
-            "Calculation outputs come from source data and deterministic code, so the language model does not invent arithmetic results.",
+            "Every number comes from the data and the code, so the model cannot make one up.",
         },
         {
-          title: "Translating Vague Human Questions into Queries",
+          title: "Turning questions into queries",
           problem:
-            "Investors ask varied questions like 'Which European fintechs in Fund II are outperforming?' requiring complex table filters.",
+            "Investors ask things like \"Which European fintechs in Fund II are doing best?\" That needs careful filtering of the data.",
           engineeringDecision:
-            "Used fast Groq LLaMA models solely as a semantic parser to translate user intent into structured pandas query parameters, and then format verified computational results into natural English.",
+            "I used a fast LLaMA model on Groq only to understand the question and turn it into a query. Code runs the query, and the model writes the checked result in plain English.",
           impact:
-            "The interface pairs plain-language answers with calculation results that can be traced to the underlying portfolio data.",
+            "Each plain-English answer can be traced back to the portfolio data.",
         },
         {
-          title: "Bridging Prototype to Enterprise Roadmaps",
+          title: "From prototype to production",
           problem:
-            "A prototype is difficult to evaluate without a clear path for integrating it with a fund's existing accounting systems.",
+            "A prototype is hard to judge without a plan for connecting it to the fund's accounting systems.",
           engineeringDecision:
-            "Authored system architecture and data pipeline specifications alongside a phased enterprise delivery plan.",
+            "I wrote the system design, the data pipeline spec and a delivery plan in phases.",
           impact:
-            "Gave executive stakeholders a clear path from prototype to production roll-out.",
+            "The leadership team had a clear path from prototype to production.",
         },
       ],
       impact:
-        "The prototype keeps financial calculations in deterministic code and grounds conversational responses in query output.",
+        "The prototype keeps the maths in code, and every answer is based on the query result.",
     },
   },
   {
@@ -244,38 +244,38 @@ export const projects: Project[] = [
     title: "Worknoon",
     period: "2024 to 2025",
     summary:
-      "A live platform for finding, booking, and managing coworking desks, private office suites, and meeting spaces with instant real-time reservations.",
+      "A live platform for finding and booking coworking desks, private offices and meeting rooms.",
     images: [{ src: "/project-worknoon.png", alt: "Worknoon coworking booking platform" }],
     technologies: ["React", "TypeScript", "Node.js", "Express", "PostgreSQL", "Tailwind CSS"],
     liveUrl: "https://worknoon.com",
     liveLabel: "Visit worknoon.com",
     categories: ["Frontend", "Backend"],
     caseStudy: {
-      role: "Full-Stack Engineer — owned the booking engine, user account management, and payment checkout from initial architecture to live launch.",
+      role: "Full-stack engineer. I built the booking engine, user accounts and checkout, from the first design to launch.",
       problem:
-        "Booking a desk or meeting room required back-and-forth with office managers and manual payment confirmation. Worknoon brings availability, reservation, and checkout into one booking flow.",
+        "Booking a desk or meeting room meant emailing an office manager and confirming payment by hand. Worknoon puts finding a space, booking it and paying into one flow.",
       challenges: [
         {
-          title: "Double-Booking Race Conditions",
+          title: "Two people booking the same room",
           problem:
-            "When multiple remote workers attempted to book the same prime meeting room simultaneously, legacy systems created double bookings.",
+            "When two people tried to book the same room at the same moment, older systems let both bookings through.",
           engineeringDecision:
-            "Engineered atomic row-level locking in PostgreSQL during checkout transactions to guarantee that once a room is reserved, it is locked immediately.",
+            "I used row-level locks in PostgreSQL during checkout. Once a room is taken, it is locked straight away.",
           impact:
-            "The database transaction makes availability checking and reservation a single operation, so competing requests cannot both claim the same slot.",
+            "Checking and booking happen in one step, so two requests cannot both get the same slot.",
         },
         {
-          title: "Complex Multi-Seat Team Billing",
+          title: "Team bookings on one bill",
           problem:
-            "Companies needed their employees to book desks individually while billing the expenses automatically to a centralized corporate account.",
+            "Companies wanted staff to book desks themselves, with the cost going to one company account.",
           engineeringDecision:
-            "Architected hierarchical team account structures with role-based budget limits and automated monthly invoicing.",
+            "I built team accounts with roles, budget limits and monthly invoices.",
           impact:
-            "Enabled seamless corporate team onboarding without manual finance manager approvals for every desk.",
+            "Teams can book desks without a finance manager approving each one.",
         },
       ],
       impact:
-        "Worknoon brings workspace discovery, reservation, confirmation, and team billing into one live booking flow.",
+        "Worknoon brings finding, booking, confirming and team billing into one live flow.",
     },
   },
   {
@@ -283,7 +283,7 @@ export const projects: Project[] = [
     title: "Driver Certified",
     period: "2023 to 2024",
     summary:
-      "A commercial ride-hailing and verified driver platform on the iOS App Store in Nigeria, supporting instant bookings, pre-scheduled rides, hourly hire plans, and real-time GPS tracking.",
+      "A ride booking app with verified drivers, live on the iOS App Store in Nigeria. You can book a ride now, book ahead or hire a driver by the hour, and track the car live.",
     images: [
       { src: "/project-driver-certified.png", alt: "Driver Certified ride booking app" },
       { src: "/driver-certified.jpg", alt: "Driver Certified listing on the App Store" },
@@ -292,31 +292,31 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/Beloved1310/Driver-Certified-Project",
     categories: ["Backend"],
     caseStudy: {
-      role: "Backend Engineer — architected accounts, trip lifecycle management, geospatial driver matching, and payment plan APIs.",
+      role: "Backend engineer. I built the accounts, trip flow, driver matching and payment plan APIs.",
       problem:
-        "Commuters and corporate travelers in Nigeria need vetted, professional chauffeurs they can trust. However, existing ride apps only offered instant on-demand rides, leaving travelers stranded when they needed to reserve drivers days in advance or book a chauffeur for a full day of meetings.",
+        "People in Nigeria want trusted, vetted drivers. Most ride apps only offered rides on demand. You could not book a driver days ahead, or hire one for a full day of meetings.",
       challenges: [
         {
-          title: "Matching Drivers Across Fluctuating Cellular Networks",
+          title: "Patchy mobile data",
           problem:
-            "Spotty mobile data in dense urban areas caused driver coordinate pings to drop, leading to inaccurate ETAs and lost dispatches.",
+            "In busy city areas, weak signal meant driver locations dropped out. Arrival times were wrong and requests were lost.",
           engineeringDecision:
-            "Optimized MongoDB geospatial 2dsphere indexing and designed reconnect-tolerant polling endpoints that smooth driver positions over intermittent connections.",
+            "I tuned MongoDB location indexes and built endpoints that cope with dropped connections and smooth out driver positions.",
           impact:
-            "The dispatch flow matches requests against location-indexed driver data and displays location updates as connections recover.",
+            "Requests are matched to nearby drivers, and locations update again when the signal returns.",
         },
         {
-          title: "Handling Varied Booking Modalities in One State Machine",
+          title: "Three kinds of booking in one system",
           problem:
-            "Supporting instant trips, future reservations, and multi-hour hire plans required radically different billing and driver availability rules.",
+            "Rides now, rides booked ahead and hourly hire each had different pricing and availability rules.",
           engineeringDecision:
-            "Designed a strict finite state machine managing trip lifecycles (requested, accepted, arriving, in-transit, completed) with mode-specific pricing rules.",
+            "I built one clear set of trip stages (requested, accepted, arriving, on trip, completed) with pricing rules for each booking type.",
           impact:
-            "The state machine defines valid trip transitions and keeps pricing rules attached to the selected booking mode.",
+            "A trip can only move through valid stages, and the right pricing stays with each booking type.",
         },
       ],
       impact:
-        "Live on the iOS App Store in Nigeria, handling real-time driver dispatches, ride reservations, and flexible time plans with high reliability.",
+        "Live on the iOS App Store in Nigeria, handling ride requests, bookings ahead and hourly hire.",
     },
   },
   {
@@ -324,7 +324,7 @@ export const projects: Project[] = [
     title: "Medical Image Management System",
     period: "MSc project, Kingston University",
     summary:
-      "A GDPR-compliant, fault-tolerant microservices system for storing, processing, and accessing clinical diagnostic medical images with strict access controls.",
+      "A system for storing and viewing medical scans, built as separate services so one failure does not take down the rest. It follows GDPR and has strict access controls.",
     images: [{ src: "/optimized/ims.jpg", alt: "Image Management System dashboard" }],
     technologies: ["React", "Node.js", "Redis", "MongoDB", "Docker", "Express", "Microservices"],
     githubUrl: "https://github.com/Beloved1310/ABC-Healthcare-Image-Management-System",
@@ -332,31 +332,31 @@ export const projects: Project[] = [
     liveLabel: "Watch the demo",
     categories: ["Frontend", "Backend"],
     caseStudy: {
-      role: "System Architect & Developer — designed and implemented the containerized microservices architecture and GDPR compliance layer.",
+      role: "Designer and developer. I built the services in Docker and the GDPR layer.",
       problem:
-        "In healthcare, medical scans (CT, MRI, X-rays) are vital for patient diagnoses. When hospital systems run as monolithic software, a crash in an image conversion worker can bring down the entire hospital viewing platform. Furthermore, patient scan archives must strictly follow GDPR patient privacy laws.",
+        "Doctors rely on scans like CT, MRI and X-rays. When a hospital system is one big program, a crash in image processing can take down the whole viewer. Patient scans must also follow GDPR.",
       challenges: [
         {
-          title: "Monolithic Cascading Outages",
+          title: "One failure brings down everything",
           problem:
-            "If heavy image conversion tasks hung or ran out of memory, clinician viewing portals crashed.",
+            "If a heavy image job froze or ran out of memory, the doctors' viewer crashed too.",
           engineeringDecision:
-            "Decomposed the system into independent microservices (Auth, Image Ingestion, Metadata Store, Audit Log) packaged in Docker containers.",
+            "I split the system into separate services (login, image upload, image details, audit log), each in its own Docker container.",
           impact:
-            "Separating background processing from image viewing keeps conversion failures within the service that owns that work.",
+            "If image processing fails, the failure stays in that service and the viewer keeps working.",
         },
         {
-          title: "GDPR Consent & Immutable Audit Logs",
+          title: "GDPR and a record of every access",
           problem:
-            "Hospital data audits must account for every clinician who viewed or exported a patient record.",
+            "Hospitals must be able to show every doctor who viewed or downloaded a patient record.",
           engineeringDecision:
-            "Implemented an immutable cryptographic audit ledger recording every record access with timestamps and physician IDs.",
+            "I built an audit log that cannot be changed. It records every access with the time and the doctor's ID.",
           impact:
-            "Access records and consent state are represented in the application for inspection during a privacy review.",
+            "Access records and patient consent can be checked during a privacy review.",
         },
       ],
       impact:
-        "Built a healthcare imaging prototype with isolated image-processing services and an access audit trail, making the privacy and failure boundaries explicit for review.",
+        "A medical imaging prototype with separate processing services and a full access log. It makes the privacy rules and failure limits easy to review.",
     },
   },
   {
@@ -364,7 +364,7 @@ export const projects: Project[] = [
     title: "LearnQuest",
     period: "MSc dissertation, Kingston University",
     summary:
-      "A behavioral learning platform grounded in Duckworth's Grit Theory that leverages generative AI to analyze student struggle cues and dynamically adapt curriculum to sustain learner perseverance.",
+      "A learning platform based on Angela Duckworth's Grit Theory. It uses AI to notice when a student is struggling and changes the lesson to help them keep going.",
     images: [{ src: "/optimized/learnquest.jpg", alt: "Learn Quest account sign-up screen" }],
     technologies: ["JavaScript", "LLMs", "React", "Node.js", "MongoDB", "Express", "Tailwind CSS"],
     githubUrl: "https://github.com/Beloved1310/Behavioural-learning-platformBE/tree/feat/core-grit-therory",
@@ -372,31 +372,31 @@ export const projects: Project[] = [
     liveLabel: "Watch the demo",
     categories: ["AI", "Frontend", "Backend"],
     caseStudy: {
-      role: "Researcher & Lead Engineer — authored the theoretical pedagogy, implemented the AI adaptive engine, and developed the full-stack web application.",
+      role: "Researcher and engineer. I wrote the teaching approach, built the AI that adapts lessons and built the web app.",
       problem:
-        "As a former high school teacher in Nigeria, I saw students give up not because they lacked intelligence, but because they lost confidence the first time a concept became hard. Online learning platforms typically give binary right/wrong scores that demotivate struggling learners. LearnQuest asked: can software operationalize Angela Duckworth's 'Grit Theory' to help students keep going?",
+        "When I taught in Nigeria, I saw students give up. They were not less able. They lost confidence the first time something got hard. Most learning apps just mark answers right or wrong, which puts struggling students off. LearnQuest asked one question: can software use Grit Theory to help students keep going?",
       challenges: [
         {
-          title: "Translating Psychological Grit into Software Algorithms",
+          title: "Turning grit into code",
           problem:
-            "Psychological concepts like 'perseverance' and 'growth mindset' are subjective and hard to quantify in code.",
+            "Ideas like perseverance and growth mindset are hard to measure.",
           engineeringDecision:
-            "Modeled attempt patterns, time spent on difficult sub-steps, and retry resilience into a dynamic student state machine.",
+            "I tracked how students try, how long they spend on hard steps and how often they try again. These feed a model of where each student is.",
           impact:
-            "Transformed abstract behavioral science into responsive software heuristics.",
+            "Ideas from behaviour science became rules the software can act on.",
         },
         {
-          title: "Preventing Student Frustration Spikes",
+          title: "Stopping students from giving up",
           problem:
-            "When students hit a wall, generic hints feel patronizing and students close the tab.",
+            "When students get stuck, generic hints feel patronising and they close the tab.",
           engineeringDecision:
-            "Used LLMs to generate empathetic, growth-mindset feedback tailored to where the learner specifically struggled, scaling challenge difficulty dynamically.",
+            "I used AI to write kind, encouraging feedback about the exact step where the student was stuck, and to adjust how hard the next task is.",
           impact:
-            "The adaptive flow changes the hint and next exercise in response to the learner's attempt pattern.",
+            "The hint and the next exercise change based on how the student has been working.",
         },
       ],
       impact:
-        "Completed as an MSc dissertation at Kingston University London and awarded a Distinction. The prototype demonstrates how feedback and exercise difficulty can respond to learner behavior.",
+        "My MSc dissertation at Kingston University London, awarded a Distinction. The prototype shows how feedback and difficulty can respond to how a student learns.",
     },
   },
   {
@@ -404,7 +404,7 @@ export const projects: Project[] = [
     title: "Voting Module Sidechain",
     period: "October 2024 to December 2024",
     summary:
-      "A high-integrity blockchain voting module built on the Klayr SDK that cryptographically verifies every vote and deterministically closes polls at block expiration. Awarded an ecosystem grant.",
+      "A blockchain voting module built on the Klayr SDK. It checks every vote and closes the poll at a set block, with no one able to change it. It won an ecosystem grant.",
     images: [{ src: "/optimized/voting-module.jpg", alt: "Voting Module code and terminal output in a code editor" }],
     technologies: ["TypeScript", "Klayr SDK", "Blockchain", "Cryptography", "Node.js"],
     githubUrl: "https://github.com/Beloved1310/voting-module",
@@ -413,38 +413,38 @@ export const projects: Project[] = [
     liveLabel: "Watch the demo",
     categories: ["Backend"],
     caseStudy: {
-      role: "Solo Blockchain Engineer — architected custom sidechain stores, transactions, and on-block verification commands.",
+      role: "Sole engineer. I built the custom stores, transactions and on-chain checks.",
       problem:
-        "Online voting in community organizations and decentralized groups often suffers from low trust: administrators can secretly alter poll close times, voters worry ballots might be double-counted, and audit logs are easy to manipulate. We needed a verifiable system where voting rules and deadlines are set in code and mathematically impossible to tamper with.",
+        "Online voting in communities often has a trust problem. Admins can quietly change when a poll closes. Voters worry their vote is counted twice. Logs are easy to edit. I wanted a system where the rules and deadlines live in code and cannot be changed.",
       challenges: [
         {
-          title: "Double-Voting and Ballot Tampering",
+          title: "Voting twice and changing votes",
           problem:
-            "Preventing voters from casting multiple ballots across decentralized nodes without leaking individual voter anonymity.",
+            "Voters must not be able to vote more than once across the network, and their votes must stay private.",
           engineeringDecision:
-            "Designed dedicated transaction assets on the Klayr SDK that cryptographically verify cryptographic signatures and record votes into immutable Merkle state stores.",
+            "I built custom transactions on the Klayr SDK. They check each voter's signature and store the vote in a record that cannot be changed.",
           impact:
-            "The transaction handler checks voter signatures and ballot state before recording a vote.",
+            "Every vote is checked for a valid signature and a previous vote before it is recorded.",
         },
         {
-          title: "Deterministic Poll Closure Without Human Intervention",
+          title: "Closing the poll on time",
           problem:
-            "Human administrators often forget or intentionally delay poll closure to let favorable votes slip in.",
+            "Admins can forget to close a poll, or keep it open on purpose to let more votes in.",
           engineeringDecision:
-            "Implemented on-block lifecycle hooks that monitor blockchain block height and automatically seal tallies at the exact expiration block.",
+            "I added checks that run on each new block. When the poll reaches its end block, the count is sealed automatically.",
           impact:
-            "The poll closes from block-height state, so the closing rule is inspectable and does not depend on a manual administrator action.",
+            "The poll closes at a set block, so anyone can check the rule and no admin is needed.",
         },
       ],
       impact:
-        "The project won a competitive blockchain developer grant and recognition across the web3 community for its clean module architecture and verifiable ballot execution.",
+        "The project won a blockchain developer grant for its clean design and votes that anyone can verify.",
     },
   },
   {
     slug: "first-aid-app-generator",
     title: "QuickAid Emergency First-Aid Assistant",
     summary:
-      "A rapid-response emergency guidance generator powered by the Gemini API that provides immediate, prioritized first-aid protocols during critical medical incidents.",
+      "An emergency helper built on the Gemini API. Describe what is happening and it gives you first-aid steps in order, starting with the most important one.",
     images: [{ src: "/optimized/first-aid.jpg", alt: "QuickAid first-aid guidance form" }],
     technologies: ["Python", "Gemini API", "Streamlit", "Prompt Engineering"],
     githubUrl: "https://github.com/Beloved1310/First-Aid-App-Generator",
@@ -452,29 +452,29 @@ export const projects: Project[] = [
     liveLabel: "Watch the demo",
     categories: ["AI", "Frontend"],
     caseStudy: {
-      role: "Creator & AI Engineer — developed the specialized emergency prompts, safety checks, and Streamlit user experience.",
+      role: "Creator. I wrote the emergency prompts and safety checks and built the Streamlit app.",
       problem:
-        "In a medical emergency (choking, severe burn, fracture, allergic reaction), bystanders panic. Searching Google brings up pages of ads and walls of text, while standard AI chatbots waste precious seconds greeting the user. People need life-saving physical steps immediately.",
+        "In an emergency, like choking, a bad burn, a broken bone or an allergic reaction, people panic. A web search shows ads and long pages. A normal chatbot wastes time being polite. People need clear steps straight away.",
       challenges: [
         {
-          title: "Conversational Lag During Life-Threatening Seconds",
+          title: "Chatbots waste precious seconds",
           problem:
-            "Standard conversational models output polite preamble like 'I am sorry to hear you are having an emergency,' wasting time.",
+            "Chat models often start with lines like \"I am sorry to hear you are having an emergency\". That costs time.",
           engineeringDecision:
-            "Used instruction-constrained prompts to prioritize a concrete safety action before explanatory text.",
+            "I wrote strict prompts that put the first safety action before any explanation.",
           impact:
-            "The response starts with an ordered first-aid action and follows with relevant cautions and guidance.",
+            "Every answer starts with the first thing to do, then gives warnings and next steps.",
         },
       ],
       impact:
-        "Built an emergency assistant that structures guidance as prioritized actions and keeps a reminder to contact emergency services visible in the interface.",
+        "An emergency helper that gives first-aid steps in order and always shows a reminder to call emergency services.",
     },
   },
   {
     slug: "nowdevhub",
     title: "NowDevHub Developer Community",
     summary:
-      "A dedicated community platform and resource hub for ServiceNow developers to exchange reusable components, Script Includes, and architectural insights with real-time live discussions.",
+      "A community site for ServiceNow developers to share code, swap ideas and chat live.",
     images: [{ src: "/optimized/nowdevhub.jpg", alt: "NowDevHub login screen" }],
     technologies: ["React", "Node.js", "PostgreSQL", "Socket.io", "Express", "Tailwind CSS"],
     githubUrl: "https://github.com/Beloved1310",
@@ -482,49 +482,49 @@ export const projects: Project[] = [
     liveLabel: "Visit NowDevHub",
     categories: ["Frontend", "Backend"],
     caseStudy: {
-      role: "Full-Stack Engineer — architected the real-time messaging layer, relational PostgreSQL database, and React client application.",
+      role: "Full-stack engineer. I built the live chat, the PostgreSQL database and the React app.",
       problem:
-        "ServiceNow developers work on complex enterprise workflows and often solve similar implementation challenges in silos. There was no real-time hub where practitioners could share snippets, get code reviewed, and discuss best practices live.",
+        "ServiceNow developers often solve the same problems alone. There was no place where they could share code, get feedback and talk in real time.",
       challenges: [
         {
-          title: "Stale Forum Discussions",
+          title: "Slow forum threads",
           problem:
-            "Traditional developer forums require constant manual page reloads, causing discussions to drag on for hours.",
+            "On old forums you have to keep refreshing the page, so conversations drag on for hours.",
           engineeringDecision:
-            "Implemented real-time WebSockets with Socket.io on Node.js to provide instant chat, presence detection, and community pings.",
+            "I used Socket.io on Node.js for live chat, online status and alerts.",
           impact:
-            "Developers can share code snippets and exchange messages through a live Socket.io connection.",
+            "Developers can share code and chat over a live connection.",
         },
       ],
       impact:
-        "Deployed a ServiceNow resource hub with code sharing, discussion, and live collaboration, available at the linked site.",
+        "A live ServiceNow community site for sharing code, discussion and working together.",
     },
   },
   {
     slug: "shefi-solana",
     title: "Solana Smart Contract & DeFi Tracker",
     summary:
-      "A decentralized finance and SPL token tracking interface built during the SheFi technical fellowship, with wallet connectivity and live Solana cluster subscriptions.",
+      "A DeFi and token tracker for Solana, built during the SheFi fellowship. It connects to your wallet and updates live.",
     images: [],
     technologies: ["Solana", "Web3.js", "Rust", "React", "TypeScript", "Tailwind CSS"],
     categories: ["Backend", "Frontend"],
     caseStudy: {
-      role: "Web3 Engineer — built the Solana wallet integration, SPL token balance tracker, and real-time transaction event listeners.",
+      role: "Web3 engineer. I built the wallet connection, the token balance tracker and the live transaction updates.",
       problem:
-        "On Solana, a frontend needs to reflect wallet and account changes from the cluster without relying on repeated manual refreshes.",
+        "On Solana, an app needs to show wallet and account changes as they happen, without the user refreshing.",
       challenges: [
         {
-          title: "Handling Sub-Second Finality in UI",
+          title: "Keeping up with fast transactions",
           problem:
-            "Repeated HTTP polling can leave displayed balances stale while account state changes on the cluster.",
+            "Checking for changes over and over can leave balances out of date.",
           engineeringDecision:
-            "Subscribed directly to Solana cluster WebSocket RPC streams, listening for slot commitment updates and balance changes live.",
+            "I subscribed directly to Solana's live WebSocket feed to hear about balance changes as they happen.",
           impact:
-            "Delivered instant visual feedback as soon as transactions were confirmed on-chain.",
+            "Users see the change as soon as a transaction is confirmed.",
         },
       ],
       impact:
-        "Delivered a DeFi tracker that connects a wallet and reflects account and transaction updates from Solana subscriptions.",
+        "A DeFi tracker that connects a wallet and shows account and transaction updates live.",
     },
   },
 ];

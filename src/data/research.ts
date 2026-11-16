@@ -73,7 +73,7 @@ export const talks: Talk[] = [
     title: "Your Agent Left the Laptop Open. LAR Closes It",
     event: "Large Language Models, AI and ML Conference London (LLMday London)",
     format: "Talk",
-    brief: "Presented the LAR framework (Lock, Attribute, Require) for enterprise autonomous AI agents that are safe to trust, with an out-of-band live mobile CIBA demo.",
+    brief: "I presented LAR (Lock, Attribute, Require), my framework for AI agents you can trust at work, with a live demo of phone approval using CIBA.",
     image: [
       {
         src: "/ayo-speaking-llmday.jpg",
@@ -82,36 +82,36 @@ export const talks: Talk[] = [
     ],
     link: "https://lnkd.in/p/eJCFCXHh",
     story: {
-      mistakeOrContextTitle: "The Mistake: Handing Ambient Privileges to Bots",
+      mistakeOrContextTitle: "The mistake: giving agents our own access",
       mistakeOrContextText:
-        "When we initially integrated autonomous LLM coding and workflow agents into internal repositories, we made the classic engineer mistake: handing the agent our own broad, ambient user credentials. The bot could edit code, but it also possessed the unchecked power to drop databases and access confidential files. It was the digital equivalent of leaving an unlocked laptop open in a busy cafe.",
-      solutionOrArchitectureTitle: "The Solution: The LAR Governance Framework",
+        "When we first added AI agents to our code and workflows, we made a common mistake. We gave them our own full login. The agent could edit code, but it could also delete databases and open private files. It was like leaving your laptop open and unlocked in a busy café.",
+      solutionOrArchitectureTitle: "The fix: the LAR framework",
       solutionOrArchitectureText:
-        "Instead of keeping that close call behind closed doors, I stood in front of hundreds of AI practitioners in London and openly walked through how we fixed it: the LAR framework (Lock, Attribute, Require). I broke down how to swap ambient privileges for downscoped, single-purpose RFC 8693 tokens, tie every action to an accountable human, and require out-of-band CIBA mobile approvals before any high-stakes operation executes.",
+        "I shared what went wrong and how we fixed it with a room of AI engineers in London. LAR has three parts. Lock: swap broad access for a narrow, short-lived token (RFC 8693). Attribute: link every action to a real person. Require: ask that person to approve on their phone (CIBA) before anything high risk runs.",
       reflectionOrTakeaway:
-        "“The best part of any talk isn't the 30 minutes on stage—it's the hour afterward standing in the hallway, listening to other engineers share the exact same pain points they thought only they were facing. That candid human exchange is why I speak.”",
+        "“The best part of a talk is not the 30 minutes on stage. It is the hour after, in the hallway, when other engineers say they have the same problem and thought they were the only ones. That is why I speak.”",
       caseStudyUrl: "/projects/lar-framework",
-      caseStudyLabel: "Explore LAR Case Study & Simulator",
+      caseStudyLabel: "See the LAR case study and simulator",
     },
   },
   {
     title: "Bitwise in the Browser: The Superpower You've Been Ignoring",
     event: "JSMonthly",
     format: "Talk",
-    brief: "Working directly with bits, a superpower most web developers ignore.",
+    brief: "Working directly with bits, a skill most web developers never use.",
     image: [
       { src: "/optimized/bitwise-talk.jpg", alt: "Adefisayo Adejumo presenting Bitwise in the Browser at JSMonthly" },
       { src: "/bitwise-talk.jpg", alt: "Adefisayo Adejumo presenting Bitwise in the Browser at JSMonthly" },
     ],
     story: {
-      mistakeOrContextTitle: "The Blindspot: Neglecting Low-Level Bit Operations",
+      mistakeOrContextTitle: "The gap: ignoring bits",
       mistakeOrContextText:
-        "Modern web developers frequently treat JavaScript as an abstract high-level script, reaching for bulky state libraries and nested object hashes for operations that could execute orders of magnitude faster using native 32-bit integers and bit masks.",
-      solutionOrArchitectureTitle: "The Implementation: Binary Flags & Performance Patterns",
+        "Many web developers treat JavaScript as purely high level. They reach for big libraries and nested objects for jobs that plain numbers and bit masks could do much faster.",
+      solutionOrArchitectureTitle: "The patterns: flags and bit masks",
       solutionOrArchitectureText:
-        "Walked the London JS community through practical, production-ready bitwise patterns: packed permission bitmasks, blazing-fast state flags, memory management in heavy canvas simulations, and bit-level cryptography checks in Web Workers.",
+        "I showed the London JS community bitwise patterns they can use today: permissions packed into one number, fast state flags, saving memory in heavy canvas work and bit checks inside Web Workers.",
       reflectionOrTakeaway:
-        "“Mastering low-level fundamentals doesn't mean writing assembly—it means understanding what the V8 engine is doing beneath the hood so you make smarter architectural trade-offs.”",
+        "“Knowing the basics does not mean writing assembly. It means knowing what the V8 engine is doing underneath, so you make better choices.”",
     },
   },
   {
@@ -119,44 +119,44 @@ export const talks: Talk[] = [
     event: "DTX London 2026",
     date: "14 October 2026",
     format: "Panel",
-    brief: "Moderated a high-stakes panel of principal engineers from Barclays, Switch2, and building societies on transitioning AI from novelty prototypes into hardened enterprise value.",
+    brief: "I moderated a panel of senior engineers from Barclays, Switch2 and building societies on moving AI from demos to real business value.",
     image: [{ src: "/ayo-dtx-panel.jpg", alt: "Adefisayo Adejumo moderating the DTX London 2026 panel" }],
     story: {
-      mistakeOrContextTitle: "The Problem: The Chasm Between AI Demos and Regulated Production",
+      mistakeOrContextTitle: "The problem: from demo to production",
       mistakeOrContextText:
-        "Enterprises are flooded with impressive internal AI prototypes, but when it comes to shipping them in regulated industries (banking, healthcare, housing), teams stall because of unquantified security risks and absent audit trails.",
-      solutionOrArchitectureTitle: "The Discussion: Hardening Autonomous Agents",
+        "Many companies have impressive AI demos. In regulated fields like banking, healthcare and housing, those demos often stall. The security risks are unclear and there is no audit trail.",
+      solutionOrArchitectureTitle: "The discussion: making agents safe to ship",
       solutionOrArchitectureText:
-        "Moderated lead engineers from Barclays, Switch2, and building societies, debating deterministic guardrails, zero-trust token exchange, automated compliance gating, and how to scale engineer adoption safely.",
+        "I led a discussion with engineers from Barclays, Switch2 and building societies. We covered fixed guardrails, narrow access tokens, automatic compliance checks and how to help engineers adopt AI safely.",
       reflectionOrTakeaway:
-        "“The bottleneck in enterprise AI adoption is never model intelligence; it is runtime governance, verifiable provenance, and organizational confidence.”",
+        "“What holds back AI at work is rarely how smart the model is. It is control at runtime, a clear record of what happened and trust inside the company.”",
     },
   },
   {
     title: "Why traditional debugging fails",
     event: "DevFest (Google Developer Group)",
     format: "Speaking",
-    brief: "Deconstructing why legacy breakpoint debugging breaks down in asynchronous, distributed, and event-driven architectures.",
+    brief: "Why stepping through code with breakpoints stops working in async, distributed and event-driven systems.",
     image: [
       { src: "/optimized/devfest.jpg", alt: "Adefisayo Adejumo speaking on stage at DevFest" },
       { src: "/devfest.JPG", alt: "Adefisayo Adejumo speaking on stage at DevFest" },
     ],
     story: {
-      mistakeOrContextTitle: "The Friction: Breakpoint Debugging in Distributed Systems",
+      mistakeOrContextTitle: "The problem: breakpoints in distributed systems",
       mistakeOrContextText:
-        "Stepping line-by-line with standard IDE breakpoints completely falls apart when diagnosing microtask timing bugs, event loop starvation, network race conditions, or distributed pub/sub pipelines.",
-      solutionOrArchitectureTitle: "The Technique: Observability-Driven Engineering",
+        "Stepping through code line by line does not help with timing bugs, a blocked event loop, network race conditions or messages passing between services.",
+      solutionOrArchitectureTitle: "The approach: debug with evidence",
       solutionOrArchitectureText:
-        "Presented a mental model shift: modeling states as finite automata, capturing structured telemetry traces, and writing reproducible contract property tests instead of relying on post-mortem ad-hoc console logs.",
+        "I showed a different way to think. Map out the states your system can be in, collect structured traces and write tests that reproduce the bug, instead of adding console logs after the fact.",
       reflectionOrTakeaway:
-        "“If you cannot reproduce a failure deterministically with an isolated test case, you are guessing rather than engineering.”",
+        "“If you cannot reproduce a bug with a test, you are guessing, not engineering.”",
     },
   },
   {
     title: "From Web2 to Web3: Onboarding a Million Developers Using web3.js",
     event: "Web3 Lagos Conference 2024",
     format: "Talk",
-    brief: "Presenting to a packed auditorium in Lagos on bridging traditional full-stack web developers into decentralized architecture using familiar TypeScript patterns.",
+    brief: "A talk to a full room in Lagos on helping web developers move into web3 using TypeScript patterns they already know.",
     image: [
       {
         src: "/optimized/web3lagos-room.jpg",
@@ -168,21 +168,21 @@ export const talks: Talk[] = [
       },
     ],
     story: {
-      mistakeOrContextTitle: "The Barrier: Steep Learning Curves in Decentralized Tech",
+      mistakeOrContextTitle: "The barrier: web3 is hard to start",
       mistakeOrContextText:
-        "Decentralized architecture often repels talented full-stack engineers with convoluted tooling, unintuitive hex addresses, and poorly documented RPC client libraries.",
-      solutionOrArchitectureTitle: "The Bridge: Pragmatic TypeScript Architectures",
+        "Web3 puts off good web developers. The tools are confusing, the addresses are hard to read and the libraries are poorly documented.",
+      solutionOrArchitectureTitle: "The bridge: familiar TypeScript",
       solutionOrArchitectureText:
-        "Walked a packed auditorium of over 300 Nigerian engineers through building reliable decentralized applications with web3.js, using standard TypeScript abstractions, strongly-typed contract wrappers, and predictable error handling.",
+        "I showed more than 300 Nigerian engineers how to build web3 apps with web3.js using normal TypeScript: typed contract wrappers and clear error handling.",
       reflectionOrTakeaway:
-        "“Great developer tooling succeeds when it meets engineers within their existing mental models rather than forcing them to start from scratch.”",
+        "“Good developer tools meet engineers where they already are. They do not make them start again from zero.”",
     },
   },
   {
     title: "Engagement in Web3: How Marketing and Community Building Intersect",
     event: "Web3 Global Conference, Africa Edition 2024",
     format: "Panel",
-    brief: "Panel discussion on authentic developer community building versus superficial token hype cycles in emerging tech ecosystems.",
+    brief: "A panel on building real developer communities, not short-lived token hype.",
     image: [
       {
         src: "/optimized/web3global-panel.jpg",
@@ -190,21 +190,21 @@ export const talks: Talk[] = [
       },
     ],
     story: {
-      mistakeOrContextTitle: "The Pitfall: Prioritizing Hype Over Technical Substance",
+      mistakeOrContextTitle: "The problem: hype over substance",
       mistakeOrContextText:
-        "Tech ecosystems often fall victim to short-term speculative hype cycles that burn out builders and obscure real engineering utility.",
-      solutionOrArchitectureTitle: "The Strategy: Grounded Technical Community Building",
+        "Tech communities often chase short bursts of hype. Builders burn out and the real value gets lost.",
+      solutionOrArchitectureTitle: "The approach: build around real work",
       solutionOrArchitectureText:
-        "Shared proven lessons on organizing hands-on builder bootcamps, code-review study circles, and mentorship pipelines that retain developers for years.",
+        "I shared what has worked for me: hands-on bootcamps, code review circles and mentoring that keeps developers involved for years.",
       reflectionOrTakeaway:
-        "“Communities endure when they are founded on mutual problem-solving and shared technical mastery, not speculative hype.”",
+        "“Communities last when people solve problems together and grow their skills, not when they chase hype.”",
     },
   },
   {
     title: "The Multicall Plugin",
     event: "Web3.js African Tour",
     format: "Talk",
-    brief: "Hands-on walkthrough of batching multiple RPC contract reads into a single network call, reducing latency by 80%.",
+    brief: "A hands-on walkthrough of grouping many contract reads into one network call, cutting delay by 80%.",
     image: [
       {
         src: "/optimized/web3js-africa-tour-talk.jpg",
@@ -212,14 +212,14 @@ export const talks: Talk[] = [
       },
     ],
     story: {
-      mistakeOrContextTitle: "The Bottleneck: Network Latency from Cascading RPC Queries",
+      mistakeOrContextTitle: "The problem: too many network calls",
       mistakeOrContextText:
-        "Querying contract states one-by-one introduces crippling network overhead, exhausts rate limits on RPC providers, and slows down client interfaces.",
-      solutionOrArchitectureTitle: "The Fix: Aggregated Batch Queries with Multicall",
+        "Reading contract data one call at a time adds a lot of delay, hits provider rate limits and slows the app down.",
+      solutionOrArchitectureTitle: "The fix: one call with Multicall",
       solutionOrArchitectureText:
-        "Taught developers how to bundle dozens of disparate RPC reads into a single byte-packed multicall execution, reducing network round-trips by over 80%.",
+        "I showed developers how to group dozens of reads into a single multicall, cutting network round trips by more than 80%.",
       reflectionOrTakeaway:
-        "“Fundamental engineering principles—batching, caching, reducing round trips—are timeless and universal across every technology stack.”",
+        "“The basics, like batching, caching and fewer round trips, work in every tech stack.”",
     },
   },
 ];
