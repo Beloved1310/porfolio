@@ -125,7 +125,7 @@ const TabPanel = ({ tab }: { tab: TabId }) => {
           to="/#speaking"
           className="group mt-10 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-stone-700 dark:text-stone-300 hover:text-amber-700 dark:hover:text-amber-400"
         >
-          Talks & Community Sharing
+          Talks and community
           <FiArrowRight aria-hidden="true" className="group-hover:translate-x-1 transition-transform" />
         </Link>
       </>
@@ -243,7 +243,7 @@ const Projects = () => {
             },
             {
               label: "Speaking",
-              description: "Talks, keynotes, and conference panels.",
+              description: "Talks and conference panels.",
               to: "/speaking",
             },
           ]}

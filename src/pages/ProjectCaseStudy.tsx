@@ -90,8 +90,8 @@ const ProjectCaseStudy = () => {
         type: "work",
         title:
           work.id === "dti"
-            ? "Prayer Bud — Admin Activity & Community Platform"
-            : `${work.company} — ${work.role}`,
+            ? "Prayer Bud: Admin Activity and Community Platform"
+            : `${work.company}: ${work.role}`,
         company: work.company,
         role: work.caseStudy.role || work.role,
         period: work.period,
@@ -138,7 +138,7 @@ const ProjectCaseStudy = () => {
           Story Not Found
         </h1>
         <p className="text-stone-500 dark:text-stone-400 mb-8 max-w-md">
-          The requested project or work experience case study could not be located.
+          We could not find that project.
         </p>
         <Link
           to="/projects"
@@ -181,7 +181,7 @@ const ProjectCaseStudy = () => {
         <header className="mb-12">
           <div className="flex flex-wrap items-center gap-3 mb-4">
             <span className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-amber-700 dark:text-amber-400">
-              {item.type === "work" ? "Professional Work Case Study" : "Case Study"} · {item.categories.join(" · ")}
+              {item.type === "work" ? "Work case study" : "Case Study"} · {item.categories.join(" · ")}
             </span>
             {item.highlight && (
               <a

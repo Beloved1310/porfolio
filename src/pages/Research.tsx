@@ -56,10 +56,10 @@ const Research = () => {
         {/* Narrative Intro */}
         <header className="mb-14 max-w-3xl">
           <span className="text-[10px] font-mono font-bold uppercase tracking-[0.3em] text-amber-700 dark:text-amber-400 block mb-3">
-            Sharing With Communities
+            Sharing with communities
           </span>
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.1] text-stone-950 dark:text-white mb-6">
-            Speaking is how I share with communities my learnings, mistakes, and solutions. Every talk is personal.
+            I speak to share what I have learned, the mistakes I made and how I fixed them. Every talk is personal.
           </h1>
           <p className="text-base sm:text-lg text-stone-600 dark:text-stone-300 leading-relaxed font-normal">
             I don&apos;t get on stage to deliver scripted product pitches or pretend everything was easy. I speak to open-source the real engineering hurdles: the systems that broke under unexpected scale, the architectural mistakes we made, and the hard-won solutions that actually worked in production. Every time I hold a microphone, it&apos;s an honest conversation with fellow builders.
@@ -106,7 +106,7 @@ const Research = () => {
               <div className="p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div className="max-w-3xl">
                   <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 block mb-1">
-                    Keynote & Technical Deep Dive · London Stage
+                    Talk · London
                   </span>
                   <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-stone-950 dark:text-white mb-2">
                     &ldquo;{talks[0].title}&rdquo;
@@ -434,7 +434,7 @@ const Research = () => {
           links={[
             {
               label: "Work & Production Systems",
-              description: "Full case studies, system breakdowns, and research publications.",
+              description: "Case studies, how things were built and research papers.",
               to: "/projects",
             },
             {
@@ -505,7 +505,7 @@ const Research = () => {
                   {/* Section 1: Mistake or Context */}
                   <div className="p-5 rounded-2xl bg-stone-50 dark:bg-stone-950/60 border border-stone-200/80 dark:border-stone-800/80">
                     <span className="block text-xs font-mono font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 mb-2">
-                      {activeTalk.story.mistakeOrContextTitle || "The Context & Friction"}
+                      {activeTalk.story.mistakeOrContextTitle || "The problem"}
                     </span>
                     <p className="text-sm sm:text-base text-stone-800 dark:text-stone-200 leading-relaxed font-normal">
                       {activeTalk.story.mistakeOrContextText}
@@ -515,7 +515,7 @@ const Research = () => {
                   {/* Section 2: Solution or Architecture */}
                   <div className="p-5 rounded-2xl bg-stone-50 dark:bg-stone-950/60 border border-stone-200/80 dark:border-stone-800/80">
                     <span className="block text-xs font-mono font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 mb-2">
-                      {activeTalk.story.solutionOrArchitectureTitle || "The Engineering Solution & Architecture"}
+                      {activeTalk.story.solutionOrArchitectureTitle || "The solution"}
                     </span>
                     <p className="text-sm sm:text-base text-stone-800 dark:text-stone-200 leading-relaxed font-normal">
                       {activeTalk.story.solutionOrArchitectureText}
@@ -526,7 +526,7 @@ const Research = () => {
                   {activeTalk.story.reflectionOrTakeaway && (
                     <div className="p-5 rounded-2xl bg-stone-50 dark:bg-stone-950/60 border border-stone-200/80 dark:border-stone-800/80">
                       <span className="block text-xs font-mono font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 mb-2">
-                        Key Community Takeaway & Reflection
+                        What I took away
                       </span>
                       <p className="italic text-sm sm:text-base text-stone-700 dark:text-stone-300 leading-relaxed">
                         {activeTalk.story.reflectionOrTakeaway}
@@ -541,7 +541,7 @@ const Research = () => {
                         to={activeTalk.story.caseStudyUrl}
                         className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-stone-900 dark:bg-white text-white dark:text-stone-900 text-xs font-bold uppercase tracking-widest hover:bg-amber-700 dark:hover:bg-amber-400 dark:hover:text-stone-950 transition-colors shadow-sm"
                       >
-                        <span>{activeTalk.story.caseStudyLabel || "Explore Case Study"}</span>
+                        <span>{activeTalk.story.caseStudyLabel || "Read the case study"}</span>
                         <FiArrowRight />
                       </Link>
                     )}
@@ -552,7 +552,7 @@ const Research = () => {
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-stone-300 dark:border-stone-700 text-stone-800 dark:text-stone-200 text-xs font-bold uppercase tracking-widest hover:border-amber-600 hover:text-amber-700 dark:hover:text-amber-400 transition-colors"
                       >
-                        <span>Read Retrospective & Community Post</span>
+                        <span>Read the post</span>
                         <FiExternalLink />
                       </a>
                     )}

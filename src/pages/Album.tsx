@@ -30,7 +30,7 @@ const Album = () => {
             },
             {
               label: "Talks & Community Sharing",
-              description: "Sharing learnings, mistakes, and solutions with engineering communities.",
+              description: "What I have learned, shared with engineering communities.",
               to: "/#speaking",
             },
             {

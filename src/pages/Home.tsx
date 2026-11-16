@@ -220,7 +220,7 @@ const Home = () => {
                   <span className="w-8 h-px bg-stone-300 dark:bg-stone-700" />- SHARING WITH COMMUNITIES
                 </h2>
                 <h3 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight leading-[1.15] text-stone-950 dark:text-white mb-5 text-balance">
-                  Speaking is how I share with communities my learnings, mistakes, and solutions. Every talk is personal.
+                  I speak to share what I have learned, the mistakes I made and how I fixed them. Every talk is personal.
                 </h3>
                 <p className="text-base sm:text-lg text-stone-600 dark:text-stone-300 leading-relaxed font-normal mb-8">
                   I don&apos;t get on stage to deliver scripted product pitches or pretend everything was easy. I speak to open-source the real engineering hurdles: the systems that broke under unexpected scale, the architectural mistakes we made, and the hard-won solutions that actually worked in production. Every time I hold a microphone, it&apos;s an honest conversation with fellow builders.
@@ -230,7 +230,7 @@ const Home = () => {
                   to="/speaking"
                   className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-stone-900 dark:bg-white text-white dark:text-stone-900 text-xs font-bold uppercase tracking-widest hover:bg-amber-600 dark:hover:bg-amber-400 dark:hover:text-stone-950 transition-colors shadow-sm"
                 >
-                  <span>Explore the Speaking Page</span>
+                  <span>See all talks</span>
                   <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
