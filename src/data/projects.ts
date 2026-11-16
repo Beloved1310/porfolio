@@ -115,7 +115,7 @@ export const projects: Project[] = [
       },
     ],
     technologies: ["OAuth 2.0 Token Exchange", "CIBA", "Agent Governance", "TypeScript", "Python", "FastAPI"],
-    slides: [],
+    slides: [{ label: "View the LLMday London slides", url: "https://canva.link/5rtgq6go8cba1ha" }],
     categories: ["AI", "Backend"],
     caseStudy: {
       role: "Creator. I designed the framework, built it on open standards and made the live demo.",
@@ -152,7 +152,12 @@ export const projects: Project[] = [
     period: "March 2026 to April 2026",
     summary:
       "An AI pipeline that reads financial and legal documents and finds \"sludge\": hidden cancel steps, confusing terms and other friction. Every finding is tied to FCA guidance FG22/5.",
-    images: [{ src: "/project-sludge-audit.png", alt: "Consumer Duty Sludge Audit Tool interface" }],
+    images: [
+      {
+        src: "/consumer-duty-sludge-audit.png",
+        alt: "Consumer Duty Sludge Audit home screen, with a website URL field, a Run Audit button and a tab to compare two sites",
+      },
+    ],
     technologies: ["Python", "LangChain", "LangGraph", "ChromaDB", "Groq (LLaMA)", "FastAPI"],
     githubUrl: "https://github.com/Beloved1310/cd-audit-tool",
     categories: ["AI", "Backend"],

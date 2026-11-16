@@ -5,6 +5,7 @@ import {
   FiArrowRight,
   FiBookOpen,
   FiExternalLink,
+  FiMonitor,
   FiX,
 } from "react-icons/fi";
 import { talks, type Talk } from "../data/research";
@@ -496,6 +497,36 @@ const Research = () => {
                   className="block h-auto max-h-[75vh] w-full object-contain"
                 />
               </div>
+            )}
+
+            {/* Slides call to action */}
+            {activeTalk.slides && (
+              <a
+                href={activeTalk.slides}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative mb-6 flex items-center justify-between gap-4 overflow-hidden rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-orange-400 p-5 sm:p-6 text-stone-950 shadow-lg shadow-amber-500/25 ring-1 ring-amber-600/20 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-amber-500/40 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-300"
+              >
+                <span className="flex items-center gap-4">
+                  <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-stone-950 text-amber-400">
+                    <FiMonitor className="text-xl" aria-hidden="true" />
+                    <span className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-white animate-ping motion-reduce:hidden" />
+                    <span className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-white" />
+                  </span>
+                  <span>
+                    <span className="block text-[10px] font-mono font-bold uppercase tracking-widest text-stone-900/70">
+                      Slides
+                    </span>
+                    <span className="block text-base sm:text-lg font-black tracking-tight">
+                      See the slides from this talk
+                    </span>
+                  </span>
+                </span>
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-stone-950 text-white transition-transform group-hover:translate-x-1">
+                  <FiArrowRight aria-hidden="true" />
+                </span>
+                <span className="sr-only">(opens in a new tab)</span>
+              </a>
             )}
 
             {/* Modal Story Content (Mistake, Solution, Takeaway) */}

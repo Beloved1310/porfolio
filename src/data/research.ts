@@ -65,6 +65,8 @@ export interface Talk {
   image?: ImageSource[];
   // The LinkedIn or X post about the talk.
   link?: string;
+  // The slide deck shown in the talk's detail view.
+  slides?: string;
   story?: TalkStoryDetail;
 }
 
@@ -81,6 +83,7 @@ export const talks: Talk[] = [
       },
     ],
     link: "https://lnkd.in/p/eJCFCXHh",
+    slides: "https://canva.link/5rtgq6go8cba1ha",
     story: {
       mistakeOrContextTitle: "The mistake: giving agents our own access",
       mistakeOrContextText:
@@ -98,6 +101,7 @@ export const talks: Talk[] = [
     title: "Bitwise in the Browser: The Superpower You've Been Ignoring",
     event: "JSMonthly",
     format: "Talk",
+    slides: "https://canva.link/8gj4r5n99ix3cxf",
     brief: "Working directly with bits, a skill most web developers never use.",
     image: [
       { src: "/optimized/bitwise-talk.jpg", alt: "Adefisayo Adejumo presenting Bitwise in the Browser at JSMonthly" },
